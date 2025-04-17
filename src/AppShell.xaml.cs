@@ -1,6 +1,6 @@
-﻿using BaseMobile.Views;
+﻿using Recipes.Views;
 
-namespace BaseMobile
+namespace Recipes
 {
     public partial class AppShell : Shell
     {

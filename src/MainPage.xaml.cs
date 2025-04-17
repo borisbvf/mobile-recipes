@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using BaseMobile.Services;
+using Recipes.Services;
 
-namespace BaseMobile
+namespace Recipes
 {
     public partial class MainPage : ContentPage
     {

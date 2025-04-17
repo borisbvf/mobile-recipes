@@ -1,7 +1,7 @@
-﻿using BaseMobile.Services;
+﻿using Recipes.Services;
 using System.ComponentModel;
 
-namespace BaseMobile
+namespace Recipes
 {
     public partial class App : Application
     {

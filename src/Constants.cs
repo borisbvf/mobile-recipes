@@ -1,4 +1,4 @@
-﻿namespace BaseMobile;
+﻿namespace Recipes;
 public class Constants
 {
 	public const string AppThemeKey = "AppTheme";

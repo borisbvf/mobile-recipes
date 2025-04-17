@@ -1,8 +1,8 @@
-﻿using BaseMobile.ViewModels;
-using BaseMobile.Views;
+﻿using Recipes.ViewModels;
+using Recipes.Views;
 using Microsoft.Extensions.Logging;
 
-namespace BaseMobile
+namespace Recipes
 {
     public static class MauiProgram
     {

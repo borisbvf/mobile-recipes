@@ -1,4 +1,4 @@
-﻿namespace BaseMobile.Models;
+﻿namespace Recipes.Models;
 public class SettingTheme
 {
 	public AppTheme AppTheme { get; }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BaseMobile.Services;
+namespace Recipes.Services;
 public class ThemeService : INotifyPropertyChanged
 {
 	public event PropertyChangedEventHandler? PropertyChanged;

@@ -1,8 +1,8 @@
-﻿using BaseMobile.Resources.Localization;
+﻿using Recipes.Resources.Localization;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BaseMobile.Services;
+namespace Recipes.Services;
 public class LocalizationManager : INotifyPropertyChanged
 {
 	private LocalizationManager()

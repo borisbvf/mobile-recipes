@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace BaseMobile
+namespace Recipes
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

@@ -1,6 +1,6 @@
-using BaseMobile.ViewModels;
+using Recipes.ViewModels;
 
-namespace BaseMobile.Views;
+namespace Recipes.Views;
 
 public partial class SettingsPage : ContentPage
 {

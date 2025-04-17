@@ -1,9 +1,9 @@
-﻿using BaseMobile.Services;
-using BaseMobile.Models;
+﻿using Recipes.Services;
+using Recipes.Models;
 using System.Collections.ObjectModel;
-using BaseMobile.Resources.Localization;
+using Recipes.Resources.Localization;
 
-namespace BaseMobile.ViewModels;
+namespace Recipes.ViewModels;
 public class SettingsViewModel : BaseViewModel
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;

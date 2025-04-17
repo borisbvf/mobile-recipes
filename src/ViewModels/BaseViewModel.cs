@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BaseMobile.ViewModels;
+namespace Recipes.ViewModels;
 public class BaseViewModel
 {
 	private bool isBusy;

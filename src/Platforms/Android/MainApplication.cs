@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace BaseMobile
+namespace Recipes
 {
     [Application]
     public class MainApplication : MauiApplication
