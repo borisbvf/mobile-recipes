@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BaseMobile.MainPage"
+			 Title="{Binding LocalizationManager[AppName],Mode=OneWay}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Order="Secondary"
+			Text="{Binding LocalizationManager[Settings], Mode=OneWay}"
+			Command="{Binding SettingsCommand}"/>
+	</ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="{Binding LocalizationManager[AppName],Mode=OneWay}"
+                Style="{StaticResource Headline}"/>
+
+            <Label
+                Text="{Binding LocalizationManager[MainPageHint],Mode=OneWay}"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
