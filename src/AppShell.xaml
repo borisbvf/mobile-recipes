@@ -5,11 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Recipes"
     Shell.FlyoutBehavior="Disabled"
-    Title="BaseMobile">
+    Title="Recipes">
 
+	<FlyoutItem
+		FlyoutItemIsVisible="False"
+		Title="Loading"
+		Route="LoadingPage">
+		<ShellContent ContentTemplate="{DataTemplate local:Views.LoadingPage}"/>
+	</FlyoutItem>
+	
     <ShellContent
 		Shell.NavBarIsVisible="True"
-        Title="Home"
+        Title="Recipes"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

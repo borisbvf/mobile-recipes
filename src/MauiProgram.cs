@@ -22,6 +22,8 @@ namespace Recipes
 #endif
             builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<LoadingViewModel>();
+            builder.Services.AddTransient<LoadingPage>();
             return builder.Build();
         }
     }

@@ -11,4 +11,9 @@ public class Constants
 
 	public const string MainPageRoute = "MainPage";
 	public const string SettingsPageRoute = "SettingsPage";
+	public const string LoadingPageRoute = "LoadingPage";
+	public const string DetailPageRoute = "DetailPage";
+	public const string EditPageRoute = "EditPage";
+
+	public const int LoadingAnimationInterval = 3000;
 }

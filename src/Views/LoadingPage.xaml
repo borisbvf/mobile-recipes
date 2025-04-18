@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.LoadingPage"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodels:LoadingViewModel"
+			 Shell.NavBarIsVisible="False"
+			 Shell.FlyoutBehavior="Disabled"
+             Title="LoadingPage">
+	<Grid
+		BackgroundColor="Black"
+		HorizontalOptions="Fill"
+		VerticalOptions="Fill">
+		<Image
+			Source="{Binding AnimationFileName}"
+			Aspect="AspectFit"
+			IsAnimationPlaying="True"/>
+	</Grid>
+</ContentPage>
