@@ -20,7 +20,14 @@ namespace Recipes
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-            builder.Services.AddTransient<SettingsViewModel>();
+			builder.Services.AddSingleton<IRecipeService, RecipeService>();
+			builder.Services.AddTransient<RecipeListViewModel>();
+			builder.Services.AddTransient<RecipeListView>();
+			builder.Services.AddTransient<RecipeDetailViewModel>();
+			builder.Services.AddTransient<RecipeDetailView>();
+			builder.Services.AddTransient<RecipeEditViewModel>();
+			builder.Services.AddTransient<RecipeEditView>();
+			builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<LoadingViewModel>();
             builder.Services.AddTransient<LoadingPage>();

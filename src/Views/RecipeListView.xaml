@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.RecipeListView"
+			 xmlns:model="clr-namespace:Recipes.Models"
+			 xmlns:viewmodel="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodel:RecipeListViewModel"
+             Title="{Binding LocalizationManager[Recipes], Mode=OneWay}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Order="Secondary"
+			Text="{Binding LocalizationManager[Settings], Mode=OneWay}"
+			Command="{Binding SettingsCommand}"/>
+	</ContentPage.ToolbarItems>
+	<Grid
+		Padding="2"
+		Margin="2">
+		<RefreshView
+			IsRefreshing="{Binding IsBusy, Mode=OneWayToSource}"
+			Command="{Binding GetRecipesCommand}">
+			<CollectionView
+				ItemsSource="{Binding Recipes}"
+				Grid.Row="1">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="model:Recipe">
+						<Frame
+							BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
+							Padding="4"
+							Margin="4">
+							<VerticalStackLayout
+								Padding="0">
+								<VerticalStackLayout.GestureRecognizers>
+									<TapGestureRecognizer
+										Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecipeListViewModel}},Path=GoToDetailsCommand}"
+										CommandParameter="{Binding .}"/>
+								</VerticalStackLayout.GestureRecognizers>
+								<Label
+									Margin="5"
+									Text="{Binding Name}"
+									TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+									FontAttributes="Bold"
+									FontSize="16"/>
+								<Label
+									Margin="5"
+									Text="{Binding Description}"
+									TextColor="{AppThemeBinding Light=Black, Dark=White}"
+									FontSize="13"
+									VerticalOptions="End"
+									/>
+							</VerticalStackLayout>
+						</Frame>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</RefreshView>
+		<ImageButton
+			Margin="10"
+			Source="{AppThemeBinding Light=add_icon.png, Dark=add_icon_2.png}"
+			Aspect="AspectFill"
+			Grid.Row="2"
+			HorizontalOptions="End"
+			VerticalOptions="End"
+			CornerRadius="10"
+			ZIndex="100"
+			HeightRequest="62"
+			WidthRequest="62"
+			Command="{Binding AddRecipeCommand}"/>
+	</Grid>
+</ContentPage>

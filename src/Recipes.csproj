@@ -101,6 +101,15 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\RecipeDetailView.xaml.cs">
+	    <DependentUpon>RecipeDetailView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\RecipeEditView.xaml.cs">
+	    <DependentUpon>RecipeEditView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\RecipeListView.xaml.cs">
+	    <DependentUpon>RecipeListView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>

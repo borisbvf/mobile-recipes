@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.RecipeEditView"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodels:RecipeEditViewModel"
+             Title="{Binding Title}">
+	<Grid
+		RowDefinitions="126,*,110"
+		Padding="5"
+		Margin="5">
+		<VerticalStackLayout
+			Grid.Row="0">
+			<Label
+				FontAttributes="Bold"
+				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+				Text="{Binding LocalizationManager[Name], Mode=OneWay}"/>
+			<Entry
+				Placeholder="{Binding LocalizationManager[NamePlaceholder], Mode=OneWay}"
+				IsEnabled="{Binding IsEnabled}"
+				Text="{Binding Recipe.Name, Mode=TwoWay}"/>
+			<Label
+				FontAttributes="Bold"
+				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+				Text="{Binding LocalizationManager[Description], Mode=OneWay}"/>
+			<Entry
+				Placeholder="{Binding LocalizationManager[DescriptionPlaceholder], Mode=OneWay}"
+				IsEnabled="{Binding IsEnabled}"
+				Text="{Binding Recipe.Description, Mode=TwoWay}"/>
+		</VerticalStackLayout>
+		<VerticalStackLayout
+			Grid.Row="1">
+			<Label
+				FontAttributes="Bold"
+				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+				Text="{Binding LocalizationManager[Directions], Mode=OneWay}"/>
+			<Editor
+				AutoSize="TextChanges"
+				Placeholder="{Binding LocalizationManager[DirectionsPlaceholder], Mode=OneWay}"
+				IsEnabled="{Binding IsEnabled}"
+				Text="{Binding Recipe.Content, Mode=TwoWay}"/>
+		</VerticalStackLayout>
+		<VerticalStackLayout
+			Grid.Row="2">
+			<Button
+				Margin="5"
+				Text="{Binding LocalizationManager[Save], Mode=OneWay}"
+				IsEnabled="{Binding IsEnabled}"
+				Command="{Binding SaveCommand}"
+				CommandParameter="{Binding Recipe}"/>
+			<Button
+				Margin="5"
+				Text="{Binding LocalizationManager[Cancel], Mode=OneWay}"
+				IsEnabled="{Binding IsEnabled}"
+				Command="{Binding CancelCommand}"/>
+		</VerticalStackLayout>
+	</Grid>
+</ContentPage>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.RecipeDetailView"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodels:RecipeDetailViewModel"
+             Title="{Binding Recipe.Name}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Text="{Binding LocalizationManager[Edit], Mode=OneWay}"
+			Command="{Binding EditRecipeCommand}"
+			CommandParameter="{Binding Recipe}"/>
+		<ToolbarItem
+			Text="{Binding LocalizationManager[Delete], Mode=OneWay}"
+			Command="{Binding DeleteRecipeCommand}"
+			CommandParameter="{Binding Recipe}"/>
+	</ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+		<Label
+			Padding="10"
+			Margin="5"
+            Text="{Binding Recipe.Name}"
+			HorizontalOptions="Center"
+			FontSize="Medium"
+			FontAttributes="Bold"/>
+		<Label
+			Padding="10"
+			Margin="5"
+			FontAttributes="Italic"
+			Text="{Binding Recipe.Description}"/>
+		<Label
+			Padding="10"
+			Margin="5"
+			Text="{Binding Recipe.Content}"/>
+	</VerticalStackLayout>
+</ContentPage>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppName" xml:space="preserve">
-    <value>Mobile application</value>
+    <value>Recipes</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -126,8 +126,32 @@
   <data name="DarkTheme" xml:space="preserve">
     <value>Dark</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DescriptionPlaceholder" xml:space="preserve">
+    <value>Recipe description</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ErrorAddingRecipe" xml:space="preserve">
+    <value>Adding recipe failed.</value>
+  </data>
+  <data name="ErrorDeletingRecipe" xml:space="preserve">
+    <value>Deleting recipe failed.</value>
+  </data>
+  <data name="ErrorGettingRecipesFailed" xml:space="preserve">
+    <value>Getting recipe list failed.</value>
+  </data>
+  <data name="ErrorUpdatingRecipe" xml:space="preserve">
+    <value>Updating recipe failed.</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language:</value>
@@ -138,9 +162,21 @@
   <data name="MainPageHint" xml:space="preserve">
     <value>Changing the language and theme is available from the settings menu</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="NamePlaceholder" xml:space="preserve">
+    <value>Recipe name</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
     <comment>Ok</comment>
+  </data>
+  <data name="Recipes" xml:space="preserve">
+    <value>Recipes</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -150,5 +186,14 @@
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme:</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="WmRecipeDirectionsEmpty" xml:space="preserve">
+    <value>Recipe's directions are empty.</value>
+  </data>
+  <data name="WmRecipeNameEmpty" xml:space="preserve">
+    <value>Recipe's name is empty.</value>
   </data>
 </root>

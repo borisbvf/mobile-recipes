@@ -17,7 +17,7 @@
     <ShellContent
 		Shell.NavBarIsVisible="True"
         Title="Recipes"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate local:Views.RecipeListView}"
         Route="MainPage" />
 
 </Shell>

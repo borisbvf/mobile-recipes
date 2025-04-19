@@ -61,7 +61,7 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mobile application.
+        ///   Looks up a localized string similar to Recipes.
         /// </summary>
         internal static string AppName {
             get {
@@ -88,11 +88,83 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe description.
+        /// </summary>
+        internal static string DescriptionPlaceholder {
+            get {
+                return ResourceManager.GetString("DescriptionPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adding recipe failed..
+        /// </summary>
+        internal static string ErrorAddingRecipe {
+            get {
+                return ResourceManager.GetString("ErrorAddingRecipe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting recipe failed..
+        /// </summary>
+        internal static string ErrorDeletingRecipe {
+            get {
+                return ResourceManager.GetString("ErrorDeletingRecipe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Getting recipe list failed..
+        /// </summary>
+        internal static string ErrorGettingRecipesFailed {
+            get {
+                return ResourceManager.GetString("ErrorGettingRecipesFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating recipe failed..
+        /// </summary>
+        internal static string ErrorUpdatingRecipe {
+            get {
+                return ResourceManager.GetString("ErrorUpdatingRecipe", resourceCulture);
             }
         }
         
@@ -124,11 +196,47 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe name.
+        /// </summary>
+        internal static string NamePlaceholder {
+            get {
+                return ResourceManager.GetString("NamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         internal static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipes.
+        /// </summary>
+        internal static string Recipes {
+            get {
+                return ResourceManager.GetString("Recipes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
@@ -156,6 +264,33 @@ namespace Recipes.Resources.Localization {
         internal static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe&apos;s directions are empty..
+        /// </summary>
+        internal static string WmRecipeDirectionsEmpty {
+            get {
+                return ResourceManager.GetString("WmRecipeDirectionsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe&apos;s name is empty..
+        /// </summary>
+        internal static string WmRecipeNameEmpty {
+            get {
+                return ResourceManager.GetString("WmRecipeNameEmpty", resourceCulture);
             }
         }
     }
