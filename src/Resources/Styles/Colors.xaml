@@ -13,6 +13,8 @@
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
 
+	<Color x:Key="MainDark">#0097B2</Color>
+	<Color x:Key="MainLight">#A0F0F0</Color>
 	<Color x:Key="ShellBackgroundLight">#aaaaff</Color>
 	<Color x:Key="ShellBackgroundDark">#444499</Color>
 

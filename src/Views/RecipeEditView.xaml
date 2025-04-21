@@ -13,7 +13,7 @@
 			Grid.Row="0">
 			<Label
 				FontAttributes="Bold"
-				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 				Text="{Binding LocalizationManager[Name], Mode=OneWay}"/>
 			<Entry
 				Placeholder="{Binding LocalizationManager[NamePlaceholder], Mode=OneWay}"
@@ -21,7 +21,7 @@
 				Text="{Binding Recipe.Name, Mode=TwoWay}"/>
 			<Label
 				FontAttributes="Bold"
-				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 				Text="{Binding LocalizationManager[Description], Mode=OneWay}"/>
 			<Entry
 				Placeholder="{Binding LocalizationManager[DescriptionPlaceholder], Mode=OneWay}"
@@ -32,7 +32,7 @@
 			Grid.Row="1">
 			<Label
 				FontAttributes="Bold"
-				TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 				Text="{Binding LocalizationManager[Directions], Mode=OneWay}"/>
 			<Editor
 				AutoSize="TextChanges"

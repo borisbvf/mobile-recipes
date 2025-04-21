@@ -24,7 +24,6 @@
 				<CollectionView.ItemTemplate>
 					<DataTemplate x:DataType="model:Recipe">
 						<Frame
-							BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray600}}"
 							Padding="4"
 							Margin="4">
 							<VerticalStackLayout
@@ -37,19 +36,12 @@
 								<Label
 									Margin="5"
 									Text="{Binding Name}"
-									TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 									FontAttributes="Bold"
 									FontSize="16"/>
 								<Label
 									Margin="5"
 									Text="{Binding Description}"
-									TextColor="{AppThemeBinding Light=Black, Dark=White}"
-									FontSize="13"
-									VerticalOptions="End"
-									/>
-								<Label
-									Margin="5"
-									Text="{Binding Id}"
 									FontSize="13"
 									VerticalOptions="End"
 									/>
