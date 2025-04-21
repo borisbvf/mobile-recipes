@@ -20,7 +20,7 @@ namespace Recipes
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-			builder.Services.AddSingleton<IRecipeService, RecipeService>();
+			builder.Services.AddSingleton<IRecipeService, RecipeDatabase>();
 			builder.Services.AddTransient<RecipeListViewModel>();
 			builder.Services.AddTransient<RecipeListView>();
 			builder.Services.AddTransient<RecipeDetailViewModel>();

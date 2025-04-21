@@ -42,9 +42,23 @@ public class RecipeDetailViewModel : BaseViewModel
 		Recipe? recipe = obj as Recipe;
 		if (recipe != null)
 		{
-			if (await Shell.Current.DisplayPromptAsync("", "Are you sure you want to delete this recipe?") == "Ok")
+			if (await Shell.Current.DisplayAlert("",
+				$"{LocalizationManager["DeleteMsg"]}",
+				$"{LocalizationManager["Ok"]}",
+				$"{LocalizationManager["Cancel"]}"))
 			{
-				await recipeService.DeleteRecipeAsync(recipe.Id);
+				RequestResult result = await recipeService.DeleteRecipeAsync(recipe);
+				if (result.IsSuccess)
+				{
+					await Shell.Current.GoToAsync("..");
+				}
+				else
+				{
+					await Shell.Current.DisplayAlert(
+						$"{LocalizationManager["Error"]}",
+						$"{LocalizationManager["ErrorDeletingRecipe"]}: {result.ErrorMessage}",
+						$"{LocalizationManager["Ok"]}");
+				}
 			}
 		}
 	}

@@ -16,11 +16,11 @@
 		Padding="2"
 		Margin="2">
 		<RefreshView
-			IsRefreshing="{Binding IsBusy, Mode=OneWayToSource}"
-			Command="{Binding GetRecipesCommand}">
+			IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+			Command="{Binding GetRecipesCommand}"
+			Grid.Row="1">
 			<CollectionView
-				ItemsSource="{Binding Recipes}"
-				Grid.Row="1">
+				ItemsSource="{Binding Recipes}">
 				<CollectionView.ItemTemplate>
 					<DataTemplate x:DataType="model:Recipe">
 						<Frame
@@ -44,6 +44,12 @@
 									Margin="5"
 									Text="{Binding Description}"
 									TextColor="{AppThemeBinding Light=Black, Dark=White}"
+									FontSize="13"
+									VerticalOptions="End"
+									/>
+								<Label
+									Margin="5"
+									Text="{Binding Id}"
 									FontSize="13"
 									VerticalOptions="End"
 									/>

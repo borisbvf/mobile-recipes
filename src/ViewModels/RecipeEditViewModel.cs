@@ -31,7 +31,7 @@ public class RecipeEditViewModel: BaseViewModel
 	public ICommand SaveCommand => new Command(SaveRecipe);
 	private async void SaveRecipe(object obj)
 	{
-		Recipe? recipe = obj as Recipe;
+		//Recipe? recipe = obj as Recipe;
 		if (recipe != null)
 		{
 			if (string.IsNullOrEmpty(recipe.Name))

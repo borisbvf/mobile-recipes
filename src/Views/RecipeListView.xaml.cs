@@ -11,6 +11,6 @@ public partial class RecipeListView : ContentPage
 	protected override async void OnAppearing()
 	{
 		base.OnAppearing();
-		//(BindingContext as RecipeListViewModel)?.GetRecipesCommand.Execute(this);
+		(BindingContext as RecipeListViewModel)?.GetRecipesCommand.Execute(this);
 	}
 }

@@ -97,6 +97,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete recipe?.
+        /// </summary>
+        internal static string DeleteMsg {
+            get {
+                return ResourceManager.GetString("DeleteMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description:.
         /// </summary>
         internal static string Description {
@@ -111,6 +120,24 @@ namespace Recipes.Resources.Localization {
         internal static string DescriptionPlaceholder {
             get {
                 return ResourceManager.GetString("DescriptionPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directions:.
+        /// </summary>
+        internal static string Directions {
+            get {
+                return ResourceManager.GetString("Directions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe directions.
+        /// </summary>
+        internal static string DirectionsPlaceholder {
+            get {
+                return ResourceManager.GetString("DirectionsPlaceholder", resourceCulture);
             }
         }
         

@@ -129,11 +129,20 @@
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
+  <data name="DeleteMsg" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить рецепт?</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание:</value>
   </data>
   <data name="DescriptionPlaceholder" xml:space="preserve">
     <value>Описание рецепта</value>
+  </data>
+  <data name="Directions" xml:space="preserve">
+    <value>Инструкции:</value>
+  </data>
+  <data name="DirectionsPlaceholder" xml:space="preserve">
+    <value>Инструкции рецепта</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Изменить</value>

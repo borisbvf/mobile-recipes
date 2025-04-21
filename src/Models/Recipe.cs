@@ -1,6 +1,9 @@
-﻿namespace Recipes.Models;
+﻿using SQLite;
+
+namespace Recipes.Models;
 public class Recipe
 {
+	[PrimaryKey, AutoIncrement]
 	public int Id { get; set; }
 	public string? Name { get; set; }
 	public string? Description { get; set; }

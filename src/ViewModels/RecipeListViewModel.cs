@@ -9,6 +9,20 @@ public class RecipeListViewModel : BaseViewModel
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
 	public ObservableCollection<Recipe> Recipes { get; } = new();
+
+	private bool isRefreshing;
+	public bool IsRefreshing
+	{
+		get => isRefreshing;
+		set
+		{
+			if (isRefreshing != value)
+			{
+				isRefreshing = value;
+				OnPropertyChanged();
+			}
+		}
+	}
 	
 	private IRecipeService recipeService;
 
@@ -52,6 +66,7 @@ public class RecipeListViewModel : BaseViewModel
 		finally
 		{
 			IsBusy = false;
+			IsRefreshing = false;
 		}
 	}
 
