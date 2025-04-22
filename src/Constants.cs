@@ -16,6 +16,9 @@ public static class Constants
 	public const string LoadingPageRoute = "LoadingPage";
 	public const string DetailPageRoute = "DetailPage";
 	public const string EditPageRoute = "EditPage";
+	public const string IngredientListRoute = "IngredientListView";
+	public const string IngredientDetailRoute = "IngredientDetailView";
+	public const string IngredientEditRoute = "IngredientEditView";
 
 
 	public const int LoadingAnimationInterval = 3000;

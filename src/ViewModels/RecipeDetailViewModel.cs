@@ -47,16 +47,16 @@ public class RecipeDetailViewModel : BaseViewModel
 				$"{LocalizationManager["Ok"]}",
 				$"{LocalizationManager["Cancel"]}"))
 			{
-				RequestResult result = await recipeService.DeleteRecipeAsync(recipe);
-				if (result.IsSuccess)
+				try
 				{
+					await recipeService.DeleteRecipeAsync(recipe);
 					await Shell.Current.GoToAsync("..");
 				}
-				else
+				catch (Exception ex)
 				{
 					await Shell.Current.DisplayAlert(
 						$"{LocalizationManager["Error"]}",
-						$"{LocalizationManager["ErrorDeletingRecipe"]}: {result.ErrorMessage}",
+						$"{LocalizationManager["ErrorDeletingRecipe"]}: {ex.Message}",
 						$"{LocalizationManager["Ok"]}");
 				}
 			}

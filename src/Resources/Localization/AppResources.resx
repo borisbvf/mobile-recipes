@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddIngredient" xml:space="preserve">
+    <value>Add ingredient</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Recipes</value>
   </data>
@@ -159,8 +162,14 @@
   <data name="ErrorGettingRecipesFailed" xml:space="preserve">
     <value>Getting recipe list failed.</value>
   </data>
+  <data name="ErrorIngredientExists" xml:space="preserve">
+    <value>Ingredient name should be unique.</value>
+  </data>
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Updating recipe failed.</value>
+  </data>
+  <data name="Ingredients" xml:space="preserve">
+    <value>Ingredients</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language:</value>
@@ -170,6 +179,9 @@
   </data>
   <data name="MainPageHint" xml:space="preserve">
     <value>Changing the language and theme is available from the settings menu</value>
+  </data>
+  <data name="MsgAddingIngredient" xml:space="preserve">
+    <value>Enter ingredient name</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name:</value>

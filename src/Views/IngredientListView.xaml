@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.IngredientListView"
+			 xmlns:models="clr-namespace:Recipes.Models"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodels:IngredientListViewModel"
+             Title="{Binding LocalizationManager[Ingredients], Mode=OneWay}">
+	<Grid
+		RowDefinitions="*,50"
+		Padding="2"
+		Margin="2">
+		<RefreshView
+			IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+			Command="{Binding GetIngredientsCommand}"
+			Grid.Row="0">
+			<CollectionView
+				ItemsSource="{Binding Ingredients}">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="models:Ingredient">
+						<Frame
+							Padding="4"
+							Margin="4">
+							<VerticalStackLayout
+								Padding="0">
+								<VerticalStackLayout.GestureRecognizers>
+									<TapGestureRecognizer
+										Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:IngredientListViewModel}},Path=GoToDetailsCommand}"
+										CommandParameter="{Binding .}"/>
+								</VerticalStackLayout.GestureRecognizers>
+								<Label
+									Margin="5"
+									Text="{Binding Name}"
+									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+									FontAttributes="Bold"
+									FontSize="16"/>
+							</VerticalStackLayout>
+						</Frame>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+		</RefreshView>
+		<Button
+			Margin="5"
+			Grid.Row="1"
+			Text="{Binding LocalizationManager[AddIngredient], Mode=OneWay}"
+			Command="{Binding AddIngredientCommand}"/>
+	</Grid>
+</ContentPage>

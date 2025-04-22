@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddIngredient" xml:space="preserve">
+    <value>Добавить ингредиент</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Рецепты</value>
   </data>
@@ -159,8 +162,14 @@
   <data name="ErrorGettingRecipesFailed" xml:space="preserve">
     <value>Не удалось получить список рецептов.</value>
   </data>
+  <data name="ErrorIngredientExists" xml:space="preserve">
+    <value>Наименование ингридиента должно быть уникальным.</value>
+  </data>
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Не удалось изменить рецепт.</value>
+  </data>
+  <data name="Ingredients" xml:space="preserve">
+    <value>Ингридиенты</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Язык:</value>
@@ -170,6 +179,9 @@
   </data>
   <data name="MainPageHint" xml:space="preserve">
     <value>Изменение языка и темы доступно из меню настроек</value>
+  </data>
+  <data name="MsgAddingIngredient" xml:space="preserve">
+    <value>Введите наименование ингридиента</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Наименование:</value>

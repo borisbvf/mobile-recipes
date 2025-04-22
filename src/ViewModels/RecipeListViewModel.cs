@@ -39,21 +39,17 @@ public class RecipeListViewModel : BaseViewModel
 		IsBusy = true;
 		try
 		{
-			RequestResult<IEnumerable<Recipe>> result = await recipeService.GetRecipesAsync();
-			if (result.IsSuccess)
+			if (!recipeService.CheckIfDBExists())
 			{
-				if (Recipes.Count > 0)
-					Recipes.Clear();
-				foreach (Recipe recipe in result.Data!)
-					Recipes.Add(recipe);
+				await Shell.Current.DisplayAlert("", "Database does not exists, will be created.", "Ok");
+				await recipeService.CreateTables();
 			}
-			else
-			{
-				await Shell.Current.DisplayAlert(
-					LocalizationManager["Error"].ToString(),
-					result.ErrorMessage,
-					LocalizationManager["Ok"].ToString());
-			}
+
+			IEnumerable<Recipe> result = await recipeService.GetRecipeListAsync();
+			if (Recipes.Count > 0)
+				Recipes.Clear();
+			foreach (Recipe recipe in result)
+				Recipes.Add(recipe);
 		}
 		catch (Exception ex)
 		{
@@ -86,6 +82,12 @@ public class RecipeListViewModel : BaseViewModel
 	{
 		var navParameter = new Dictionary<string, object> { { nameof(Recipe), new Recipe() } };
 		Shell.Current.GoToAsync(Constants.EditPageRoute, navParameter);
+	}
+
+	public ICommand ShowIngredientListCommand => new Command(ShowIngredientList);
+	private async void ShowIngredientList()
+	{
+		await Shell.Current.GoToAsync(Constants.IngredientListRoute);
 	}
 
 	public ICommand SettingsCommand => new Command(ShowSettings);

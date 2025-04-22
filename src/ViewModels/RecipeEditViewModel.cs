@@ -37,38 +37,37 @@ public class RecipeEditViewModel: BaseViewModel
 			if (string.IsNullOrEmpty(recipe.Name))
 			{
 				await Shell.Current.DisplayAlert(
-						LocalizationManager["Warning"].ToString(),
-						LocalizationManager["WrnRecipeNameEmpty"].ToString(),
-						LocalizationManager["Ok"].ToString());
+					LocalizationManager["Warning"].ToString(),
+					LocalizationManager["WrnRecipeNameEmpty"].ToString(),
+					LocalizationManager["Ok"].ToString());
 				return;
 			}
 			if (string.IsNullOrEmpty(recipe.Content))
 			{
 				await Shell.Current.DisplayAlert(
-						LocalizationManager["Warning"].ToString(),
-						LocalizationManager["WrnRecipeDirectionsEmpty"].ToString(),
-						LocalizationManager["Ok"].ToString());
+					LocalizationManager["Warning"].ToString(),
+					LocalizationManager["WrnRecipeDirectionsEmpty"].ToString(),
+					LocalizationManager["Ok"].ToString());
 				return;
 			}
-			RequestResult result;
-			if (recipe.Id == 0)
+			try
 			{
-				result = await recipeService.AddRecipeAsync(recipe);
-			}
-			else
-			{
-				result = await recipeService.UpdateRecipeAsync(recipe);
-			}
-			if (result.IsSuccess)
-			{
+				if (recipe.Id == 0)
+				{
+					await recipeService.AddRecipeAsync(recipe);
+				}
+				else
+				{
+					await recipeService.UpdateRecipeAsync(recipe);
+				}
 				await Shell.Current.GoToAsync("..");
 			}
-			else
+			catch (Exception ex)
 			{
 				await Shell.Current.DisplayAlert(
-						LocalizationManager["Warning"].ToString(),
-						result.ErrorMessage,
-						LocalizationManager["Ok"].ToString());
+					LocalizationManager["Warning"].ToString(),
+					ex.Message,
+					LocalizationManager["Ok"].ToString());
 			}
 		}
 	}

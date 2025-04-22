@@ -61,6 +61,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add ingredient.
+        /// </summary>
+        internal static string AddIngredient {
+            get {
+                return ResourceManager.GetString("AddIngredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recipes.
         /// </summary>
         internal static string AppName {
@@ -187,11 +196,29 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingredient name should be unique..
+        /// </summary>
+        internal static string ErrorIngredientExists {
+            get {
+                return ResourceManager.GetString("ErrorIngredientExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updating recipe failed..
         /// </summary>
         internal static string ErrorUpdatingRecipe {
             get {
                 return ResourceManager.GetString("ErrorUpdatingRecipe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingredients.
+        /// </summary>
+        internal static string Ingredients {
+            get {
+                return ResourceManager.GetString("Ingredients", resourceCulture);
             }
         }
         
@@ -219,6 +246,15 @@ namespace Recipes.Resources.Localization {
         internal static string MainPageHint {
             get {
                 return ResourceManager.GetString("MainPageHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter ingredient name.
+        /// </summary>
+        internal static string MsgAddingIngredient {
+            get {
+                return ResourceManager.GetString("MsgAddingIngredient", resourceCulture);
             }
         }
         

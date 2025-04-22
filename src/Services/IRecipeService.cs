@@ -1,8 +1,18 @@
 ﻿namespace Recipes.Services;
 public interface IRecipeService
 {
-	public Task<RequestResult<IEnumerable<Recipe>>> GetRecipesAsync();
-	public Task<RequestResult> AddRecipeAsync(Recipe recipe);
-	public Task<RequestResult> UpdateRecipeAsync(Recipe recipe);
-	public Task<RequestResult> DeleteRecipeAsync(Recipe recipe);
+	public bool CheckIfDBExists();
+	public Task CreateTables();
+
+	public Task<IEnumerable<Recipe>> GetRecipeListAsync();
+	public Task<Recipe> GetRecipeAsync(int recipeId);
+	public Task AddRecipeAsync(Recipe recipe);
+	public Task UpdateRecipeAsync(Recipe recipe);
+	public Task DeleteRecipeAsync(Recipe recipe);
+
+	public Task<IEnumerable<Ingredient>> GetIngredientListAsync();
+	public Task<Ingredient> GetIngredientAsync();
+	public Task AddIngredientAsync(Ingredient ingredient);
+	public Task UpdateIngredientAsync(Ingredient ingredient);
+	public Task DeleteIngredientAsync(Ingredient ingredient);
 }
