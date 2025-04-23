@@ -70,6 +70,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tag.
+        /// </summary>
+        internal static string AddTag {
+            get {
+                return ResourceManager.GetString("AddTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recipes.
         /// </summary>
         internal static string AppName {
@@ -205,6 +214,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tag name should be unique..
+        /// </summary>
+        internal static string ErrorTagExists {
+            get {
+                return ResourceManager.GetString("ErrorTagExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updating recipe failed..
         /// </summary>
         internal static string ErrorUpdatingRecipe {
@@ -255,6 +273,33 @@ namespace Recipes.Resources.Localization {
         internal static string MsgAddingIngredient {
             get {
                 return ResourceManager.GetString("MsgAddingIngredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter tag name.
+        /// </summary>
+        internal static string MsgAddingTag {
+            get {
+                return ResourceManager.GetString("MsgAddingTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete ingredient?.
+        /// </summary>
+        internal static string MsgDeletingIngredient {
+            get {
+                return ResourceManager.GetString("MsgDeletingIngredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete tag?.
+        /// </summary>
+        internal static string MsgDeletingTag {
+            get {
+                return ResourceManager.GetString("MsgDeletingTag", resourceCulture);
             }
         }
         
@@ -318,6 +363,15 @@ namespace Recipes.Resources.Localization {
         internal static string SystemTheme {
             get {
                 return ResourceManager.GetString("SystemTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        internal static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
             }
         }
         

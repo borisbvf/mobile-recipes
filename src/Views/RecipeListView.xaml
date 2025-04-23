@@ -13,6 +13,10 @@
 			Command="{Binding ShowIngredientListCommand}"/>
 		<ToolbarItem
 			Order="Secondary"
+			Text="{Binding LocalizationManager[Tags], Mode=OneWay}"
+			Command="{Binding ShowTagListCommand}"/>
+		<ToolbarItem
+			Order="Secondary"
 			Text="{Binding LocalizationManager[Settings], Mode=OneWay}"
 			Command="{Binding SettingsCommand}"/>
 	</ContentPage.ToolbarItems>

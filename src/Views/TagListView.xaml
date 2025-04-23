@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Recipes.Views.IngredientListView"
-			 xmlns:models="clr-namespace:Recipes.Models"
+             x:Class="Recipes.Views.TagListView"
+             xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
-			 x:DataType="viewmodels:IngredientListViewModel"
-             Title="{Binding LocalizationManager[Ingredients], Mode=OneWay}">
+			 x:DataType="viewmodels:TagListViewModel"
+			 Title="{Binding LocalizationManager[Tags], Mode=OneWay}">
 	<ContentPage.Resources>
 		<Style TargetType="Grid">
 			<Setter Property="VisualStateManager.VisualStateGroups">
@@ -28,11 +28,11 @@
 		<ToolbarItem
 			Order="Primary"
 			Text="{Binding LocalizationManager[Edit]}"
-			Command="{Binding EditIngredientCommand}"/>
+			Command="{Binding EditTagCommand}"/>
 		<ToolbarItem
 			Order="Primary"
 			Text="{Binding LocalizationManager[Delete]}"
-			Command="{Binding DeleteIngredientCommand}"/>
+			Command="{Binding DeleteTagCommand}"/>
 	</ContentPage.ToolbarItems>
 	<Grid
 		RowDefinitions="*,50"
@@ -40,14 +40,14 @@
 		Margin="2">
 		<RefreshView
 			IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-			Command="{Binding GetIngredientsCommand}"
+			Command="{Binding GetTagsCommand}"
 			Grid.Row="0">
 			<CollectionView
 				SelectionMode="Single"
-				ItemsSource="{Binding Ingredients}"
-				SelectedItem="{Binding SelectedIngredient}">
+				ItemsSource="{Binding Tags}"
+				SelectedItem="{Binding SelectedTag}">
 				<CollectionView.ItemTemplate>
-					<DataTemplate x:DataType="models:Ingredient">
+					<DataTemplate x:DataType="models:RecipeTag">
 						<Grid
 							Padding="4"
 							Margin="4">
@@ -68,7 +68,7 @@
 		<Button
 			Margin="5"
 			Grid.Row="1"
-			Text="{Binding LocalizationManager[AddIngredient], Mode=OneWay}"
-			Command="{Binding AddIngredientCommand}"/>
+			Text="{Binding LocalizationManager[AddTag], Mode=OneWay}"
+			Command="{Binding AddTagCommand}"/>
 	</Grid>
 </ContentPage>

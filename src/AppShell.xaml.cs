@@ -12,6 +12,7 @@ namespace Recipes
 			Routing.RegisterRoute(Constants.DetailPageRoute, typeof(RecipeDetailView));
 			Routing.RegisterRoute(Constants.EditPageRoute, typeof(RecipeEditView));
             Routing.RegisterRoute(Constants.IngredientListRoute, typeof(IngredientListView));
+            Routing.RegisterRoute(Constants.TagListRoute, typeof(TagListView));
 
 			BindingContext = this;
         }

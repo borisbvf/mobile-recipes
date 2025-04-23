@@ -120,6 +120,9 @@
   <data name="AddIngredient" xml:space="preserve">
     <value>Добавить ингредиент</value>
   </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Добавить ярлык</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Рецепты</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="ErrorIngredientExists" xml:space="preserve">
     <value>Наименование ингридиента должно быть уникальным.</value>
   </data>
+  <data name="ErrorTagExists" xml:space="preserve">
+    <value>Наименование ярлыка должно быть уникальным.</value>
+  </data>
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Не удалось изменить рецепт.</value>
   </data>
@@ -182,6 +188,15 @@
   </data>
   <data name="MsgAddingIngredient" xml:space="preserve">
     <value>Введите наименование ингридиента</value>
+  </data>
+  <data name="MsgAddingTag" xml:space="preserve">
+    <value>Введите наименование ярлыка</value>
+  </data>
+  <data name="MsgDeletingIngredient" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить ингридиент?</value>
+  </data>
+  <data name="MsgDeletingTag" xml:space="preserve">
+    <value>Вы уверены,что хотите удалить ярлык?</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Наименование:</value>
@@ -203,6 +218,9 @@
   </data>
   <data name="SystemTheme" xml:space="preserve">
     <value>Системная</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Ярлыки</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Тема:</value>

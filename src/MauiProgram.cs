@@ -33,6 +33,8 @@ namespace Recipes
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<IngredientListViewModel>();
             builder.Services.AddTransient<IngredientListView>();
+            builder.Services.AddTransient<TagListViewModel>();
+            builder.Services.AddTransient<TagListView>();
             return builder.Build();
         }
     }

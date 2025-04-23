@@ -90,6 +90,12 @@ public class RecipeListViewModel : BaseViewModel
 		await Shell.Current.GoToAsync(Constants.IngredientListRoute);
 	}
 
+	public ICommand ShowTagListCommand => new Command(ShowTagList);
+	private async void ShowTagList()
+	{
+		await Shell.Current.GoToAsync(Constants.TagListRoute);
+	}
+
 	public ICommand SettingsCommand => new Command(ShowSettings);
 	private async void ShowSettings()
 	{

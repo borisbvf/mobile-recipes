@@ -120,6 +120,9 @@
   <data name="AddIngredient" xml:space="preserve">
     <value>Add ingredient</value>
   </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Add tag</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Recipes</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="ErrorIngredientExists" xml:space="preserve">
     <value>Ingredient name should be unique.</value>
   </data>
+  <data name="ErrorTagExists" xml:space="preserve">
+    <value>Tag name should be unique.</value>
+  </data>
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Updating recipe failed.</value>
   </data>
@@ -182,6 +188,15 @@
   </data>
   <data name="MsgAddingIngredient" xml:space="preserve">
     <value>Enter ingredient name</value>
+  </data>
+  <data name="MsgAddingTag" xml:space="preserve">
+    <value>Enter tag name</value>
+  </data>
+  <data name="MsgDeletingIngredient" xml:space="preserve">
+    <value>Are you sure you want to delete ingredient?</value>
+  </data>
+  <data name="MsgDeletingTag" xml:space="preserve">
+    <value>Are you sure you want to delete tag?</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name:</value>
@@ -204,6 +219,9 @@
   </data>
   <data name="SystemTheme" xml:space="preserve">
     <value>System</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme:</value>

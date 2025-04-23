@@ -23,6 +23,20 @@ public class IngredientListViewModel : BaseViewModel
 		}
 	}
 
+	private Ingredient selectedIngredient;
+	public Ingredient SelectedIngredient
+	{
+		get => selectedIngredient;
+		set
+		{
+			if (selectedIngredient != value)
+			{
+				selectedIngredient = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
 	private IRecipeService recipeService;
 
 	public IngredientListViewModel(IRecipeService recipeService)
@@ -100,6 +114,75 @@ public class IngredientListViewModel : BaseViewModel
 			catch(Exception ex)
 			{
 				Debug.WriteLine($"Unable to add ingredient: {ex.Message}");
+				await Shell.Current.DisplayAlert(
+					LocalizationManager["Error"].ToString(),
+					ex.Message,
+					LocalizationManager["Ok"].ToString());
+			}
+		}
+	}
+
+	public ICommand EditIngredientCommand => new Command(EditIngredient, CanEditIngredient);
+	private bool CanEditIngredient()
+	{
+		return selectedIngredient != null;
+	}
+	private async void EditIngredient()
+	{
+		string name = await Shell.Current.DisplayPromptAsync(
+			"",
+			$"{LocalizationManager["MsgAddingIngredient"]}",
+			$"{LocalizationManager["Ok"]}",
+			$"{LocalizationManager["Cancel"]}",
+			$"{selectedIngredient.Name}");
+		if (name != null)
+		{
+			foreach (Ingredient ingredient in Ingredients)
+			{
+				if (ingredient != selectedIngredient && string.Equals(ingredient.Name, name, StringComparison.OrdinalIgnoreCase))
+				{
+					await Shell.Current.DisplayAlert(
+						$"{LocalizationManager["Error"]}",
+						$"{LocalizationManager["ErrorIngredientExists"]}",
+						$"{LocalizationManager["Ok"]}");
+					return;
+				}
+			}
+			try
+			{
+				selectedIngredient.Name = name;
+				await recipeService.UpdateIngredientAsync(selectedIngredient);
+				GetIngredientsAsync();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Unable to update ingredient: {ex.Message}");
+				await Shell.Current.DisplayAlert(
+					LocalizationManager["Error"].ToString(),
+					ex.Message,
+					LocalizationManager["Ok"].ToString());
+			}
+		}
+	}
+
+	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, () => selectedIngredient != null);
+	private async void DeleteIngredient()
+	{
+		bool confirmed = await Shell.Current.DisplayAlert(
+			"",
+			$"{LocalizationManager["MsgDeletingIngredient"]}",
+			$"{LocalizationManager["Ok"]}",
+			$"{LocalizationManager["Cancel"]}");
+		if (confirmed)
+		{
+			try
+			{
+				await recipeService.DeleteIngredientAsync(selectedIngredient);
+				GetIngredientsAsync();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Unable to delete ingredient: {ex.Message}");
 				await Shell.Current.DisplayAlert(
 					LocalizationManager["Error"].ToString(),
 					ex.Message,

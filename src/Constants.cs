@@ -19,6 +19,7 @@ public static class Constants
 	public const string IngredientListRoute = "IngredientListView";
 	public const string IngredientDetailRoute = "IngredientDetailView";
 	public const string IngredientEditRoute = "IngredientEditView";
+	public const string TagListRoute = "TagListView";
 
 
 	public const int LoadingAnimationInterval = 3000;

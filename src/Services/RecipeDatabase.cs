@@ -22,7 +22,7 @@ namespace Recipes.Services
 		private const string DBRecipeTagScript = "CREATE TABLE tags (" +
 			"id INTEGER PRIMARY KEY," +
 			"name TEXT NOT NULL UNIQUE," +
-			"color TEXT NOT NULL" +
+			"color TEXT" +
 			");";
 		private const string DBRecipeTagLinkScript = "CREATE TABLE recipe_tag (" +
 			"recipe_id INTEGER," +
@@ -128,6 +128,29 @@ namespace Recipes.Services
 		{
 			int rows = await database!.ExecuteAsync(
 				$"DELETE FROM ingredients WHERE id = {ingredient.Id}");
+		}
+
+		public async Task<IEnumerable<RecipeTag>> GetTagListAsync()
+		{
+			return await database!.QueryAsync<RecipeTag>("SELECT id, name, color FROM tags");
+		}
+		public async Task AddTagAsync(RecipeTag recipeTag)
+		{
+			int rows = await database!.ExecuteAsync(
+				"INSERT INTO tags (name, color) VALUES (?, ?)",
+				recipeTag.Name,
+				recipeTag.Color);
+		}
+		public async Task UpdateTagAsync(RecipeTag recipeTag)
+		{
+			int rows = await database!.ExecuteAsync(
+				$"UPDATE tags SET name = ?, color = ? WHERE id = {recipeTag.Id}",
+				recipeTag.Name,
+				recipeTag.Color);
+		}
+		public async Task DeleteTagAsync(RecipeTag recipeTag)
+		{
+			int rows = await database!.ExecuteAsync($"DELETE FROM tags WHERE id = {recipeTag.Id}");
 		}
 	}
 }
