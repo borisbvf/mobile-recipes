@@ -44,7 +44,7 @@
 			Command="{Binding DeleteTagCommand}"/>
 		<ToolbarItem
 			Order="Primary"
-			Text="Change color"
+			Text="{Binding LocalizationManager[ChangeColor]}"
 			Command="{Binding SelectColorCommand}"/>
 	</ContentPage.ToolbarItems>
 	<Grid

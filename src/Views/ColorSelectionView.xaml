@@ -4,7 +4,7 @@
              x:Class="Recipes.Views.ColorSelectionView"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:ColorSelectionViewModel"
-             Title="ColorSelectionView">
+             Title="{Binding LocalizationManager[ColorSelectionTitle]}">
 	<CollectionView
 		Margin="5"
 		ItemsSource="{Binding Colors}"

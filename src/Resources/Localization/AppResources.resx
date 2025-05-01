@@ -132,6 +132,15 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ChangeColor" xml:space="preserve">
+    <value>Change color</value>
+  </data>
+  <data name="ColorSelectionTitle" xml:space="preserve">
+    <value>Tag's color</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Dark</value>
   </data>

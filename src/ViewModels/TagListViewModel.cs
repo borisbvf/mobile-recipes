@@ -230,9 +230,9 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 				{
 					Debug.WriteLine($"Error while updating tag's color. {ex.Message}");
 					await Shell.Current.DisplayAlert(
-						$"Error",
-						$"{ex.Message} {selectedTag.Color}",
-						"Ok");
+						$"{LocalizationManager["Error"]}",
+						$"{ex.Message}",
+						$"{LocalizationManager["Ok"]}");
 				}
 			}
 		}

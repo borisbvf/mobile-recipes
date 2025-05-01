@@ -106,6 +106,33 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        internal static string Change {
+            get {
+                return ResourceManager.GetString("Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change color.
+        /// </summary>
+        internal static string ChangeColor {
+            get {
+                return ResourceManager.GetString("ChangeColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag&apos;s color.
+        /// </summary>
+        internal static string ColorSelectionTitle {
+            get {
+                return ResourceManager.GetString("ColorSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         internal static string DarkTheme {

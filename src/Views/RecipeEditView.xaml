@@ -7,7 +7,7 @@
 			 x:DataType="viewmodels:RecipeEditViewModel"
              Title="{Binding Title}">
 	<Grid
-		RowDefinitions="126,*,110"
+		RowDefinitions="126,*,50"
 		Padding="5"
 		Margin="5">
 		<VerticalStackLayout
@@ -68,7 +68,7 @@
 							VerticalOptions="Center"
 							Text="{Binding LocalizationManager[Tags], Mode=OneWay}"/>
 						<Button
-							Text="Change"
+							Text="{Binding LocalizationManager[Change], Mode=OneWay}"
 							VerticalOptions="Center"
 							HorizontalOptions="End"
 							Command="{Binding SelectTagsCommand}"/>
@@ -99,19 +99,21 @@
 				</VerticalStackLayout>
 			</Frame>
 		</VerticalStackLayout>
-		<VerticalStackLayout
+		<HorizontalStackLayout
 			Grid.Row="2">
 			<Button
 				Margin="5"
+				WidthRequest="180"
 				Text="{Binding LocalizationManager[Save], Mode=OneWay}"
 				IsEnabled="{Binding IsEnabled}"
 				Command="{Binding SaveCommand}"
 				CommandParameter="{Binding Recipe}"/>
 			<Button
 				Margin="5"
+				WidthRequest="180"
 				Text="{Binding LocalizationManager[Cancel], Mode=OneWay}"
 				IsEnabled="{Binding IsEnabled}"
 				Command="{Binding CancelCommand}"/>
-		</VerticalStackLayout>
+		</HorizontalStackLayout>
 	</Grid>
 </ContentPage>
