@@ -7,6 +7,7 @@
 			 x:DataType="viewmodels:TagListViewModel"
 			 Title="{Binding LocalizationManager[Tags], Mode=OneWay}">
 	<ContentPage.Resources>
+		<viewmodels:TextToColorConverter x:Key="textToColor"/>
 		<Style TargetType="Grid">
 			<Setter Property="VisualStateManager.VisualStateGroups">
 				<VisualStateGroupList>
@@ -24,7 +25,15 @@
 			</Setter>
 		</Style>
 	</ContentPage.Resources>
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior
+			Command="{Binding SaveCheckedCommand}"/>
+	</Shell.BackButtonBehavior>
 	<ContentPage.ToolbarItems>
+		<ToolbarItem
+			Order="Primary"
+			Text="{Binding LocalizationManager[Add]}"
+			Command="{Binding AddTagCommand}"/>
 		<ToolbarItem
 			Order="Primary"
 			Text="{Binding LocalizationManager[Edit]}"
@@ -33,9 +42,12 @@
 			Order="Primary"
 			Text="{Binding LocalizationManager[Delete]}"
 			Command="{Binding DeleteTagCommand}"/>
+		<ToolbarItem
+			Order="Primary"
+			Text="Change color"
+			Command="{Binding SelectColorCommand}"/>
 	</ContentPage.ToolbarItems>
 	<Grid
-		RowDefinitions="*,50"
 		Padding="2"
 		Margin="2">
 		<RefreshView
@@ -49,26 +61,29 @@
 				<CollectionView.ItemTemplate>
 					<DataTemplate x:DataType="models:RecipeTag">
 						<Grid
-							Padding="4"
-							Margin="4">
-							<VerticalStackLayout
+							Padding="2"
+							Margin="2">
+							<HorizontalStackLayout
 								Padding="0">
-								<Label
-									Margin="5"
-									Text="{Binding Name}"
-									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-									FontAttributes="Bold"
-									FontSize="16"/>
-							</VerticalStackLayout>
+								<CheckBox
+									IsChecked="{Binding IsChecked}"
+									IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TagListViewModel}}, Path=IsCheckAvailable}"/>
+								<Frame
+									Padding="5"
+									CornerRadius="15"
+									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+									<Label
+										Margin="5"
+										Text="{Binding Name}"
+										TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+										FontAttributes="Bold"
+										FontSize="14"/>
+								</Frame>
+							</HorizontalStackLayout>
 						</Grid>
 					</DataTemplate>
 				</CollectionView.ItemTemplate>
 			</CollectionView>
 		</RefreshView>
-		<Button
-			Margin="5"
-			Grid.Row="1"
-			Text="{Binding LocalizationManager[AddTag], Mode=OneWay}"
-			Command="{Binding AddTagCommand}"/>
 	</Grid>
 </ContentPage>

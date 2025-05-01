@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Web;
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;
-public class TagListViewModel : BaseViewModel
+public class TagListViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
@@ -19,6 +20,30 @@ public class TagListViewModel : BaseViewModel
 			{
 				isRefreshing = value;
 				OnPropertyChanged();
+			}
+		}
+	}
+
+	public bool IsCheckAvailable
+	{
+		get => checkedIds != null;
+	}
+
+	private List<int>? checkedIds;
+	public List<int>? CheckedIds
+	{
+		get => checkedIds;
+		set
+		{
+			if (value != checkedIds)
+			{
+				checkedIds = value;
+				foreach (RecipeTag tag in Tags)
+				{
+					tag.IsChecked = (checkedIds != null) && checkedIds.IndexOf(tag.Id) >= 0;
+				}
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsCheckAvailable));
 			}
 		}
 	}
@@ -42,6 +67,7 @@ public class TagListViewModel : BaseViewModel
 	public TagListViewModel(IRecipeService recipeService)
 	{
 		this.recipeService = recipeService;
+		CheckedIds = null;
 	}
 
 	public ICommand GetTagsCommand => new Command(GetTagListAsync);
@@ -56,7 +82,10 @@ public class TagListViewModel : BaseViewModel
 			if (Tags.Count > 0)
 				Tags.Clear();
 			foreach (RecipeTag tag in result)
+			{
+				tag.IsChecked = (checkedIds != null) && (checkedIds.IndexOf(tag.Id) >= 0);
 				Tags.Add(tag);
+			}
 		}
 		catch (Exception ex)
 		{
@@ -178,5 +207,59 @@ public class TagListViewModel : BaseViewModel
 					LocalizationManager["Ok"].ToString());
 			}
 		}
+	}
+
+	public async void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		if (query.ContainsKey(Constants.CheckedTagsParameter))
+		{
+			CheckedIds = query[Constants.CheckedTagsParameter] as List<int>;
+		}
+		
+		if (query.ContainsKey(Constants.SelectedColorParameter))
+		{
+			string? selectedColor = query[Constants.SelectedColorParameter].ToString();
+			if (selectedTag != null && !string.IsNullOrEmpty(selectedColor))
+			{
+				selectedTag.Color = selectedColor;
+				try
+				{
+					await recipeService.UpdateTagAsync(selectedTag);
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine($"Error while updating tag's color. {ex.Message}");
+					await Shell.Current.DisplayAlert(
+						$"Error",
+						$"{ex.Message} {selectedTag.Color}",
+						"Ok");
+				}
+			}
+		}
+	}
+
+	public ICommand SaveCheckedCommand => new Command(SaveChecked);
+	public async void SaveChecked()
+	{
+		Dictionary<string, object> navParam = new Dictionary<string, object>();
+		if (checkedIds != null)
+		{
+			checkedIds.Clear();
+			foreach (RecipeTag tag in Tags)
+			{
+				if (tag.IsChecked)
+				{
+					checkedIds.Add(tag.Id);
+				}
+			}
+			navParam.Add(Constants.CheckedTagsParameter, checkedIds);
+		}
+		await Shell.Current.GoToAsync("..", navParam);
+	}
+
+	public ICommand SelectColorCommand => new Command(SelectColor);
+	public async void SelectColor()
+	{
+		await Shell.Current.GoToAsync(Constants.ColorSelectionRoute);
 	}
 }

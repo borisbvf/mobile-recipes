@@ -1,8 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Recipes.ViewModels;
 [QueryProperty(nameof(Recipe), "Recipe")]
-public class RecipeEditViewModel: BaseViewModel
+public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
@@ -27,6 +28,8 @@ public class RecipeEditViewModel: BaseViewModel
 			OnPropertyChanged();
 		}
 	}
+
+	public ObservableCollection<RecipeTag> Tags { get; } = [];
 
 	public ICommand SaveCommand => new Command(SaveRecipe);
 	private async void SaveRecipe(object obj)
@@ -76,5 +79,37 @@ public class RecipeEditViewModel: BaseViewModel
 	private void CancelRecipe()
 	{
 		Shell.Current.GoToAsync("..");
+	}
+
+	public ICommand SelectTagsCommand => new Command(SelectTags);
+	private async void SelectTags()
+	{
+		List<int> tagIds = new();
+		foreach (RecipeTag tag in Tags)
+		{
+			tagIds.Add(tag.Id);
+		}
+		Dictionary<string, object> navParam = new Dictionary<string, object>
+		{
+			{ Constants.CheckedTagsParameter , tagIds }
+		};
+		await Shell.Current.GoToAsync(Constants.TagListRoute, navParam);
+	}
+
+	public async void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		if (query.ContainsKey(Constants.CheckedTagsParameter))
+		{
+			List<int>? tagIds = query[Constants.CheckedTagsParameter] as List<int>;
+			Tags.Clear();
+			if (tagIds != null)
+			{
+				IEnumerable<RecipeTag> data = await recipeService.GetTagListAsync(tagIds);
+				foreach (RecipeTag tag in data)
+				{
+					Tags.Add(tag.Clone() as RecipeTag);
+				}
+			}
+		}
 	}
 }

@@ -35,6 +35,8 @@ namespace Recipes
             builder.Services.AddTransient<IngredientListView>();
             builder.Services.AddTransient<TagListViewModel>();
             builder.Services.AddTransient<TagListView>();
+            builder.Services.AddTransient<ColorSelectionViewModel>();
+            builder.Services.AddTransient<ColorSelectionView>();
             return builder.Build();
         }
     }

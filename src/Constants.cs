@@ -20,6 +20,7 @@ public static class Constants
 	public const string IngredientDetailRoute = "IngredientDetailView";
 	public const string IngredientEditRoute = "IngredientEditView";
 	public const string TagListRoute = "TagListView";
+	public const string ColorSelectionRoute = "ColorSelectionView";
 
 
 	public const int LoadingAnimationInterval = 3000;
@@ -31,4 +32,8 @@ public static class Constants
 		SQLite.SQLiteOpenFlags.Create |
 		SQLite.SQLiteOpenFlags.SharedCache;
 	public static string DBPath = Path.Combine(FileSystem.AppDataDirectory, DBFileName);
+
+
+	public const string CheckedTagsParameter = "CheckedTags";
+	public const string SelectedColorParameter = "SelectedColor";
 }

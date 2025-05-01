@@ -134,6 +134,10 @@ namespace Recipes.Services
 		{
 			return await database!.QueryAsync<RecipeTag>("SELECT id, name, color FROM tags");
 		}
+		public async Task<IEnumerable<RecipeTag>> GetTagListAsync(List<int> ids)
+		{
+			return await database!.QueryAsync<RecipeTag>($"SELECT id, name, color FROM tags WHERE id IN ({string.Join(',', ids)})");
+		}
 		public async Task AddTagAsync(RecipeTag recipeTag)
 		{
 			int rows = await database!.ExecuteAsync(

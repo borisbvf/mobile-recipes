@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Recipes.Views.RecipeEditView"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 xmlns:models="clr-namespace:Recipes.Models"
 			 x:DataType="viewmodels:RecipeEditViewModel"
              Title="{Binding Title}">
 	<Grid
@@ -33,12 +34,70 @@
 			<Label
 				FontAttributes="Bold"
 				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+				Text="{Binding LocalizationManager[Ingredients], Mode=OneWay}"/>
+			<Grid>
+				<HorizontalStackLayout>
+					<Button
+						Text="Add"/>
+					<Button
+						Text="Delete"/>
+				</HorizontalStackLayout>
+				<CollectionView>
+
+				</CollectionView>
+			</Grid>
+			<Label
+				FontAttributes="Bold"
+				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 				Text="{Binding LocalizationManager[Directions], Mode=OneWay}"/>
 			<Editor
 				AutoSize="TextChanges"
 				Placeholder="{Binding LocalizationManager[DirectionsPlaceholder], Mode=OneWay}"
 				IsEnabled="{Binding IsEnabled}"
 				Text="{Binding Recipe.Content, Mode=TwoWay}"/>
+
+			<Frame
+				Padding="5"
+				CornerRadius="10">
+				<VerticalStackLayout>
+					<Grid
+						RowDefinitions="40">
+						<Label
+							FontAttributes="Bold"
+							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+							VerticalOptions="Center"
+							Text="{Binding LocalizationManager[Tags], Mode=OneWay}"/>
+						<Button
+							Text="Change"
+							VerticalOptions="Center"
+							HorizontalOptions="End"
+							Command="{Binding SelectTagsCommand}"/>
+					</Grid>
+					<CollectionView
+						Grid.Row="1"
+						ItemsSource="{Binding Tags}">
+						<CollectionView.ItemsLayout>
+							<LinearItemsLayout
+								Orientation="Horizontal"
+								ItemSpacing="5"/>
+						</CollectionView.ItemsLayout>
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="models:RecipeTag">
+								<Frame
+									Padding="5"
+									CornerRadius="15"
+									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+									<Label
+										Margin="5"
+										FontSize="14"
+										FontAttributes="Bold"
+										Text="{Binding Name}"/>
+								</Frame>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</VerticalStackLayout>
+			</Frame>
 		</VerticalStackLayout>
 		<VerticalStackLayout
 			Grid.Row="2">

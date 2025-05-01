@@ -17,6 +17,7 @@ public interface IRecipeService
 	public Task DeleteIngredientAsync(Ingredient ingredient);
 
 	public Task<IEnumerable<RecipeTag>> GetTagListAsync();
+	public Task<IEnumerable<RecipeTag>> GetTagListAsync(List<int> ids);
 	public Task AddTagAsync(RecipeTag recipeTag);
 	public Task UpdateTagAsync(RecipeTag recipeTag);
 	public Task DeleteTagAsync(RecipeTag recipeTag);
