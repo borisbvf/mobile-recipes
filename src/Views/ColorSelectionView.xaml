@@ -11,11 +11,17 @@
 		SelectedItem="{Binding SelectedColor}"
 		SelectionMode="Single"
 		SelectionChangedCommand="{Binding FinishSelectionCommand}">
+		<CollectionView.ItemsLayout>
+			<GridItemsLayout
+				Orientation="Vertical"
+				Span="3"/>
+		</CollectionView.ItemsLayout>
 		<CollectionView.ItemTemplate>
 			<DataTemplate x:DataType="Color">
 				<Rectangle
 					Margin="5"
-					HeightRequest="80"
+					HeightRequest="100"
+					WidthRequest="100"
 					BackgroundColor="{Binding .}"/>
 			</DataTemplate>
 		</CollectionView.ItemTemplate>

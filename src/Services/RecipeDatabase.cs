@@ -67,35 +67,40 @@ namespace Recipes.Services
 		{
 			foreach (string script in DBScripts)
 			{
-				await database.ExecuteAsync(script);
+				await database!.ExecuteAsync(script);
 			}
 		}
 
 		public async Task<IEnumerable<Recipe>> GetRecipeListAsync()
 		{
-			return await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions FROM recipes");
+			return await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, prep_time as preparationtime, cook_time as cookingtime FROM recipes");
 		}
 
-		public async Task<Recipe> GetRecipeAsync(int recipeId)
+		public async Task<Recipe?> GetRecipeAsync(int recipeId)
 		{
-			var data = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions FROM recipes WHERE id = id");
+			var data = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, prep_time as preparationtime, cook_time as cookingtime FROM recipes WHERE id = id");
 			return data.FirstOrDefault();
 		}
 
 		public async Task AddRecipeAsync(Recipe recipe)
 		{
 			int rows = await database!.ExecuteAsync(
-				"INSERT INTO recipes (name, description, instructions) VALUES (?, ?, ?)",
+				"INSERT INTO recipes (name, description, instructions, prep_time, cook_time) VALUES (?, ?, ?, ?, ?)",
 				recipe.Name,
 				recipe.Description,
-				recipe.Content);
+				recipe.Instructions,
+				recipe.PreparationTime,
+				recipe.CookingTime);
 		}
 		public async Task UpdateRecipeAsync(Recipe recipe)
 		{
 			int rows = await database!.ExecuteAsync(
-				$"UPDATE recipes SET name = ?, description = ? WHERE id = {recipe.Id}",
+				$"UPDATE recipes SET name = ?, description = ?, instructions = ?, prep_time = ?, cook_time = ? WHERE id = {recipe.Id}",
 				recipe.Name,
-				recipe.Description);
+				recipe.Description,
+				recipe.Instructions,
+				recipe.PreparationTime,
+				recipe.CookingTime);
 		}
 		public async Task DeleteRecipeAsync(Recipe recipe)
 		{
@@ -106,11 +111,6 @@ namespace Recipes.Services
 		public async Task<IEnumerable<Ingredient>> GetIngredientListAsync()
 		{
 			return await database!.QueryAsync<Ingredient>("SELECT id, name FROM ingredients");
-		}
-		public async Task<Ingredient> GetIngredientAsync()
-		{
-			var data = await database!.QueryAsync<Ingredient>("SELECT id, name FROM ingredient WHERE 1 = 1");
-			return data.FirstOrDefault();
 		}
 		public async Task AddIngredientAsync(Ingredient ingredient)
 		{

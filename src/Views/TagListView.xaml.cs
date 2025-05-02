@@ -8,7 +8,7 @@ public partial class TagListView : ContentPage
 		BindingContext = tagListViewModel;
 	}
 
-	protected override async void OnAppearing()
+	protected override void OnAppearing()
 	{
 		base.OnAppearing();
 		(BindingContext as TagListViewModel)?.GetTagsCommand.Execute(this);

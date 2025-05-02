@@ -1,13 +1,13 @@
 ﻿using System.Globalization;
 
 namespace Recipes.ViewModels;
-public class TextToColorConverter : IValueConverter
+public class MinutesToTimeSpanConverter : IValueConverter
 {
 	public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
 	{
 		if (value != null)
 		{
-			return Color.FromArgb((string)value);
+			return TimeSpan.FromMinutes(System.Convert.ToDouble(value));
 		}
 		else
 		{
@@ -19,7 +19,7 @@ public class TextToColorConverter : IValueConverter
 	{
 		if (value != null)
 		{
-			return ((Color)value).ToArgbHex();
+			return ((TimeSpan)value).Hours * 60 + ((TimeSpan)value).Minutes;
 		}
 		else
 		{

@@ -16,6 +16,11 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		recipe = new();
 	}
 
+	public double BottomButtonWidth
+	{
+		get => DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density / 2 - 8;
+	}
+
 	private Recipe? recipe;
 	public Recipe? Recipe
 	{
@@ -41,15 +46,15 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			{
 				await Shell.Current.DisplayAlert(
 					LocalizationManager["Warning"].ToString(),
-					LocalizationManager["WrnRecipeNameEmpty"].ToString(),
+					LocalizationManager["WmRecipeNameEmpty"].ToString(),
 					LocalizationManager["Ok"].ToString());
 				return;
 			}
-			if (string.IsNullOrEmpty(recipe.Content))
+			if (string.IsNullOrEmpty(recipe.Instructions))
 			{
 				await Shell.Current.DisplayAlert(
 					LocalizationManager["Warning"].ToString(),
-					LocalizationManager["WrnRecipeDirectionsEmpty"].ToString(),
+					LocalizationManager["WmRecipeDirectionsEmpty"].ToString(),
 					LocalizationManager["Ok"].ToString());
 				return;
 			}
@@ -107,7 +112,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 				IEnumerable<RecipeTag> data = await recipeService.GetTagListAsync(tagIds);
 				foreach (RecipeTag tag in data)
 				{
-					Tags.Add(tag.Clone() as RecipeTag);
+					Tags.Add(tag);
 				}
 			}
 		}

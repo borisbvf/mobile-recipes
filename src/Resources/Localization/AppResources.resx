@@ -141,6 +141,9 @@
   <data name="ColorSelectionTitle" xml:space="preserve">
     <value>Tag's color</value>
   </data>
+  <data name="CookTime" xml:space="preserve">
+    <value>Cooking time:</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Dark</value>
   </data>
@@ -186,6 +189,9 @@
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Updating recipe failed.</value>
   </data>
+  <data name="Images" xml:space="preserve">
+    <value>Images:</value>
+  </data>
   <data name="Ingredients" xml:space="preserve">
     <value>Ingredients</value>
   </data>
@@ -219,6 +225,9 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
     <comment>Ok</comment>
+  </data>
+  <data name="PrepTime" xml:space="preserve">
+    <value>Preparation time:</value>
   </data>
   <data name="Recipes" xml:space="preserve">
     <value>Recipes</value>

@@ -8,7 +8,7 @@ public partial class IngredientListView : ContentPage
 		BindingContext = ingredientViewModel;
 	}
 
-	protected override async void OnAppearing()
+	protected override void OnAppearing()
 	{
 		base.OnAppearing();
 		(BindingContext as IngredientListViewModel)?.GetIngredientsCommand.Execute(this);

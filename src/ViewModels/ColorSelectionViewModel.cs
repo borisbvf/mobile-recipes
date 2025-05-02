@@ -7,8 +7,8 @@ public class ColorSelectionViewModel : BaseViewModel
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 	public ObservableCollection<Color> Colors { get; } = [];
 
-	private Color selectedColor;
-	public Color SelectedColor
+	private Color? selectedColor;
+	public Color? SelectedColor
 	{
 		get => selectedColor;
 		set
@@ -23,25 +23,21 @@ public class ColorSelectionViewModel : BaseViewModel
 
 	public ColorSelectionViewModel()
 	{
-		//Colors.Add(Color.FromRgb(200, 200, 200));
-		//Colors.Add(Color.FromRgb(240, 50, 240));
-		//Colors.Add(Color.FromRgb(50, 240, 150));
-		//Colors.Add(Color.FromRgb(50, 150, 240));
+		Colors.Add(Color.FromArgb("#F1BCDB"));
+		Colors.Add(Color.FromArgb("#F19288"));
+		Colors.Add(Color.FromArgb("#FFC175"));
+		Colors.Add(Color.FromArgb("#FBFF9E"));
+		Colors.Add(Color.FromArgb("#F5F3AE"));
+		Colors.Add(Color.FromArgb("#AFDE9C"));
+		Colors.Add(Color.FromArgb("#A0FEE7"));
+		Colors.Add(Color.FromArgb("#B6ECC6"));
+		Colors.Add(Color.FromArgb("#9EE6EA"));
+		Colors.Add(Color.FromArgb("94DFFF"));
+		Colors.Add(Color.FromArgb("#92B3E3"));
+		Colors.Add(Color.FromArgb("#8694F3"));
 		Colors.Add(Color.FromArgb("#AB93DC"));
-		Colors.Add(Color.FromArgb("#f5f3ae"));
-		Colors.Add(Color.FromArgb("#b6ecc6"));
-		Colors.Add(Color.FromArgb("#92b3e3"));
-		Colors.Add(Color.FromArgb("94dfff"));
-		Colors.Add(Color.FromArgb("#f1bcdb"));
-		Colors.Add(Color.FromArgb("#ffc175"));
-		Colors.Add(Color.FromArgb("#d59ce7"));
-		Colors.Add(Color.FromArgb("#cba89a"));
-		Colors.Add(Color.FromArgb("#9ee6ea"));
-		Colors.Add(Color.FromArgb("#afde9c"));
-		Colors.Add(Color.FromArgb("#f19288"));
-		Colors.Add(Color.FromArgb("#8694f3"));
-		Colors.Add(Color.FromArgb("#a0fee7"));
-		Colors.Add(Color.FromArgb("#fbff9e"));
+		Colors.Add(Color.FromArgb("#D59CE7"));
+		Colors.Add(Color.FromArgb("#CBA89A"));
 	}
 
 	public ICommand FinishSelectionCommand => new Command(FinishSelection);

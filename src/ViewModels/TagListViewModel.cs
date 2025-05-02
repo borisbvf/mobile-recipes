@@ -48,8 +48,8 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	private RecipeTag selectedTag;
-	public RecipeTag SelectedTag
+	private RecipeTag? selectedTag;
+	public RecipeTag? SelectedTag
 	{
 		get => selectedTag;
 		set
@@ -147,38 +147,41 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 	}
 	private async void EditTag()
 	{
-		string name = await Shell.Current.DisplayPromptAsync(
+		if (selectedTag != null)
+		{
+			string name = await Shell.Current.DisplayPromptAsync(
 			"",
 			$"{LocalizationManager["MsgAddingTag"]}",
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}",
 			$"{selectedTag.Name}");
-		if (name != null)
-		{
-			foreach (RecipeTag tag in Tags)
+			if (name != null)
 			{
-				if (tag != selectedTag && string.Equals(tag.Name, name, StringComparison.OrdinalIgnoreCase))
+				foreach (RecipeTag tag in Tags)
 				{
-					await Shell.Current.DisplayAlert(
-						$"{LocalizationManager["Error"]}",
-						$"{LocalizationManager["ErrorTagExists"]}",
-						$"{LocalizationManager["Ok"]}");
-					return;
+					if (tag != selectedTag && string.Equals(tag.Name, name, StringComparison.OrdinalIgnoreCase))
+					{
+						await Shell.Current.DisplayAlert(
+							$"{LocalizationManager["Error"]}",
+							$"{LocalizationManager["ErrorTagExists"]}",
+							$"{LocalizationManager["Ok"]}");
+						return;
+					}
 				}
-			}
-			try
-			{
-				selectedTag.Name = name;
-				await recipeService.UpdateTagAsync(selectedTag);
-				GetTagListAsync();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine($"Unable to update tag: {ex.Message}");
-				await Shell.Current.DisplayAlert(
-					LocalizationManager["Error"].ToString(),
-					ex.Message,
-					LocalizationManager["Ok"].ToString());
+				try
+				{
+					selectedTag.Name = name;
+					await recipeService.UpdateTagAsync(selectedTag);
+					GetTagListAsync();
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine($"Unable to update tag: {ex.Message}");
+					await Shell.Current.DisplayAlert(
+						LocalizationManager["Error"].ToString(),
+						ex.Message,
+						LocalizationManager["Ok"].ToString());
+				}
 			}
 		}
 	}
@@ -186,25 +189,28 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 	public ICommand DeleteTagCommand => new Command(DeleteTag, () => selectedTag != null);
 	private async void DeleteTag()
 	{
-		bool confirmed = await Shell.Current.DisplayAlert(
+		if (selectedTag != null)
+		{
+			bool confirmed = await Shell.Current.DisplayAlert(
 			"",
 			$"{LocalizationManager["MsgDeletingTag"]}",
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}");
-		if (confirmed)
-		{
-			try
+			if (confirmed)
 			{
-				await recipeService.DeleteTagAsync(selectedTag);
-				GetTagListAsync();
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine($"Unable to delete tag: {ex.Message}");
-				await Shell.Current.DisplayAlert(
-					LocalizationManager["Error"].ToString(),
-					ex.Message,
-					LocalizationManager["Ok"].ToString());
+				try
+				{
+					await recipeService.DeleteTagAsync(selectedTag);
+					GetTagListAsync();
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine($"Unable to delete tag: {ex.Message}");
+					await Shell.Current.DisplayAlert(
+						LocalizationManager["Error"].ToString(),
+						ex.Message,
+						LocalizationManager["Ok"].ToString());
+				}
 			}
 		}
 	}

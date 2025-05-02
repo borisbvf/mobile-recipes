@@ -5,6 +5,9 @@
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:RecipeDetailViewModel"
              Title="{Binding Recipe.Name}">
+	<ContentPage.Resources>
+		<viewmodels:MinutesToTimeStringConverter x:Key="minutesToTimeString"/>
+	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{Binding LocalizationManager[Edit], Mode=OneWay}"
@@ -31,6 +34,14 @@
 		<Label
 			Padding="10"
 			Margin="5"
-			Text="{Binding Recipe.Content}"/>
+			Text="{Binding Path=Recipe.PreparationTime, Converter={StaticResource minutesToTimeString}}"/>
+		<Label
+			Padding="10"
+			Margin="5"
+			Text="{Binding Path=Recipe.CookingTime, Converter={StaticResource minutesToTimeString}}"/>
+		<Label
+			Padding="10"
+			Margin="5"
+			Text="{Binding Recipe.Instructions}"/>
 	</VerticalStackLayout>
 </ContentPage>

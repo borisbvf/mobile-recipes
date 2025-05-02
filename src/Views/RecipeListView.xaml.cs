@@ -8,7 +8,7 @@ public partial class RecipeListView : ContentPage
 		BindingContext = viewModel;
 	}
 
-	protected override async void OnAppearing()
+	protected override void OnAppearing()
 	{
 		base.OnAppearing();
 		(BindingContext as RecipeListViewModel)?.GetRecipesCommand.Execute(this);

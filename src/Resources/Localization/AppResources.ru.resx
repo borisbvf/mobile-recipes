@@ -141,6 +141,9 @@
   <data name="ColorSelectionTitle" xml:space="preserve">
     <value>Цвет ярлыка</value>
   </data>
+  <data name="CookTime" xml:space="preserve">
+    <value>Время на приготовление:</value>
+  </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>Тёмная</value>
   </data>
@@ -157,10 +160,10 @@
     <value>Описание рецепта</value>
   </data>
   <data name="Directions" xml:space="preserve">
-    <value>Инструкции:</value>
+    <value>Действия:</value>
   </data>
   <data name="DirectionsPlaceholder" xml:space="preserve">
-    <value>Инструкции рецепта</value>
+    <value>Действия по рецепту</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Изменить</value>
@@ -185,6 +188,9 @@
   </data>
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Не удалось изменить рецепт.</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>Изображения:</value>
   </data>
   <data name="Ingredients" xml:space="preserve">
     <value>Ингридиенты</value>
@@ -218,6 +224,9 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ок</value>
+  </data>
+  <data name="PrepTime" xml:space="preserve">
+    <value>Время на подготовку:</value>
   </data>
   <data name="Recipes" xml:space="preserve">
     <value>Рецепты</value>

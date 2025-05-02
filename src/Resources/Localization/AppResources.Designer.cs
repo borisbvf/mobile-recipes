@@ -133,6 +133,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cooking time:.
+        /// </summary>
+        internal static string CookTime {
+            get {
+                return ResourceManager.GetString("CookTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         internal static string DarkTheme {
@@ -268,6 +277,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Images:.
+        /// </summary>
+        internal static string Images {
+            get {
+                return ResourceManager.GetString("Images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingredients.
         /// </summary>
         internal static string Ingredients {
@@ -363,6 +381,15 @@ namespace Recipes.Resources.Localization {
         internal static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparation time:.
+        /// </summary>
+        internal static string PrepTime {
+            get {
+                return ResourceManager.GetString("PrepTime", resourceCulture);
             }
         }
         
