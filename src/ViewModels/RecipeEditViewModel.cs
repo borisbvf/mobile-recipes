@@ -29,19 +29,23 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			if (recipe == value)
 				return;
 			recipe = value;
-			Tags.Clear();
-			if (recipe != null)
-			{
-				foreach (RecipeTag tag in recipe.Tags)
-				{
-					Tags.Add(tag);
-				}
-			}
 			OnPropertyChanged();
 		}
 	}
 
-	public ObservableCollection<RecipeTag> Tags { get; } = [];
+	private Ingredient? selectedIngredient;
+	public Ingredient? SelectedIngredient
+	{
+		get => selectedIngredient;
+		set
+		{
+			if (selectedIngredient != value)
+			{
+				selectedIngredient = value;
+				OnPropertyChanged();
+			}
+		}
+	}
 
 	public ICommand SaveCommand => new Command(SaveRecipe);
 	private async void SaveRecipe(object obj)
@@ -67,11 +71,6 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			}
 			try
 			{
-				recipe.Tags.Clear();
-				foreach (RecipeTag tag in Tags)
-				{
-					recipe.Tags.Add(tag);
-				}
 				if (recipe.Id == 0)
 				{
 					await recipeService.AddRecipeAsync(recipe);
@@ -102,7 +101,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 	private async void SelectTags()
 	{
 		List<int> tagIds = new();
-		foreach (RecipeTag tag in Tags)
+		foreach (RecipeTag tag in recipe.Tags)
 		{
 			tagIds.Add(tag.Id);
 		}
@@ -113,22 +112,65 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		await Shell.Current.GoToAsync(Constants.TagListRoute, navParam);
 	}
 
+	public ICommand AddIngredientCommand => new Command(AddIngredient);
+	public async void AddIngredient()
+	{
+		await Shell.Current.GoToAsync(Constants.IngredientListRoute);
+	}
+
+	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, () => selectedIngredient != null);
+	public void DeleteIngredient()
+	{
+		if (selectedIngredient != null)
+		{
+			recipe?.Ingredients.Remove(selectedIngredient);
+		}
+	}
+
+	public ICommand PickImageCommand => new Command(PickImage);
+	public async void PickImage()
+	{
+		await MediaPicker.Default.PickPhotoAsync();
+	}
+
 	public async void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
 		if (query.ContainsKey(nameof(Recipe)))
 		{
 			Recipe = query[nameof(Recipe)] as Recipe;
 		}
+
 		if (query.ContainsKey(Constants.CheckedTagsParameter))
 		{
 			List<int>? tagIds = query[Constants.CheckedTagsParameter] as List<int>;
-			Tags.Clear();
 			if (tagIds != null)
 			{
+				recipe?.Tags.Clear();
 				IEnumerable<RecipeTag> data = await recipeService.GetTagListAsync(tagIds);
 				foreach (RecipeTag tag in data)
 				{
-					Tags.Add(tag);
+					recipe?.Tags.Add(tag);
+				}
+			}
+		}
+
+		if (query.ContainsKey(nameof(Ingredient)))
+		{
+			Ingredient? added = query[nameof(Ingredient)] as Ingredient;
+			if (added != null && recipe != null)
+			{
+				bool alreadyAdded = false;
+				foreach (Ingredient ingredient in recipe.Ingredients)
+				{
+					if (ingredient.Id == added.Id)
+					{
+						alreadyAdded = true;
+						break;
+					}
+				}
+				if (!alreadyAdded)
+				{
+					recipe?.Ingredients.Add(added);
 				}
 			}
 		}

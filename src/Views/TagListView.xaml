@@ -32,7 +32,7 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
-			IconImageSource="add.png"
+			IconImageSource="add_2.png"
 			Text="{Binding LocalizationManager[Add]}"
 			Command="{Binding AddTagCommand}"/>
 		<ToolbarItem

@@ -8,6 +8,22 @@
              Title="{Binding Title}">
 	<ContentPage.Resources>
 		<viewmodels:MinutesToTimeSpanConverter x:Key="minutesToTimeSpan"/>
+		<Style TargetType="Grid">
+			<Setter Property="VisualStateManager.VisualStateGroups">
+				<VisualStateGroupList>
+					<VisualStateGroup x:Name="CommonStates">
+						<VisualState x:Name="Normal"/>
+						<VisualState x:Name="Selected">
+							<VisualState.Setters>
+								<Setter
+								Property="BackgroundColor"
+								Value="LightSkyBlue"/>
+							</VisualState.Setters>
+						</VisualState>
+					</VisualStateGroup>
+				</VisualStateGroupList>
+			</Setter>
+		</Style>
 	</ContentPage.Resources>
 	<Grid
 		RowDefinitions="*,50"
@@ -78,24 +94,37 @@
 								CornerRadius="10"
 								WidthRequest="30"
 								HorizontalOptions="End"
-								Source="add.png"/>
+								Source="add_2.png"
+								Command="{Binding AddIngredientCommand}"/>
 							<ImageButton
 								Aspect="AspectFit"
 								CornerRadius="10"
 								WidthRequest="30"
 								HorizontalOptions="End"
-								Source="edit.png"/>
-							<ImageButton
-								Aspect="AspectFit"
-								CornerRadius="10"
-								WidthRequest="30"
-								HorizontalOptions="End"
-								Source="delete.png"/>
+								Source="delete.png"
+								Command="{Binding DeleteIngredientCommand}"/>
 						</HorizontalStackLayout>
 						
 					</Grid>
-					<CollectionView>
-						
+					<CollectionView
+						SelectionMode="Single"
+						ItemsSource="{Binding Recipe.Ingredients}"
+						SelectedItem="{Binding SelectedIngredient}">
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="models:Ingredient">
+								<Grid
+									ColumnDefinitions="*,2*">
+									<Label
+										Grid.Column="0"
+										VerticalOptions="Center"
+										Text="{Binding Name}"/>
+									<Entry
+										Grid.Column="1"
+										VerticalOptions="Center"
+										Text="{Binding Comment, Mode=TwoWay}"/>
+								</Grid>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>						
 					</CollectionView>
 				</VerticalStackLayout>
 			</Frame>
@@ -119,8 +148,7 @@
 							Command="{Binding SelectTagsCommand}"/>
 					</Grid>
 					<CollectionView
-						Grid.Row="1"
-						ItemsSource="{Binding Tags}">
+						ItemsSource="{Binding Recipe.Tags}">
 						<CollectionView.ItemsLayout>
 							<LinearItemsLayout
 								Orientation="Horizontal"
@@ -174,7 +202,8 @@
 								CornerRadius="10"
 								WidthRequest="30"
 								HorizontalOptions="End"
-								Source="add.png"/>
+								Command="{Binding PickImageCommand}"
+								Source="add_2.png"/>
 							<ImageButton
 								Aspect="AspectFit"
 								CornerRadius="10"

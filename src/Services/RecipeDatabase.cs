@@ -90,6 +90,12 @@ namespace Recipes.Services
 				{
 					recipe.Tags.Add(tag);
 				}
+				List<Ingredient> ingredients = await database!.QueryAsync<Ingredient>("SELECT t.id, t.name, link.comment FROM ingredients t " +
+					$"INNER JOIN recipe_ingredient link ON link.ingredient_id = t.id WHERE link.recipe_id = {recipeId}");
+				foreach (Ingredient ingredient in ingredients)
+				{
+					recipe.Ingredients.Add(ingredient);
+				}
 			}
 			return recipe;
 		}
@@ -122,13 +128,17 @@ namespace Recipes.Services
 				recipe.Instructions,
 				recipe.PreparationTime,
 				recipe.CookingTime);
-			if (recipe.Tags?.Count > 0)
+			await database!.ExecuteAsync($"DELETE FROM recipe_tag WHERE recipe_id = {recipe.Id}");
+			foreach (RecipeTag tag in recipe.Tags)
 			{
-				await database!.ExecuteAsync($"DELETE FROM recipe_tag WHERE recipe_id = {recipe.Id}");
-				foreach (RecipeTag tag in recipe.Tags)
-				{
-					await database!.ExecuteAsync($"INSERT INTO recipe_tag (recipe_id, tag_id) VALUES ({recipe.Id}, {tag.Id})");
-				}
+				await database!.ExecuteAsync($"INSERT INTO recipe_tag (recipe_id, tag_id) VALUES ({recipe.Id}, {tag.Id})");
+			}
+			await database!.ExecuteAsync($"DELETE FROM recipe_ingredient WHERE recipe_id = {recipe.Id}");
+			foreach (Ingredient ingredient in recipe.Ingredients)
+			{
+				await database!.ExecuteAsync(
+					$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment) VALUES ({recipe.Id}, {ingredient.Id}, ?)", 
+					ingredient.Comment);
 			}
 		}
 		public async Task DeleteRecipeAsync(Recipe recipe)

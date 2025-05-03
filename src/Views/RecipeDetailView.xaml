@@ -5,17 +5,19 @@
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 x:DataType="viewmodels:RecipeDetailViewModel"
-             Title="{Binding Recipe.Name}">
+             Title="">
 	<ContentPage.Resources>
 		<viewmodels:MinutesToTimeStringConverter x:Key="minutesToTimeString"/>
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Text="{Binding LocalizationManager[Edit], Mode=OneWay}"
+			IconImageSource="edit.png"
 			Command="{Binding EditRecipeCommand}"
 			CommandParameter="{Binding Recipe}"/>
 		<ToolbarItem
 			Text="{Binding LocalizationManager[Delete], Mode=OneWay}"
+			IconImageSource="delete.png"
 			Command="{Binding DeleteRecipeCommand}"
 			CommandParameter="{Binding Recipe}"/>
 	</ContentPage.ToolbarItems>
@@ -72,17 +74,26 @@
 		<Frame
 			Margin="2"
 			Padding="5">
-			<VerticalStackLayout>
+			<HorizontalStackLayout>
 				<Label
+					Margin="1,1,10,1"
 					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 					Text="{Binding LocalizationManager[IngredientsCaption]}"/>
-				<CollectionView>
+				<CollectionView
+					ItemsSource="{Binding Recipe.Ingredients}">
 					<CollectionView.ItemTemplate>
-						<DataTemplate>
+						<DataTemplate x:DataType="models:Ingredient">
+							<HorizontalStackLayout>
+								<Label
+									Margin="1,1,10,1"
+									Text="{Binding Name}"/>
+								<Label
+									Text="{Binding Comment}"/>
+							</HorizontalStackLayout>
 						</DataTemplate>
 					</CollectionView.ItemTemplate>
 				</CollectionView>
-			</VerticalStackLayout>
+			</HorizontalStackLayout>
 		</Frame>
 		
 		<Frame
@@ -102,9 +113,10 @@
 		<Frame
 			Margin="2"
 			Padding="5">
-			<VerticalStackLayout>
+			<HorizontalStackLayout>
 				<Label
-					Margin="1,1,1,5"
+					VerticalOptions="Center"
+					Margin="1,1,5,1"
 					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 					Text="{Binding LocalizationManager[TagsCaption]}"/>
 				<CollectionView
@@ -130,7 +142,7 @@
 						</DataTemplate>
 					</CollectionView.ItemTemplate>
 				</CollectionView>
-			</VerticalStackLayout>
+			</HorizontalStackLayout>
 		</Frame>
 		
 		<Frame

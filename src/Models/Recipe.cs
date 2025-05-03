@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System.Collections.ObjectModel;
 
 namespace Recipes.Models;
 public class Recipe
@@ -10,9 +11,9 @@ public class Recipe
 	public string? Instructions { get; set; }
 	public int? PreparationTime { get; set; }
 	public int? CookingTime { get; set; }
-	public List<RecipeTag> Tags { get; }
-	public List<Ingredient> Ingredients { get; }
-	public List<Image> Images { get; }
+	public ObservableCollection<RecipeTag> Tags { get; }
+	public ObservableCollection<Ingredient> Ingredients { get; }
+	public ObservableCollection<Image> Images { get; }
 	public Recipe()
 	{
 		Tags = new();
