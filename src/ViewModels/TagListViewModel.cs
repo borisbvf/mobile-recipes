@@ -263,7 +263,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		await Shell.Current.GoToAsync("..", navParam);
 	}
 
-	public ICommand SelectColorCommand => new Command(SelectColor);
+	public ICommand SelectColorCommand => new Command(SelectColor, () => selectedTag != null);
 	public async void SelectColor()
 	{
 		await Shell.Current.GoToAsync(Constants.ColorSelectionRoute);

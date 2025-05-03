@@ -2,7 +2,6 @@
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;
-[QueryProperty(nameof(Recipe), "Recipe")]
 public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
@@ -30,6 +29,14 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			if (recipe == value)
 				return;
 			recipe = value;
+			Tags.Clear();
+			if (recipe != null)
+			{
+				foreach (RecipeTag tag in recipe.Tags)
+				{
+					Tags.Add(tag);
+				}
+			}
 			OnPropertyChanged();
 		}
 	}
@@ -60,6 +67,11 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			}
 			try
 			{
+				recipe.Tags.Clear();
+				foreach (RecipeTag tag in Tags)
+				{
+					recipe.Tags.Add(tag);
+				}
 				if (recipe.Id == 0)
 				{
 					await recipeService.AddRecipeAsync(recipe);
@@ -103,6 +115,10 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 
 	public async void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
+		if (query.ContainsKey(nameof(Recipe)))
+		{
+			Recipe = query[nameof(Recipe)] as Recipe;
+		}
 		if (query.ContainsKey(Constants.CheckedTagsParameter))
 		{
 			List<int>? tagIds = query[Constants.CheckedTagsParameter] as List<int>;

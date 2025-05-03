@@ -10,4 +10,13 @@ public class Recipe
 	public string? Instructions { get; set; }
 	public int? PreparationTime { get; set; }
 	public int? CookingTime { get; set; }
+	public List<RecipeTag> Tags { get; }
+	public List<Ingredient> Ingredients { get; }
+	public List<Image> Images { get; }
+	public Recipe()
+	{
+		Tags = new();
+		Ingredients = new();
+		Images = new();
+	}
 }

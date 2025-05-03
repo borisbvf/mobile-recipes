@@ -63,25 +63,34 @@
 				CornerRadius="10">
 				<VerticalStackLayout>
 					<Grid
-						RowDefinitions="40"
+						RowDefinitions="30"
 						ColumnDefinitions="*,2*">
 						<Label
 							FontAttributes="Bold"
 							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-							Text="{Binding LocalizationManager[Ingredients], Mode=OneWay}"/>
+							Text="{Binding LocalizationManager[IngredientsCaption], Mode=OneWay}"/>
 						<HorizontalStackLayout
 							HorizontalOptions="End"
 							Spacing="2"
 							Grid.Column="1">
-							<Button
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="30"
 								HorizontalOptions="End"
-								Text="Add"/>
-							<Button
+								Source="add.png"/>
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="30"
 								HorizontalOptions="End"
-								Text="Change"/>
-							<Button
+								Source="edit.png"/>
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="30"
 								HorizontalOptions="End"
-								Text="Delete"/>
+								Source="delete.png"/>
 						</HorizontalStackLayout>
 						
 					</Grid>
@@ -96,16 +105,17 @@
 				CornerRadius="10">
 				<VerticalStackLayout>
 					<Grid
-						RowDefinitions="40">
+						RowDefinitions="30">
 						<Label
 							FontAttributes="Bold"
 							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 							VerticalOptions="Center"
-							Text="{Binding LocalizationManager[Tags], Mode=OneWay}"/>
-						<Button
-							Text="{Binding LocalizationManager[Change], Mode=OneWay}"
-							VerticalOptions="Center"
+							Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
+						<ImageButton
+							Aspect="AspectFit"
 							HorizontalOptions="End"
+							WidthRequest="30"
+							Source="edit.png"
 							Command="{Binding SelectTagsCommand}"/>
 					</Grid>
 					<CollectionView
@@ -119,7 +129,7 @@
 						<CollectionView.ItemTemplate>
 							<DataTemplate x:DataType="models:RecipeTag">
 								<Frame
-									Padding="5"
+									Padding="5,1"
 									CornerRadius="15"
 									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
 									<Label
@@ -149,7 +159,7 @@
 				CornerRadius="10">
 				<VerticalStackLayout>
 					<Grid
-						RowDefinitions="40"
+						RowDefinitions="30"
 						ColumnDefinitions="*,2*">
 						<Label
 							FontAttributes="Bold"
@@ -159,15 +169,24 @@
 							HorizontalOptions="End"
 							Spacing="2"
 							Grid.Column="1">
-							<Button
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="30"
 								HorizontalOptions="End"
-								Text="Add"/>
-							<Button
+								Source="add.png"/>
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="30"
 								HorizontalOptions="End"
-								Text="Change"/>
-							<Button
+								Source="edit.png"/>
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="30"
 								HorizontalOptions="End"
-								Text="Delete"/>
+								Source="delete.png"/>
 						</HorizontalStackLayout>
 
 					</Grid>

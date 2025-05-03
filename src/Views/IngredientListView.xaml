@@ -5,7 +5,7 @@
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:IngredientListViewModel"
-             Title="{Binding LocalizationManager[Ingredients], Mode=OneWay}">
+             Title="{Binding LocalizationManager[IngredientsTitle], Mode=OneWay}">
 	<ContentPage.Resources>
 		<Style TargetType="Grid">
 			<Setter Property="VisualStateManager.VisualStateGroups">
@@ -24,51 +24,51 @@
 			</Setter>
 		</Style>
 	</ContentPage.Resources>
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior
+			Command="{Binding FinishSelectionCommand}"/>
+	</Shell.BackButtonBehavior>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
+			IconImageSource="add.png"
+			Text="{Binding LocalizationManager[AddIngredient]}"
+			Command="{Binding AddIngredientCommand}"/>
+		<ToolbarItem
+			Order="Primary"
+			IconImageSource="edit.png"
 			Text="{Binding LocalizationManager[Edit]}"
 			Command="{Binding EditIngredientCommand}"/>
 		<ToolbarItem
 			Order="Primary"
+			IconImageSource="delete.png"
 			Text="{Binding LocalizationManager[Delete]}"
 			Command="{Binding DeleteIngredientCommand}"/>
 	</ContentPage.ToolbarItems>
-	<Grid
-		RowDefinitions="*,50"
-		Padding="2"
-		Margin="2">
-		<RefreshView
-			IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-			Command="{Binding GetIngredientsCommand}"
-			Grid.Row="0">
-			<CollectionView
-				SelectionMode="Single"
-				ItemsSource="{Binding Ingredients}"
-				SelectedItem="{Binding SelectedIngredient}">
-				<CollectionView.ItemTemplate>
-					<DataTemplate x:DataType="models:Ingredient">
-						<Grid
-							Padding="4"
-							Margin="4">
-							<VerticalStackLayout
-								Padding="0">
-								<Label
-									Margin="5"
-									Text="{Binding Name}"
-									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-									FontAttributes="Bold"
-									FontSize="16"/>
-							</VerticalStackLayout>
-						</Grid>
-					</DataTemplate>
-				</CollectionView.ItemTemplate>
-			</CollectionView>
-		</RefreshView>
-		<Button
-			Margin="5"
-			Grid.Row="1"
-			Text="{Binding LocalizationManager[AddIngredient], Mode=OneWay}"
-			Command="{Binding AddIngredientCommand}"/>
-	</Grid>
+	<RefreshView
+		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+		Command="{Binding GetIngredientsCommand}">
+		<CollectionView
+			SelectionMode="Single"
+			ItemsSource="{Binding Ingredients}"
+			SelectedItem="{Binding SelectedIngredient}">
+			<CollectionView.ItemTemplate>
+				<DataTemplate x:DataType="models:Ingredient">
+					<Grid
+						Padding="4"
+						Margin="4">
+						<VerticalStackLayout
+							Padding="0">
+							<Label
+								Margin="5"
+								Text="{Binding Name}"
+								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+								FontAttributes="Bold"
+								FontSize="16"/>
+						</VerticalStackLayout>
+					</Grid>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</RefreshView>
 </ContentPage>

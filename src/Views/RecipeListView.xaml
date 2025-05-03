@@ -9,11 +9,11 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Secondary"
-			Text="{Binding LocalizationManager[Ingredients], Mode=OneWay}"
+			Text="{Binding LocalizationManager[IngredientsTitle], Mode=OneWay}"
 			Command="{Binding ShowIngredientListCommand}"/>
 		<ToolbarItem
 			Order="Secondary"
-			Text="{Binding LocalizationManager[Tags], Mode=OneWay}"
+			Text="{Binding LocalizationManager[TagsTitle], Mode=OneWay}"
 			Command="{Binding ShowTagListCommand}"/>
 		<ToolbarItem
 			Order="Secondary"

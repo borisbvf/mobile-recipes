@@ -73,13 +73,25 @@ namespace Recipes.Services
 
 		public async Task<IEnumerable<Recipe>> GetRecipeListAsync()
 		{
-			return await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, prep_time as preparationtime, cook_time as cookingtime FROM recipes");
+			return await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
+				"prep_time as preparationtime, cook_time as cookingtime FROM recipes");
 		}
 
 		public async Task<Recipe?> GetRecipeAsync(int recipeId)
 		{
-			var data = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, prep_time as preparationtime, cook_time as cookingtime FROM recipes WHERE id = id");
-			return data.FirstOrDefault();
+			var data = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
+				$"prep_time as preparationtime, cook_time as cookingtime FROM recipes WHERE id = {recipeId}");
+			Recipe? recipe = data.FirstOrDefault();
+			if (recipe != null)
+			{
+				List<RecipeTag> tags = await database!.QueryAsync<RecipeTag>("SELECT t.id, t.name, t.color FROM tags t " +
+					$"INNER JOIN recipe_tag rt ON rt.tag_id = t.id WHERE rt.recipe_id = {recipeId}");
+				foreach (RecipeTag tag in tags)
+				{
+					recipe.Tags.Add(tag);
+				}
+			}
+			return recipe;
 		}
 
 		public async Task AddRecipeAsync(Recipe recipe)
@@ -91,6 +103,15 @@ namespace Recipes.Services
 				recipe.Instructions,
 				recipe.PreparationTime,
 				recipe.CookingTime);
+			if (recipe.Tags?.Count > 0)
+			{
+				int lastRecipeId = await database!.ExecuteScalarAsync<int>("select last_insert_rowid()");
+				await database!.ExecuteAsync($"DELETE FROM recipe_tag WHERE recipe_id = {lastRecipeId}");
+				foreach (RecipeTag tag in recipe.Tags)
+				{
+					await database!.ExecuteAsync($"INSERT INTO recipe_tag (recipe_id, tag_id) VALUES ({lastRecipeId}, {tag.Id})");
+				}
+			}
 		}
 		public async Task UpdateRecipeAsync(Recipe recipe)
 		{
@@ -101,6 +122,14 @@ namespace Recipes.Services
 				recipe.Instructions,
 				recipe.PreparationTime,
 				recipe.CookingTime);
+			if (recipe.Tags?.Count > 0)
+			{
+				await database!.ExecuteAsync($"DELETE FROM recipe_tag WHERE recipe_id = {recipe.Id}");
+				foreach (RecipeTag tag in recipe.Tags)
+				{
+					await database!.ExecuteAsync($"INSERT INTO recipe_tag (recipe_id, tag_id) VALUES ({recipe.Id}, {tag.Id})");
+				}
+			}
 		}
 		public async Task DeleteRecipeAsync(Recipe recipe)
 		{

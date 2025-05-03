@@ -5,7 +5,7 @@
              xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:TagListViewModel"
-			 Title="{Binding LocalizationManager[Tags], Mode=OneWay}">
+			 Title="{Binding LocalizationManager[TagsTitle], Mode=OneWay}">
 	<ContentPage.Resources>
 		<viewmodels:TextToColorConverter x:Key="textToColor"/>
 		<Style TargetType="Grid">
@@ -32,58 +32,57 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
+			IconImageSource="add.png"
 			Text="{Binding LocalizationManager[Add]}"
 			Command="{Binding AddTagCommand}"/>
 		<ToolbarItem
 			Order="Primary"
+			IconImageSource="edit.png"
 			Text="{Binding LocalizationManager[Edit]}"
 			Command="{Binding EditTagCommand}"/>
 		<ToolbarItem
 			Order="Primary"
+			IconImageSource="delete.png"
 			Text="{Binding LocalizationManager[Delete]}"
 			Command="{Binding DeleteTagCommand}"/>
 		<ToolbarItem
 			Order="Primary"
+			IconImageSource="palette.png"
 			Text="{Binding LocalizationManager[ChangeColor]}"
 			Command="{Binding SelectColorCommand}"/>
 	</ContentPage.ToolbarItems>
-	<Grid
-		Padding="2"
-		Margin="2">
-		<RefreshView
-			IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-			Command="{Binding GetTagsCommand}"
-			Grid.Row="0">
-			<CollectionView
-				SelectionMode="Single"
-				ItemsSource="{Binding Tags}"
-				SelectedItem="{Binding SelectedTag}">
-				<CollectionView.ItemTemplate>
-					<DataTemplate x:DataType="models:RecipeTag">
-						<Grid
-							Padding="2"
-							Margin="2">
-							<HorizontalStackLayout
-								Padding="0">
-								<CheckBox
-									IsChecked="{Binding IsChecked}"
-									IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TagListViewModel}}, Path=IsCheckAvailable}"/>
-								<Frame
-									Padding="5"
-									CornerRadius="15"
-									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
-									<Label
-										Margin="5"
-										Text="{Binding Name}"
-										TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-										FontAttributes="Bold"
-										FontSize="14"/>
-								</Frame>
-							</HorizontalStackLayout>
-						</Grid>
-					</DataTemplate>
-				</CollectionView.ItemTemplate>
-			</CollectionView>
-		</RefreshView>
-	</Grid>
+	<RefreshView
+		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+		Command="{Binding GetTagsCommand}">
+		<CollectionView
+			SelectionMode="Single"
+			ItemsSource="{Binding Tags}"
+			SelectedItem="{Binding SelectedTag}">
+			<CollectionView.ItemTemplate>
+				<DataTemplate x:DataType="models:RecipeTag">
+					<Grid
+						Padding="2"
+						Margin="2">
+						<HorizontalStackLayout
+							Padding="0">
+							<CheckBox
+								IsChecked="{Binding IsChecked}"
+								IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TagListViewModel}}, Path=IsCheckAvailable}"/>
+							<Frame
+								Padding="5"
+								CornerRadius="15"
+								BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+								<Label
+									Margin="5"
+									Text="{Binding Name}"
+									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+									FontAttributes="Bold"
+									FontSize="14"/>
+							</Frame>
+						</HorizontalStackLayout>
+					</Grid>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</RefreshView>
 </ContentPage>

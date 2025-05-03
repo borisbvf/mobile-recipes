@@ -2,8 +2,7 @@
 
 namespace Recipes.ViewModels;
 
-[QueryProperty(nameof(Recipe), "Recipe")]
-public class RecipeDetailViewModel : BaseViewModel
+public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
@@ -13,6 +12,14 @@ public class RecipeDetailViewModel : BaseViewModel
 		this.recipeService = recipeService;
 	}
 
+	public async void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		if (query.ContainsKey(Constants.RecipeId))
+		{
+			int recipeId = (int)query[Constants.RecipeId];
+			Recipe = await recipeService.GetRecipeAsync(recipeId);
+		}
+	}
 
 	private Recipe? recipe;
 	public Recipe? Recipe

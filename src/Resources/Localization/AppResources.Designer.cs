@@ -286,11 +286,20 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingredients:.
+        /// </summary>
+        internal static string IngredientsCaption {
+            get {
+                return ResourceManager.GetString("IngredientsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingredients.
         /// </summary>
-        internal static string Ingredients {
+        internal static string IngredientsTitle {
             get {
-                return ResourceManager.GetString("Ingredients", resourceCulture);
+                return ResourceManager.GetString("IngredientsTitle", resourceCulture);
             }
         }
         
@@ -430,11 +439,20 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tags:.
+        /// </summary>
+        internal static string TagsCaption {
+            get {
+                return ResourceManager.GetString("TagsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
-        internal static string Tags {
+        internal static string TagsTitle {
             get {
-                return ResourceManager.GetString("Tags", resourceCulture);
+                return ResourceManager.GetString("TagsTitle", resourceCulture);
             }
         }
         

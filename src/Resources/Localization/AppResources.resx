@@ -192,7 +192,10 @@
   <data name="Images" xml:space="preserve">
     <value>Images:</value>
   </data>
-  <data name="Ingredients" xml:space="preserve">
+  <data name="IngredientsCaption" xml:space="preserve">
+    <value>Ingredients:</value>
+  </data>
+  <data name="IngredientsTitle" xml:space="preserve">
     <value>Ingredients</value>
   </data>
   <data name="Language" xml:space="preserve">
@@ -241,7 +244,10 @@
   <data name="SystemTheme" xml:space="preserve">
     <value>System</value>
   </data>
-  <data name="Tags" xml:space="preserve">
+  <data name="TagsCaption" xml:space="preserve">
+    <value>Tags:</value>
+  </data>
+  <data name="TagsTitle" xml:space="preserve">
     <value>Tags</value>
   </data>
   <data name="Theme" xml:space="preserve">
