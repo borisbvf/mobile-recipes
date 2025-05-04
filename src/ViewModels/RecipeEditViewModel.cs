@@ -100,6 +100,8 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 	public ICommand SelectTagsCommand => new Command(SelectTags);
 	private async void SelectTags()
 	{
+		if (recipe == null)
+			return;
 		List<int> tagIds = new();
 		foreach (RecipeTag tag in recipe.Tags)
 		{
@@ -127,14 +129,50 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		}
 	}
 
-	public ICommand PickImageCommand => new Command(PickImage);
-	public async void PickImage()
+	private async void AddFile(FileResult image)
 	{
-		await MediaPicker.Default.PickPhotoAsync();
+		if (!Directory.Exists(Constants.ImageDirectory))
+		{
+			Directory.CreateDirectory(Constants.ImageDirectory);
+		}
+		string newFileName = Path.Combine(Constants.ImageDirectory, $"{Guid.NewGuid()}{Path.GetExtension(image.FileName)}");
+		using Stream sourceStream = await image.OpenReadAsync();
+		using FileStream newFileStream = File.OpenWrite(newFileName);
+
+		await sourceStream.CopyToAsync(newFileStream);
+
+		RecipeImage recipeImage = new();
+		recipeImage.FileName = newFileName;
+		recipe!.Images.Add(recipeImage);
+	}
+
+	public ICommand SelectImageCommand => new Command(SelectImage);
+	public async void SelectImage()
+	{
+		FileResult? photo = await MediaPicker.Default.PickPhotoAsync();
+		if (photo != null && recipe != null)
+		{
+			AddFile(photo);
+		}
+	}
+
+	public ICommand TakePhotoCommand => new Command(TakePhoto);
+	public async void TakePhoto()
+	{
+		if (MediaPicker.Default.IsCaptureSupported)
+		{
+			FileResult? photo = await MediaPicker.Default.CapturePhotoAsync();
+			if (photo != null && recipe != null)
+			{
+				AddFile(photo);
+			}
+		}
+		
 	}
 
 	public async void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
+		IsBusy = true;
 		if (query.ContainsKey(nameof(Recipe)))
 		{
 			Recipe = query[nameof(Recipe)] as Recipe;
@@ -174,5 +212,6 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 				}
 			}
 		}
+		IsBusy = false;
 	}
 }

@@ -8,6 +8,7 @@
              Title="">
 	<ContentPage.Resources>
 		<viewmodels:MinutesToTimeStringConverter x:Key="minutesToTimeString"/>
+		<viewmodels:TextToColorConverter x:Key="textToColor"/>
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
@@ -46,6 +47,8 @@
 					Grid.Column="0"
 					VerticalOptions="Center"
 					HorizontalOptions="Start"
+					WidthRequest="135"
+					LineBreakMode="TailTruncation"
 					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 					Text="{Binding LocalizationManager[PrepTime]}"/>
 				<Label
@@ -104,8 +107,8 @@
 					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 					Text="{Binding LocalizationManager[Directions]}"/>
 				<Label
-					Padding="10"
-					Margin="5"
+					Padding="0"
+					Margin="0"
 					Text="{Binding Recipe.Instructions}"/>
 			</VerticalStackLayout>
 		</Frame>
@@ -152,9 +155,19 @@
 				<Label
 					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 					Text="{Binding LocalizationManager[Images]}"/>
-				<HorizontalStackLayout>
-
-				</HorizontalStackLayout>
+				<CollectionView
+					ItemsSource="{Binding Recipe.Images}">
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="models:RecipeImage">
+							<VerticalStackLayout>
+								<Image
+									Source="{Binding FileName}"/>
+								<Label
+									Text="{Binding Description}"/>
+							</VerticalStackLayout>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>					
+				</CollectionView>
 			</VerticalStackLayout>
 		</Frame>
 		

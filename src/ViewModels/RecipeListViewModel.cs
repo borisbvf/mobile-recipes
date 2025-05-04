@@ -101,4 +101,10 @@ public class RecipeListViewModel : BaseViewModel
 	{
 		await Shell.Current.GoToAsync($"{Constants.SettingsPageRoute}");
 	}
+
+	public ICommand ImageStoreCommand => new Command(ShowImageStore);
+	public async void ShowImageStore()
+	{
+		await Shell.Current.GoToAsync($"{Constants.ImageStoreRoute}");
+	}
 }

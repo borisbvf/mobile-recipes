@@ -13,7 +13,7 @@ public class Recipe
 	public int? CookingTime { get; set; }
 	public ObservableCollection<RecipeTag> Tags { get; }
 	public ObservableCollection<Ingredient> Ingredients { get; }
-	public ObservableCollection<Image> Images { get; }
+	public ObservableCollection<RecipeImage> Images { get; }
 	public Recipe()
 	{
 		Tags = new();

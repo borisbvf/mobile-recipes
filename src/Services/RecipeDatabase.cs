@@ -39,10 +39,10 @@ namespace Recipes.Services
 			"FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE ON UPDATE CASCADE," +
 			"FOREIGN KEY (ingredient_id) REFERENCES ingredients (id) ON DELETE CASCADE ON UPDATE CASCADE" +
 			");";
-		private const string DBRecipeImageLinkScript = "CREATE TABLE recipe_images (" +
+		private const string DBRecipeImageLinkScript = "CREATE TABLE recipe_image (" +
 			"id INTEGER PRIMARY KEY," +
 			"recipe_id INTEGER," +
-			"data BLOB NOT NULL," +
+			"filename TEXT NOT NULL," +
 			"description TEXT," +
 			"FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE ON UPDATE CASCADE" +
 			");";
@@ -96,6 +96,12 @@ namespace Recipes.Services
 				{
 					recipe.Ingredients.Add(ingredient);
 				}
+				List<RecipeImage> images = await database!.QueryAsync<RecipeImage>(
+					$"SELECT t.id, t.description, t.filename FROM recipe_image t WHERE t.recipe_id = {recipeId}");
+				foreach (RecipeImage image in images)
+				{
+					recipe.Images.Add(image);
+				}
 			}
 			return recipe;
 		}
@@ -112,10 +118,22 @@ namespace Recipes.Services
 			if (recipe.Tags?.Count > 0)
 			{
 				int lastRecipeId = await database!.ExecuteScalarAsync<int>("select last_insert_rowid()");
-				await database!.ExecuteAsync($"DELETE FROM recipe_tag WHERE recipe_id = {lastRecipeId}");
 				foreach (RecipeTag tag in recipe.Tags)
 				{
 					await database!.ExecuteAsync($"INSERT INTO recipe_tag (recipe_id, tag_id) VALUES ({lastRecipeId}, {tag.Id})");
+				}
+				foreach (Ingredient ingredient in recipe.Ingredients)
+				{
+					await database!.ExecuteAsync(
+						$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment) VALUES ({lastRecipeId}, {ingredient.Id}, ?)",
+						ingredient.Comment);
+				}
+				foreach (RecipeImage image in recipe.Images)
+				{
+					await database!.ExecuteAsync(
+						$"INSERT INTO recipe_image (recipe_id, description, filename VALUES ({lastRecipeId}, ?, ?)",
+						image.Description,
+						image.FileName);
 				}
 			}
 		}
@@ -139,6 +157,14 @@ namespace Recipes.Services
 				await database!.ExecuteAsync(
 					$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment) VALUES ({recipe.Id}, {ingredient.Id}, ?)", 
 					ingredient.Comment);
+			}
+			await database!.ExecuteAsync($"DELETE FROM recipe_image WHERE recipe_id = {recipe.Id}");
+			foreach (RecipeImage image in recipe.Images)
+			{
+				await database!.ExecuteAsync(
+					$"INSERT INTO recipe_image (recipe_id, description, filename) VALUES ({recipe.Id}, ?, ?)",
+					image.Description,
+					image.FileName);
 			}
 		}
 		public async Task DeleteRecipeAsync(Recipe recipe)

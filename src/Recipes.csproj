@@ -127,6 +127,9 @@
 	  <MauiXaml Update="Views\ColorSelectionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ImageStoreView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\IngredientListView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

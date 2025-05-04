@@ -219,7 +219,15 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 	{
 		if (query.ContainsKey(Constants.CheckedTagsParameter))
 		{
-			CheckedIds = query[Constants.CheckedTagsParameter] as List<int>;
+			CheckedIds = new();
+			List<int>? paramIds = query[Constants.CheckedTagsParameter] as List<int>;
+			if (paramIds != null)
+			{
+				foreach (int id in paramIds)
+				{
+					CheckedIds.Add(id);
+				}
+			}
 		}
 		
 		if (query.ContainsKey(Constants.SelectedColorParameter))
@@ -247,20 +255,27 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 	public ICommand SaveCheckedCommand => new Command(SaveChecked);
 	public async void SaveChecked()
 	{
-		Dictionary<string, object> navParam = new Dictionary<string, object>();
-		if (checkedIds != null)
+		try
 		{
-			checkedIds.Clear();
-			foreach (RecipeTag tag in Tags)
+			Dictionary<string, object> navParam = new Dictionary<string, object>();
+			if (checkedIds != null)
 			{
-				if (tag.IsChecked)
+				List<int> paramIds = new();
+				foreach (RecipeTag tag in Tags)
 				{
-					checkedIds.Add(tag.Id);
+					if (tag.IsChecked)
+					{
+						paramIds.Add(tag.Id);
+					}
 				}
+				navParam.Add(Constants.CheckedTagsParameter, paramIds);
 			}
-			navParam.Add(Constants.CheckedTagsParameter, checkedIds);
+			await Shell.Current.GoToAsync("..", navParam);
 		}
-		await Shell.Current.GoToAsync("..", navParam);
+		catch (Exception ex)
+		{
+			Debug.WriteLine($"Exception while returning selected tags. {ex.Message}");
+		}
 	}
 
 	public ICommand SelectColorCommand => new Command(SelectColor, () => selectedTag != null);

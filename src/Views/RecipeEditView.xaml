@@ -8,6 +8,7 @@
              Title="{Binding Title}">
 	<ContentPage.Resources>
 		<viewmodels:MinutesToTimeSpanConverter x:Key="minutesToTimeSpan"/>
+		<viewmodels:TextToColorConverter x:Key="textToColor"/>
 		<Style TargetType="Grid">
 			<Setter Property="VisualStateManager.VisualStateGroups">
 				<VisualStateGroupList>
@@ -29,203 +30,241 @@
 		RowDefinitions="*,50"
 		Padding="2"
 		Margin="2">
-		<VerticalStackLayout
-			Spacing="2"
-			Grid.Row="0">
+		<ScrollView>
+			<VerticalStackLayout
+				Spacing="2"
+				Grid.Row="0">
 			
-			<Label
-				FontAttributes="Bold"
-				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-				Text="{Binding LocalizationManager[Name], Mode=OneWay}"/>
-			<Entry
-				Placeholder="{Binding LocalizationManager[NamePlaceholder], Mode=OneWay}"
-				IsEnabled="{Binding IsEnabled}"
-				Text="{Binding Recipe.Name, Mode=TwoWay}"/>
-			<Label
-				FontAttributes="Bold"
-				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-				Text="{Binding LocalizationManager[Description], Mode=OneWay}"/>
-			<Entry
-				Placeholder="{Binding LocalizationManager[DescriptionPlaceholder], Mode=OneWay}"
-				IsEnabled="{Binding IsEnabled}"
-				Text="{Binding Recipe.Description, Mode=TwoWay}"/>
-			
-			<Grid
-				ColumnDefinitions="*,*">
-				<VerticalStackLayout
-					Grid.Column="0">
-					<Label
-						FontAttributes="Bold"
-						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-						Text="{Binding LocalizationManager[PrepTime], Mode=OneWay}"/>
-					<TimePicker
-						Time="{Binding Path=Recipe.PreparationTime, Converter={StaticResource minutesToTimeSpan}, Mode=TwoWay}"
-						Format="HH:mm"/>
-				</VerticalStackLayout>
-				<VerticalStackLayout
-					Grid.Column="1">
-					<Label
-						FontAttributes="Bold"
-						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-						Text="{Binding LocalizationManager[CookTime],Mode=OneWay}"/>
-					<TimePicker
-						Time="{Binding Path=Recipe.CookingTime, Converter={StaticResource minutesToTimeSpan}, Mode=TwoWay}"
-						Format="HH:mm"/>
-				</VerticalStackLayout>
-			</Grid>
-			
-			<Frame
-				Padding="5"
-				CornerRadius="10">
-				<VerticalStackLayout>
-					<Grid
-						RowDefinitions="30"
-						ColumnDefinitions="*,2*">
+				<Label
+					FontAttributes="Bold"
+					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+					Text="{Binding LocalizationManager[Name], Mode=OneWay}"/>
+				<Entry
+					Placeholder="{Binding LocalizationManager[NamePlaceholder], Mode=OneWay}"
+					IsEnabled="{Binding IsEnabled}"
+					Text="{Binding Recipe.Name, Mode=TwoWay}">
+					<Entry.Keyboard>
+						<Keyboard x:FactoryMethod="Create">
+							<x:Arguments>
+								<KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+							</x:Arguments>
+						</Keyboard>
+					</Entry.Keyboard>
+				</Entry>
+				<Label
+					FontAttributes="Bold"
+					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+					Text="{Binding LocalizationManager[Description], Mode=OneWay}"/>
+				<Editor
+					AutoSize="TextChanges"
+					Placeholder="{Binding LocalizationManager[DescriptionPlaceholder], Mode=OneWay}"
+					IsEnabled="{Binding IsEnabled}"
+					Text="{Binding Recipe.Description, Mode=TwoWay}">
+					<Editor.Keyboard>
+						<Keyboard x:FactoryMethod="Create">
+							<x:Arguments>
+								<KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+							</x:Arguments>
+						</Keyboard>
+					</Editor.Keyboard>
+				</Editor>
+
+				<Grid
+					ColumnDefinitions="*,*">
+					<VerticalStackLayout
+						Grid.Column="0">
 						<Label
 							FontAttributes="Bold"
 							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-							Text="{Binding LocalizationManager[IngredientsCaption], Mode=OneWay}"/>
-						<HorizontalStackLayout
-							HorizontalOptions="End"
-							Spacing="2"
-							Grid.Column="1">
-							<ImageButton
-								Aspect="AspectFit"
-								CornerRadius="10"
-								WidthRequest="30"
+							Text="{Binding LocalizationManager[PrepTime], Mode=OneWay}"/>
+						<TimePicker
+							Time="{Binding Path=Recipe.PreparationTime, Converter={StaticResource minutesToTimeSpan}, Mode=TwoWay}"
+							Format="HH:mm"/>
+					</VerticalStackLayout>
+					<VerticalStackLayout
+						Grid.Column="1">
+						<Label
+							FontAttributes="Bold"
+							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+							Text="{Binding LocalizationManager[CookTime],Mode=OneWay}"/>
+						<TimePicker
+							Time="{Binding Path=Recipe.CookingTime, Converter={StaticResource minutesToTimeSpan}, Mode=TwoWay}"
+							Format="HH:mm"/>
+					</VerticalStackLayout>
+				</Grid>
+			
+				<Frame
+					Padding="5"
+					CornerRadius="10">
+					<VerticalStackLayout>
+						<Grid
+							RowDefinitions="30"
+							ColumnDefinitions="*,2*">
+							<Label
+								FontAttributes="Bold"
+								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+								Text="{Binding LocalizationManager[IngredientsCaption], Mode=OneWay}"/>
+							<HorizontalStackLayout
 								HorizontalOptions="End"
-								Source="add_2.png"
-								Command="{Binding AddIngredientCommand}"/>
-							<ImageButton
-								Aspect="AspectFit"
-								CornerRadius="10"
-								WidthRequest="30"
-								HorizontalOptions="End"
-								Source="delete.png"
-								Command="{Binding DeleteIngredientCommand}"/>
-						</HorizontalStackLayout>
+								Spacing="2"
+								Grid.Column="1">
+								<ImageButton
+									Aspect="AspectFit"
+									CornerRadius="10"
+									WidthRequest="30"
+									HorizontalOptions="End"
+									Source="add_2.png"
+									Command="{Binding AddIngredientCommand}"/>
+								<ImageButton
+									Aspect="AspectFit"
+									CornerRadius="10"
+									WidthRequest="30"
+									HorizontalOptions="End"
+									Source="delete.png"
+									Command="{Binding DeleteIngredientCommand}"/>
+							</HorizontalStackLayout>
 						
-					</Grid>
-					<CollectionView
-						SelectionMode="Single"
-						ItemsSource="{Binding Recipe.Ingredients}"
-						SelectedItem="{Binding SelectedIngredient}">
-						<CollectionView.ItemTemplate>
-							<DataTemplate x:DataType="models:Ingredient">
-								<Grid
-									ColumnDefinitions="*,2*">
-									<Label
-										Grid.Column="0"
-										VerticalOptions="Center"
-										Text="{Binding Name}"/>
-									<Entry
-										Grid.Column="1"
-										VerticalOptions="Center"
-										Text="{Binding Comment, Mode=TwoWay}"/>
-								</Grid>
-							</DataTemplate>
-						</CollectionView.ItemTemplate>						
-					</CollectionView>
-				</VerticalStackLayout>
-			</Frame>
+						</Grid>
+						<CollectionView
+							SelectionMode="Single"
+							ItemsSource="{Binding Recipe.Ingredients}"
+							SelectedItem="{Binding SelectedIngredient}">
+							<CollectionView.ItemTemplate>
+								<DataTemplate x:DataType="models:Ingredient">
+									<Grid
+										ColumnDefinitions="*,2*">
+										<Label
+											Grid.Column="0"
+											VerticalOptions="Center"
+											Text="{Binding Name}"/>
+										<Entry
+											Grid.Column="1"
+											VerticalOptions="Center"
+											Text="{Binding Comment, Mode=TwoWay}"/>
+									</Grid>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>						
+						</CollectionView>
+					</VerticalStackLayout>
+				</Frame>
 
-			<Frame
-				Padding="5"
-				CornerRadius="10">
-				<VerticalStackLayout>
-					<Grid
-						RowDefinitions="30">
-						<Label
-							FontAttributes="Bold"
-							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-							VerticalOptions="Center"
-							Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
-						<ImageButton
-							Aspect="AspectFit"
-							HorizontalOptions="End"
-							WidthRequest="30"
-							Source="edit.png"
-							Command="{Binding SelectTagsCommand}"/>
-					</Grid>
-					<CollectionView
-						ItemsSource="{Binding Recipe.Tags}">
-						<CollectionView.ItemsLayout>
-							<LinearItemsLayout
-								Orientation="Horizontal"
-								ItemSpacing="5"/>
-						</CollectionView.ItemsLayout>
-						<CollectionView.ItemTemplate>
-							<DataTemplate x:DataType="models:RecipeTag">
-								<Frame
-									Padding="5,1"
-									CornerRadius="15"
-									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
-									<Label
-										Margin="5"
-										FontSize="14"
-										FontAttributes="Bold"
-										Text="{Binding Name}"/>
-								</Frame>
-							</DataTemplate>
-						</CollectionView.ItemTemplate>
-					</CollectionView>
-				</VerticalStackLayout>
-			</Frame>
+				<Frame
+					Padding="5"
+					CornerRadius="10">
+					<VerticalStackLayout>
+						<Grid
+							RowDefinitions="30">
+							<Label
+								FontAttributes="Bold"
+								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+								VerticalOptions="Center"
+								Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
+							<ImageButton
+								Aspect="AspectFit"
+								HorizontalOptions="End"
+								WidthRequest="30"
+								Source="edit.png"
+								Command="{Binding SelectTagsCommand}"/>
+						</Grid>
+						<CollectionView
+							ItemsSource="{Binding Recipe.Tags}">
+							<CollectionView.ItemsLayout>
+								<LinearItemsLayout
+									Orientation="Horizontal"
+									ItemSpacing="5"/>
+							</CollectionView.ItemsLayout>
+							<CollectionView.ItemTemplate>
+								<DataTemplate x:DataType="models:RecipeTag">
+									<Frame
+										Padding="5,1"
+										CornerRadius="15"
+										BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+										<Label
+											Margin="5"
+											FontSize="14"
+											FontAttributes="Bold"
+											Text="{Binding Name}"/>
+									</Frame>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>
+						</CollectionView>
+					</VerticalStackLayout>
+				</Frame>
 			
-			<Label
-				FontAttributes="Bold"
-				TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-				Text="{Binding LocalizationManager[Directions], Mode=OneWay}"/>
-			<Editor
-				AutoSize="TextChanges"
-				Placeholder="{Binding LocalizationManager[DirectionsPlaceholder], Mode=OneWay}"
-				IsEnabled="{Binding IsEnabled}"
-				Text="{Binding Recipe.Instructions, Mode=TwoWay}"/>
+				<Label
+					FontAttributes="Bold"
+					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+					Text="{Binding LocalizationManager[Directions], Mode=OneWay}"/>
+				<Editor
+					AutoSize="TextChanges"
+					Placeholder="{Binding LocalizationManager[DirectionsPlaceholder], Mode=OneWay}"
+					IsEnabled="{Binding IsEnabled}"
+					Text="{Binding Recipe.Instructions, Mode=TwoWay}">
+					<Editor.Keyboard>
+						<Keyboard x:FactoryMethod="Create">
+							<x:Arguments>
+								<KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+							</x:Arguments>
+						</Keyboard>
+					</Editor.Keyboard>
+				</Editor>
 
-			<Frame
-				Padding="5"
-				CornerRadius="10">
-				<VerticalStackLayout>
-					<Grid
-						RowDefinitions="30"
-						ColumnDefinitions="*,2*">
-						<Label
-							FontAttributes="Bold"
-							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-							Text="{Binding LocalizationManager[Images],Mode=OneWay}"/>
-						<HorizontalStackLayout
-							HorizontalOptions="End"
-							Spacing="2"
-							Grid.Column="1">
-							<ImageButton
-								Aspect="AspectFit"
-								CornerRadius="10"
-								WidthRequest="30"
+				<Frame
+					Padding="5"
+					CornerRadius="10">
+					<VerticalStackLayout>
+						<Grid
+							RowDefinitions="30"
+							ColumnDefinitions="*,2*">
+							<Label
+								FontAttributes="Bold"
+								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+								Text="{Binding LocalizationManager[Images],Mode=OneWay}"/>
+							<HorizontalStackLayout
 								HorizontalOptions="End"
-								Command="{Binding PickImageCommand}"
-								Source="add_2.png"/>
-							<ImageButton
-								Aspect="AspectFit"
-								CornerRadius="10"
-								WidthRequest="30"
-								HorizontalOptions="End"
-								Source="edit.png"/>
-							<ImageButton
-								Aspect="AspectFit"
-								CornerRadius="10"
-								WidthRequest="30"
-								HorizontalOptions="End"
-								Source="delete.png"/>
-						</HorizontalStackLayout>
+								Spacing="2"
+								Grid.Column="1">
+								<ImageButton
+									Aspect="AspectFit"
+									CornerRadius="10"
+									WidthRequest="30"
+									HorizontalOptions="End"
+									Command="{Binding SelectImageCommand}"
+									Source="picture.png"/>
+								<ImageButton
+									Aspect="AspectFit"
+									CornerRadius="10"
+									WidthRequest="30"
+									HorizontalOptions="End"
+									Command="{Binding TakePhotoCommand}"
+									Source="camera.png"/>
+								<ImageButton
+									Aspect="AspectFit"
+									CornerRadius="10"
+									WidthRequest="30"
+									HorizontalOptions="End"
+									Source="delete.png"/>
+							</HorizontalStackLayout>
 
-					</Grid>
-					<CollectionView>
+						</Grid>
+						<CollectionView
+							ItemsSource="{Binding Recipe.Images}">
+							<CollectionView.ItemTemplate>
+								<DataTemplate x:DataType="models:RecipeImage">
+									<VerticalStackLayout>
+										<Image
+											Source="{Binding FileName}"/>
+										<Entry
+											Text="{Binding Description, Mode=TwoWay}"/>
+									</VerticalStackLayout>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>
+						</CollectionView>
+					</VerticalStackLayout>
+				</Frame>
 
-					</CollectionView>
-				</VerticalStackLayout>
-			</Frame>
-
-		</VerticalStackLayout>
+			</VerticalStackLayout>
+		</ScrollView>
 
 		<HorizontalStackLayout
 			Grid.Row="2">

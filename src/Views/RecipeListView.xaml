@@ -19,6 +19,10 @@
 			Order="Secondary"
 			Text="{Binding LocalizationManager[Settings], Mode=OneWay}"
 			Command="{Binding SettingsCommand}"/>
+		<ToolbarItem
+			Order="Secondary"
+			Text="Image Store"
+			Command="{Binding ImageStoreCommand}"/>
 	</ContentPage.ToolbarItems>
 	<Grid
 		Padding="2"
