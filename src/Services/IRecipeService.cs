@@ -6,6 +6,7 @@ public interface IRecipeService
 
 	public Task<IEnumerable<Recipe>> GetRecipeListAsync();
 	public Task<Recipe?> GetRecipeAsync(int recipeId);
+	public Task<bool> CheckRecipeNameUnique(string name, int id);
 	public Task AddRecipeAsync(Recipe recipe);
 	public Task UpdateRecipeAsync(Recipe recipe);
 	public Task DeleteRecipeAsync(Recipe recipe);

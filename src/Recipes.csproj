@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>BaseMobile</ApplicationTitle>
+		<ApplicationTitle>Recipes</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.recipes</ApplicationId>

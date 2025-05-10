@@ -2,7 +2,7 @@
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;
-public class ColorSelectionViewModel : BaseViewModel
+public class ColorSelectionViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 	public double RectangleWidth
@@ -14,6 +14,8 @@ public class ColorSelectionViewModel : BaseViewModel
 		get => (DeviceDisplay.Current.MainDisplayInfo.Height / DeviceDisplay.Current.MainDisplayInfo.Density) * 0.8 / (Math.Ceiling(Colors.Count / 3.0)) - 10;
 	}
 	public ObservableCollection<Color> Colors { get; } = [];
+
+	private int tagId;
 
 	private Color? selectedColor;
 	public Color? SelectedColor
@@ -58,6 +60,15 @@ public class ColorSelectionViewModel : BaseViewModel
 		Dictionary<string, object> navParam = new();
 		if (selectedColor != null)
 			navParam.Add(Constants.SelectedColorParameter, selectedColor.ToArgbHex());
+		navParam.Add(Constants.TagIdParameter, tagId);
 		await Shell.Current.GoToAsync("..", navParam);
+	}
+
+	public void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		if (query.ContainsKey(Constants.TagIdParameter))
+		{
+			tagId = Convert.ToInt32(query[Constants.TagIdParameter]);
+		}
 	}
 }

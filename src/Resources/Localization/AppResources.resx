@@ -139,7 +139,7 @@
     <value>Change color</value>
   </data>
   <data name="ColorSelectionTitle" xml:space="preserve">
-    <value>Tag's color</value>
+    <value>Select tag's color</value>
   </data>
   <data name="CookTime" xml:space="preserve">
     <value>Cooking time:</value>
@@ -261,5 +261,8 @@
   </data>
   <data name="WmRecipeNameEmpty" xml:space="preserve">
     <value>Recipe's name is empty.</value>
+  </data>
+  <data name="WmRecipeNameExists" xml:space="preserve">
+    <value>Recipe with entered name already exists.</value>
   </data>
 </root>

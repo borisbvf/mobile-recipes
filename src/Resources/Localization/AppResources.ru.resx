@@ -139,7 +139,7 @@
     <value>Изменить цвет</value>
   </data>
   <data name="ColorSelectionTitle" xml:space="preserve">
-    <value>Цвет ярлыка</value>
+    <value>Выберите цвет ярлыка</value>
   </data>
   <data name="CookTime" xml:space="preserve">
     <value>Время на приготовление:</value>
@@ -260,5 +260,8 @@
   </data>
   <data name="WmRecipeNameEmpty" xml:space="preserve">
     <value>Наименование рецепта не заполнено.</value>
+  </data>
+  <data name="WmRecipeNameExists" xml:space="preserve">
+    <value>Рецепт с введенным наименованием уже существует.</value>
   </data>
 </root>

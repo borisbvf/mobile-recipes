@@ -14,9 +14,9 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 
 	public async void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
-		if (query.ContainsKey(Constants.RecipeId))
+		if (query.ContainsKey(Constants.RecipeIdParameter))
 		{
-			int recipeId = (int)query[Constants.RecipeId];
+			int recipeId = (int)query[Constants.RecipeIdParameter];
 			Recipe = await recipeService.GetRecipeAsync(recipeId);
 		}
 	}

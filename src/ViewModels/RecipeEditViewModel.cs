@@ -47,6 +47,20 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		}
 	}
 
+	private RecipeImage? selectedImage;
+	public RecipeImage? SelectedImage
+	{
+		get => selectedImage;
+		set
+		{
+			if (value != selectedImage)
+			{
+				selectedImage = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
 	public ICommand SaveCommand => new Command(SaveRecipe);
 	private async void SaveRecipe(object obj)
 	{
@@ -58,6 +72,15 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 				await Shell.Current.DisplayAlert(
 					LocalizationManager["Warning"].ToString(),
 					LocalizationManager["WmRecipeNameEmpty"].ToString(),
+					LocalizationManager["Ok"].ToString());
+				return;
+			}
+			bool isNameUnique = await recipeService.CheckRecipeNameUnique(recipe.Name, recipe.Id);
+			if (!isNameUnique)
+			{
+				await Shell.Current.DisplayAlert(
+					LocalizationManager["Warning"].ToString(),
+					LocalizationManager["WmRecipeNameExists"].ToString(),
 					LocalizationManager["Ok"].ToString());
 				return;
 			}
@@ -166,8 +189,16 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			{
 				AddFile(photo);
 			}
+		}	
+	}
+
+	public ICommand DeleteImageCommand => new Command(DeleteImage, () => selectedImage != null);
+	public void DeleteImage()
+	{
+		if (selectedImage != null && recipe != null)
+		{
+			recipe.Images.Remove(selectedImage);
 		}
-		
 	}
 
 	public async void ApplyQueryAttributes(IDictionary<string, object> query)

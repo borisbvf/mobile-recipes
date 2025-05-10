@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Web;
 using System.Windows.Input;
 
@@ -8,7 +9,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
-	public ObservableCollection<RecipeTag> Tags { get; } = [];
+	public ObservableCollection<ObservableTag> Tags { get; } = [];
 
 	private bool isRefreshing;
 	public bool IsRefreshing
@@ -48,15 +49,15 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	private RecipeTag? selectedTag;
-	public RecipeTag? SelectedTag
+	private ObservableTag? draggedTag;
+	public ObservableTag? DraggedTag
 	{
-		get => selectedTag;
+		get => draggedTag;
 		set
 		{
-			if (selectedTag != value)
+			if (draggedTag != value)
 			{
-				selectedTag = value;
+				draggedTag = value;
 				OnPropertyChanged();
 			}
 		}
@@ -84,7 +85,11 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 			foreach (RecipeTag tag in result)
 			{
 				tag.IsChecked = (checkedIds != null) && (checkedIds.IndexOf(tag.Id) >= 0);
-				Tags.Add(tag);
+				ObservableTag extendedTag = new();
+				extendedTag.CopyFrom(tag);
+				extendedTag.BackgroundDragColor = GetBaseBackgroundDragColor();
+				extendedTag.BackgroundSelectColor = GetBackgroundSelectionColor(extendedTag.IsChecked);
+				Tags.Add(extendedTag);
 			}
 		}
 		catch (Exception ex)
@@ -110,7 +115,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 			$"{LocalizationManager["MsgAddingTag"]}",
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}",
-			"");
+			keyboard: Keyboard.Create(KeyboardFlags.CapitalizeSentence));
 		if (name != null)
 		{
 			foreach (RecipeTag tag in Tags)
@@ -141,25 +146,29 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 	}
 
 	public ICommand EditTagCommand => new Command(EditTag, CanEditTag);
-	private bool CanEditTag()
+	private bool CanEditTag(object obj)
 	{
-		return selectedTag != null;
+		return obj != null;
 	}
-	private async void EditTag()
+	private async void EditTag(object obj)
 	{
-		if (selectedTag != null)
+		if (obj == null || obj is not ObservableTag)
+			return;
+		ObservableTag? editedTag = obj as ObservableTag;
+		if (editedTag != null)
 		{
 			string name = await Shell.Current.DisplayPromptAsync(
 			"",
 			$"{LocalizationManager["MsgAddingTag"]}",
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}",
-			$"{selectedTag.Name}");
+			keyboard: Keyboard.Create(KeyboardFlags.CapitalizeSentence),
+			initialValue: $"{editedTag.Name}");
 			if (name != null)
 			{
 				foreach (RecipeTag tag in Tags)
 				{
-					if (tag != selectedTag && string.Equals(tag.Name, name, StringComparison.OrdinalIgnoreCase))
+					if (tag != editedTag && string.Equals(tag.Name, name, StringComparison.OrdinalIgnoreCase))
 					{
 						await Shell.Current.DisplayAlert(
 							$"{LocalizationManager["Error"]}",
@@ -170,8 +179,8 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 				}
 				try
 				{
-					selectedTag.Name = name;
-					await recipeService.UpdateTagAsync(selectedTag);
+					editedTag.Name = name;
+					await recipeService.UpdateTagAsync(editedTag);
 					GetTagListAsync();
 				}
 				catch (Exception ex)
@@ -186,10 +195,13 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	public ICommand DeleteTagCommand => new Command(DeleteTag, () => selectedTag != null);
-	private async void DeleteTag()
+	public ICommand DeleteTagCommand => new Command(DeleteTag, (object obj) => obj != null);
+	private async void DeleteTag(object obj)
 	{
-		if (selectedTag != null)
+		if (obj == null || obj is not ObservableTag)
+			return;
+		ObservableTag? deletedTag = obj as ObservableTag;
+		if (deletedTag != null)
 		{
 			bool confirmed = await Shell.Current.DisplayAlert(
 			"",
@@ -200,7 +212,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 			{
 				try
 				{
-					await recipeService.DeleteTagAsync(selectedTag);
+					await recipeService.DeleteTagAsync(deletedTag);
 					GetTagListAsync();
 				}
 				catch (Exception ex)
@@ -229,16 +241,19 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 				}
 			}
 		}
-		
-		if (query.ContainsKey(Constants.SelectedColorParameter))
+
+		if (query.ContainsKey(Constants.SelectedColorParameter) && query.ContainsKey(Constants.TagIdParameter))
 		{
 			string? selectedColor = query[Constants.SelectedColorParameter].ToString();
-			if (selectedTag != null && !string.IsNullOrEmpty(selectedColor))
+			int tagId = Convert.ToInt32(query[Constants.TagIdParameter]);
+			ObservableTag? currentTag = Tags.FirstOrDefault(x => x.Id == tagId);
+
+			if (currentTag != null && !string.IsNullOrEmpty(selectedColor))
 			{
-				selectedTag.Color = selectedColor;
+				currentTag.Color = selectedColor;
 				try
 				{
-					await recipeService.UpdateTagAsync(selectedTag);
+					await recipeService.UpdateTagAsync(currentTag);
 				}
 				catch (Exception ex)
 				{
@@ -278,9 +293,101 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	public ICommand SelectColorCommand => new Command(SelectColor, () => selectedTag != null);
-	public async void SelectColor()
+	public ICommand SelectColorCommand => new Command(SelectColor, (object obj) => obj != null);
+	public async void SelectColor(object obj)
 	{
-		await Shell.Current.GoToAsync(Constants.ColorSelectionRoute);
+		if (obj == null || obj is not ObservableTag)
+			return;
+		ObservableTag? currentTag = obj as ObservableTag;
+		Dictionary<string, object> navParam = new();
+		if (currentTag != null)
+			navParam.Add(Constants.TagIdParameter, currentTag.Id);
+		await Shell.Current.GoToAsync(Constants.ColorSelectionRoute, navParam);
+	}
+
+	private Color GetBaseBackgroundDragColor()
+	{
+		Color result = (App.Current!.RequestedTheme == AppTheme.Light)
+			? (Color)App.Current!.Resources["White"]
+			: (Color)App.Current!.Resources["Black"];
+		return result;
+	}
+
+	private Color GetBackgroundSelectionColor(bool isChecked)
+	{
+		Color result = (App.Current!.RequestedTheme == AppTheme.Light)
+			? (Color)App.Current!.Resources["White"]
+			: (Color)App.Current!.Resources["Black"];
+		if (isChecked)
+		{
+			result = Colors.Aqua;
+		}
+		return result;
+	}
+
+	public ICommand DragTagStartingCommand => new Command(DragTagStarting);
+	public void DragTagStarting(object obj)
+	{
+		DraggedTag = obj as ObservableTag;
+	}
+
+	public ICommand DragTagOverCommand => new Command(DragTagOver);
+	public void DragTagOver(object obj)
+	{
+		ObservableTag? currentTag = obj as ObservableTag;
+		if (currentTag != null && draggedTag != null && currentTag != draggedTag)
+		{
+			currentTag.BackgroundDragColor = Colors.LightSkyBlue;
+		}
+	}
+
+	public ICommand DragTagLeaveCommand => new Command(DragTagLeave);
+	public void DragTagLeave(object obj)
+	{
+		ObservableTag? currentTag = obj as ObservableTag;
+		if (currentTag != null)
+		{
+			currentTag.BackgroundDragColor = GetBaseBackgroundDragColor();
+		}
+	}
+
+	public ICommand DropTagCommand => new Command(DropTag);
+	public async void DropTag(object obj)
+	{
+		ObservableTag? currentTag = obj as ObservableTag;
+		if (currentTag != null && draggedTag != null)
+		{
+			currentTag.BackgroundDragColor = GetBaseBackgroundDragColor();
+			draggedTag.BackgroundDragColor = GetBaseBackgroundDragColor();
+			if (currentTag != draggedTag)
+			{
+				int oldIndex = Tags.IndexOf(draggedTag);
+				int newIndex = Tags.IndexOf(currentTag);
+				int minIndex = Math.Min(oldIndex, newIndex);
+				int maxIndex = Math.Max(oldIndex, newIndex);
+				Tags.Remove(draggedTag);
+				Tags.Insert(Tags.IndexOf(currentTag), draggedTag);
+				for (int i = minIndex; i <= maxIndex; i++)
+				{
+					Tags[i].SortOrder = i;
+					await recipeService.UpdateTagAsync(Tags[i]);
+				}
+			}
+			DraggedTag = null;
+		}
+	}
+
+	public ICommand TapTagCommand => new Command(TapTag);
+	public void TapTag(object obj)
+	{
+		if (checkedIds == null)
+			return;
+
+		ObservableTag? currentTag = obj as ObservableTag;
+		if (currentTag != null)
+		{
+			currentTag.IsChecked = !currentTag.IsChecked;
+			currentTag.BackgroundSelectColor = GetBackgroundSelectionColor(currentTag.IsChecked);
+		}
 	}
 }

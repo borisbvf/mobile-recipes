@@ -22,7 +22,8 @@ namespace Recipes.Services
 		private const string DBRecipeTagScript = "CREATE TABLE tags (" +
 			"id INTEGER PRIMARY KEY," +
 			"name TEXT NOT NULL UNIQUE," +
-			"color TEXT" +
+			"color TEXT, " +
+			"sort_order INTEGER" +
 			");";
 		private const string DBRecipeTagLinkScript = "CREATE TABLE recipe_tag (" +
 			"recipe_id INTEGER," +
@@ -60,6 +61,21 @@ namespace Recipes.Services
 			{
 				database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
 			}
+			/*
+			string tempCreate = "CREATE TABLE temp_tags (" +
+				"id INTEGER," +
+				"name TEXT," +
+				"color TEXT," +
+				"sort_order INTEGER);";
+			string copyCreate = "INSERT INTO temp_tag (id, name, color, sort_order) SELECT id, name, color, 0 FROM tags";
+			string copyBack = "INSERT INTO tags (id, name, color, sort_order) SELECT id, name, color, id FROM temp_tags";
+			database!.ExecuteAsync(tempCreate);
+			database!.ExecuteAsync(copyCreate);
+			database!.ExecuteAsync("DROP TABLE tags;");
+			database!.ExecuteAsync(DBRecipeTagScript);
+			database!.ExecuteAsync(copyBack);
+			database!.ExecuteAsync("DROP TABLE temp_tags;");
+			*/
 			return File.Exists(Constants.DBPath);
 		}
 
@@ -104,6 +120,12 @@ namespace Recipes.Services
 				}
 			}
 			return recipe;
+		}
+
+		public async Task<bool> CheckRecipeNameUnique(string name, int id)
+		{
+			int count = await database!.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM recipes WHERE name = ? AND id <> {id}", name);
+			return count == 0;
 		}
 
 		public async Task AddRecipeAsync(Recipe recipe)
@@ -175,7 +197,7 @@ namespace Recipes.Services
 
 		public async Task<IEnumerable<Ingredient>> GetIngredientListAsync()
 		{
-			return await database!.QueryAsync<Ingredient>("SELECT id, name FROM ingredients");
+			return await database!.QueryAsync<Ingredient>("SELECT id, name FROM ingredients ORDER BY name");
 		}
 		public async Task AddIngredientAsync(Ingredient ingredient)
 		{
@@ -197,7 +219,7 @@ namespace Recipes.Services
 
 		public async Task<IEnumerable<RecipeTag>> GetTagListAsync()
 		{
-			return await database!.QueryAsync<RecipeTag>("SELECT id, name, color FROM tags");
+			return await database!.QueryAsync<RecipeTag>("SELECT id, name, color, sort_order as sortorder FROM tags ORDER BY sort_order");
 		}
 		public async Task<IEnumerable<RecipeTag>> GetTagListAsync(List<int> ids)
 		{
@@ -206,16 +228,18 @@ namespace Recipes.Services
 		public async Task AddTagAsync(RecipeTag recipeTag)
 		{
 			int rows = await database!.ExecuteAsync(
-				"INSERT INTO tags (name, color) VALUES (?, ?)",
+				"INSERT INTO tags (name, color, sort_order) VALUES (?, ?, ?)",
 				recipeTag.Name,
-				recipeTag.Color);
+				recipeTag.Color,
+				recipeTag.SortOrder);
 		}
 		public async Task UpdateTagAsync(RecipeTag recipeTag)
 		{
 			int rows = await database!.ExecuteAsync(
-				$"UPDATE tags SET name = ?, color = ? WHERE id = {recipeTag.Id}",
+				$"UPDATE tags SET name = ?, color = ?, sort_order = ? WHERE id = {recipeTag.Id}",
 				recipeTag.Name,
-				recipeTag.Color);
+				recipeTag.Color,
+				recipeTag.SortOrder);
 		}
 		public async Task DeleteTagAsync(RecipeTag recipeTag)
 		{

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Maui;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -92,7 +93,7 @@ public class IngredientListViewModel : BaseViewModel
 			$"{LocalizationManager["MsgAddingIngredient"]}",
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}",
-			"");
+			keyboard:Keyboard.Create(KeyboardFlags.CapitalizeSentence));
 		if (name != null)
 		{
 			foreach (Ingredient ingredient in Ingredients)
@@ -136,7 +137,8 @@ public class IngredientListViewModel : BaseViewModel
 			$"{LocalizationManager["MsgAddingIngredient"]}",
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}",
-			$"{selectedIngredient.Name}");
+			keyboard:Keyboard.Create(KeyboardFlags.CapitalizeSentence),
+			initialValue:$"{selectedIngredient.Name}");
 			if (name != null)
 			{
 				foreach (Ingredient ingredient in Ingredients)

@@ -124,7 +124,7 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag&apos;s color.
+        ///   Looks up a localized string similar to Select tag&apos;s color.
         /// </summary>
         internal static string ColorSelectionTitle {
             get {
@@ -489,6 +489,15 @@ namespace Recipes.Resources.Localization {
         internal static string WmRecipeNameEmpty {
             get {
                 return ResourceManager.GetString("WmRecipeNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipe with entered name already exists..
+        /// </summary>
+        internal static string WmRecipeNameExists {
+            get {
+                return ResourceManager.GetString("WmRecipeNameExists", resourceCulture);
             }
         }
     }

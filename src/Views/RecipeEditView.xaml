@@ -243,11 +243,14 @@
 									CornerRadius="10"
 									WidthRequest="30"
 									HorizontalOptions="End"
+									Command="{Binding DeleteImageCommand}"
 									Source="delete.png"/>
 							</HorizontalStackLayout>
 
 						</Grid>
 						<CollectionView
+							SelectionMode="Single"
+							SelectedItem="{Binding SelectedImage}"
 							ItemsSource="{Binding Recipe.Images}">
 							<CollectionView.ItemTemplate>
 								<DataTemplate x:DataType="models:RecipeImage">
@@ -255,7 +258,15 @@
 										<Image
 											Source="{Binding FileName}"/>
 										<Entry
-											Text="{Binding Description, Mode=TwoWay}"/>
+											Text="{Binding Description, Mode=TwoWay}">
+											<Entry.Keyboard>
+												<Keyboard x:FactoryMethod="Create">
+													<x:Arguments>
+														<KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+													</x:Arguments>
+												</Keyboard>
+											</Entry.Keyboard>
+										</Entry>
 									</VerticalStackLayout>
 								</DataTemplate>
 							</CollectionView.ItemTemplate>

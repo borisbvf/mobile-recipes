@@ -22,154 +22,160 @@
 			Command="{Binding DeleteRecipeCommand}"
 			CommandParameter="{Binding Recipe}"/>
 	</ContentPage.ToolbarItems>
-    <VerticalStackLayout>
-		<Label
-			Padding="2"
-			Margin="5"
-            Text="{Binding Recipe.Name}"
-			HorizontalOptions="Center"
-			FontSize="Medium"
-			FontAttributes="Bold"/>
-		<Label
-			Padding="2"
-			Margin="2"
-			FontAttributes="Italic"
-			Text="{Binding Recipe.Description}"/>
+	<ScrollView>
+		<VerticalStackLayout>
+			<Label
+				Padding="2"
+				Margin="5"
+				Text="{Binding Recipe.Name}"
+				HorizontalOptions="Center"
+				FontSize="Medium"
+				FontAttributes="Bold"/>
+			<Label
+				Padding="2"
+				Margin="2"
+				FontAttributes="Italic"
+				Text="{Binding Recipe.Description}"/>
 		
-		<Frame
-			Margin="2"
-			Padding="5">
-			<Grid
-				ColumnSpacing="40"
-				ColumnDefinitions="*,*"
-				RowDefinitions="30">
-				<Label
-					Grid.Column="0"
-					VerticalOptions="Center"
-					HorizontalOptions="Start"
-					WidthRequest="135"
-					LineBreakMode="TailTruncation"
-					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-					Text="{Binding LocalizationManager[PrepTime]}"/>
-				<Label
-					Grid.Column="0"
-					VerticalOptions="Center"
-					HorizontalOptions="End"
-					FontAttributes="Bold"
-					FontSize="16"
-					Text="{Binding Path=Recipe.PreparationTime, Converter={StaticResource minutesToTimeString}}"/>
-				<Label
-					Grid.Column="1"
-					VerticalOptions="Center"
-					HorizontalOptions="Start"
-					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-					Text="{Binding LocalizationManager[CookTime]}"/>
-				<Label
-					Grid.Column="1"
-					VerticalOptions="Center"
-					HorizontalOptions="End"
-					FontAttributes="Bold"
-					FontSize="16"
-					Text="{Binding Path=Recipe.CookingTime, Converter={StaticResource minutesToTimeString}}"/>
-			</Grid>
-		</Frame>
+			<Frame
+				Margin="2"
+				Padding="5">
+				<Grid
+					ColumnSpacing="2"
+					ColumnDefinitions="2*,*"
+					RowDefinitions="30,30">
+					<Label
+						Grid.Column="0"
+						Grid.Row="0"
+						VerticalOptions="Center"
+						HorizontalOptions="Start"
+						LineBreakMode="TailTruncation"
+						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+						Text="{Binding LocalizationManager[PrepTime]}"/>
+					<Label
+						Grid.Column="1"
+						Grid.Row="0"
+						VerticalOptions="Center"
+						HorizontalOptions="End"
+						FontAttributes="Bold"
+						FontSize="16"
+						Text="{Binding Path=Recipe.PreparationTime, Converter={StaticResource minutesToTimeString}}"/>
+					<Label
+						Grid.Column="0"
+						Grid.Row="1"
+						VerticalOptions="Center"
+						HorizontalOptions="Start"
+						LineBreakMode="TailTruncation"
+						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+						Text="{Binding LocalizationManager[CookTime]}"/>
+					<Label
+						Grid.Column="1"
+						Grid.Row="1"
+						VerticalOptions="Center"
+						HorizontalOptions="End"
+						FontAttributes="Bold"
+						FontSize="16"
+						Text="{Binding Path=Recipe.CookingTime, Converter={StaticResource minutesToTimeString}}"/>
+				</Grid>
+			</Frame>
 		
-		<Frame
-			Margin="2"
-			Padding="5">
-			<HorizontalStackLayout>
-				<Label
-					Margin="1,1,10,1"
-					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-					Text="{Binding LocalizationManager[IngredientsCaption]}"/>
-				<CollectionView
-					ItemsSource="{Binding Recipe.Ingredients}">
-					<CollectionView.ItemTemplate>
-						<DataTemplate x:DataType="models:Ingredient">
-							<HorizontalStackLayout>
-								<Label
-									Margin="1,1,10,1"
-									Text="{Binding Name}"/>
-								<Label
-									Text="{Binding Comment}"/>
-							</HorizontalStackLayout>
-						</DataTemplate>
-					</CollectionView.ItemTemplate>
-				</CollectionView>
-			</HorizontalStackLayout>
-		</Frame>
+			<Frame
+				Margin="2"
+				Padding="5">
+				<HorizontalStackLayout>
+					<Label
+						Margin="1,1,10,1"
+						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+						Text="{Binding LocalizationManager[IngredientsCaption]}"/>
+					<CollectionView
+						ItemsSource="{Binding Recipe.Ingredients}">
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="models:Ingredient">
+								<HorizontalStackLayout>
+									<Label
+										Margin="1,1,10,1"
+										Text="{Binding Name}"/>
+									<Label
+										Text="{Binding Comment}"/>
+								</HorizontalStackLayout>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</HorizontalStackLayout>
+			</Frame>
 		
-		<Frame
-			Margin="2"
-			Padding="5">
-			<VerticalStackLayout>
-				<Label
-					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-					Text="{Binding LocalizationManager[Directions]}"/>
-				<Label
-					Padding="0"
-					Margin="0"
-					Text="{Binding Recipe.Instructions}"/>
-			</VerticalStackLayout>
-		</Frame>
+			<Frame
+				Margin="2"
+				Padding="5">
+				<VerticalStackLayout>
+					<Label
+						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+						Text="{Binding LocalizationManager[Directions]}"/>
+					<Label
+						Padding="0"
+						Margin="0"
+						Text="{Binding Recipe.Instructions}"/>
+				</VerticalStackLayout>
+			</Frame>
 		
-		<Frame
-			Margin="2"
-			Padding="5">
-			<HorizontalStackLayout>
-				<Label
-					VerticalOptions="Center"
-					Margin="1,1,5,1"
-					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-					Text="{Binding LocalizationManager[TagsCaption]}"/>
-				<CollectionView
-					Grid.Row="1"
-					ItemsSource="{Binding Recipe.Tags}">
-					<CollectionView.ItemsLayout>
-						<LinearItemsLayout
-							Orientation="Horizontal"
-							ItemSpacing="5"/>
-					</CollectionView.ItemsLayout>
-					<CollectionView.ItemTemplate>
-						<DataTemplate x:DataType="models:RecipeTag">
-							<Frame
-								Padding="5"
-								CornerRadius="15"
-								BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
-								<Label
-									Margin="5,1"
-									FontSize="14"
-									FontAttributes="Bold"
-									Text="{Binding Name}"/>
-							</Frame>
-						</DataTemplate>
-					</CollectionView.ItemTemplate>
-				</CollectionView>
-			</HorizontalStackLayout>
-		</Frame>
+			<Frame
+				Margin="2"
+				Padding="5">
+				<HorizontalStackLayout>
+					<Label
+						VerticalOptions="Center"
+						Margin="1,1,5,1"
+						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+						Text="{Binding LocalizationManager[TagsCaption]}"/>
+					<CollectionView
+						Grid.Row="1"
+						ItemsSource="{Binding Recipe.Tags}">
+						<CollectionView.ItemsLayout>
+							<LinearItemsLayout
+								Orientation="Horizontal"
+								ItemSpacing="5"/>
+						</CollectionView.ItemsLayout>
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="models:RecipeTag">
+								<Frame
+									Padding="5"
+									CornerRadius="15"
+									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+									<Label
+										Margin="5,1"
+										FontSize="14"
+										FontAttributes="Bold"
+										Text="{Binding Name}"/>
+								</Frame>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</HorizontalStackLayout>
+			</Frame>
 		
-		<Frame
-			Margin="2"
-			Padding="5">
-			<VerticalStackLayout>
-				<Label
-					TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-					Text="{Binding LocalizationManager[Images]}"/>
-				<CollectionView
-					ItemsSource="{Binding Recipe.Images}">
-					<CollectionView.ItemTemplate>
-						<DataTemplate x:DataType="models:RecipeImage">
-							<VerticalStackLayout>
-								<Image
-									Source="{Binding FileName}"/>
-								<Label
-									Text="{Binding Description}"/>
-							</VerticalStackLayout>
-						</DataTemplate>
-					</CollectionView.ItemTemplate>					
-				</CollectionView>
-			</VerticalStackLayout>
-		</Frame>
+			<Frame
+				Margin="2"
+				Padding="5">
+				<VerticalStackLayout>
+					<Label
+						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+						Text="{Binding LocalizationManager[Images]}"/>
+					<CollectionView
+						ItemsSource="{Binding Recipe.Images}">
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="models:RecipeImage">
+								<VerticalStackLayout>
+									<Image
+										Source="{Binding FileName}"/>
+									<Label
+										Text="{Binding Description}"/>
+								</VerticalStackLayout>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>					
+					</CollectionView>
+				</VerticalStackLayout>
+			</Frame>
 		
-	</VerticalStackLayout>
+		</VerticalStackLayout>
+	</ScrollView>
 </ContentPage>

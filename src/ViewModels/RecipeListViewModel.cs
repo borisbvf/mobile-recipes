@@ -72,7 +72,7 @@ public class RecipeListViewModel : BaseViewModel
 		Recipe? recipe = obj as Recipe;
 		if (recipe != null)
 		{
-			var navParameter = new Dictionary<string, object> { { Constants.RecipeId, recipe.Id } };
+			var navParameter = new Dictionary<string, object> { { Constants.RecipeIdParameter, recipe.Id } };
 			Shell.Current.GoToAsync(Constants.DetailPageRoute, navParameter);
 		}
 	}
