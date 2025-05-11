@@ -40,4 +40,6 @@ public static class Constants
 	public const string SelectedColorParameter = "SelectedColor";
 	public const string RecipeIdParameter = "RecipeId";
 	public const string TagIdParameter = "TagId";
+	public const string IngredientIdsParameter = "IngredientIds";
+	public const string SelectedIngredientsParameter = "SelectedIngredients";
 }

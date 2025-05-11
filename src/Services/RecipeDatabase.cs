@@ -1,5 +1,4 @@
-﻿using Android.Renderscripts;
-using SQLite;
+﻿using SQLite;
 using System.ComponentModel;
 
 namespace Recipes.Services
@@ -37,6 +36,7 @@ namespace Recipes.Services
 			"recipe_id INTEGER," +
 			"ingredient_id INTEGER," +
 			"comment TEXT," +
+			"sort_order INTEGER," +
 			"PRIMARY KEY (recipe_id, ingredient_id)," +
 			"FOREIGN KEY (recipe_id) REFERENCES recipes (id) ON DELETE CASCADE ON UPDATE CASCADE," +
 			"FOREIGN KEY (ingredient_id) REFERENCES ingredients (id) ON DELETE CASCADE ON UPDATE CASCADE" +
@@ -62,7 +62,8 @@ namespace Recipes.Services
 			{
 				database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
 			}
-
+			//database!.ExecuteAsync("DROP TABLE recipe_ingredient;");
+			//database!.ExecuteAsync(DBRecipeIngredientLinkScript);
 			return File.Exists(Constants.DBPath);
 		}
 
@@ -93,8 +94,8 @@ namespace Recipes.Services
 				{
 					recipe.Tags.Add(tag);
 				}
-				List<Ingredient> ingredients = await database!.QueryAsync<Ingredient>("SELECT t.id, t.name, link.comment FROM ingredients t " +
-					$"INNER JOIN recipe_ingredient link ON link.ingredient_id = t.id WHERE link.recipe_id = {recipeId}");
+				List<Ingredient> ingredients = await database!.QueryAsync<Ingredient>("SELECT t.id, t.name, link.comment, link.sort_order AS sortorder " +
+					$"FROM ingredients t INNER JOIN recipe_ingredient link ON link.ingredient_id = t.id WHERE link.recipe_id = {recipeId} ORDER BY link.sort_order");
 				foreach (Ingredient ingredient in ingredients)
 				{
 					recipe.Ingredients.Add(ingredient);
@@ -134,7 +135,7 @@ namespace Recipes.Services
 				foreach (Ingredient ingredient in recipe.Ingredients)
 				{
 					await database!.ExecuteAsync(
-						$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment) VALUES ({lastRecipeId}, {ingredient.Id}, ?)",
+						$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment, sort_order) VALUES ({lastRecipeId}, {ingredient.Id}, ?, {ingredient.SortOrder})",
 						ingredient.Comment);
 				}
 				foreach (RecipeImage image in recipe.Images)
@@ -164,7 +165,7 @@ namespace Recipes.Services
 			foreach (Ingredient ingredient in recipe.Ingredients)
 			{
 				await database!.ExecuteAsync(
-					$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment) VALUES ({recipe.Id}, {ingredient.Id}, ?)", 
+					$"INSERT INTO recipe_ingredient (recipe_id, ingredient_id, comment, sort_order) VALUES ({recipe.Id}, {ingredient.Id}, ?, {ingredient.SortOrder})", 
 					ingredient.Comment);
 			}
 			await database!.ExecuteAsync($"DELETE FROM recipe_image WHERE recipe_id = {recipe.Id}");
@@ -182,9 +183,16 @@ namespace Recipes.Services
 				$"DELETE FROM recipes WHERE id = {recipe.Id}");
 		}
 
-		public async Task<IEnumerable<Ingredient>> GetIngredientListAsync()
+		public async Task<IEnumerable<Ingredient>> GetIngredientListAsync(List<int>? excludeIds)
 		{
-			return await database!.QueryAsync<Ingredient>("SELECT id, name FROM ingredients ORDER BY name");
+			if (excludeIds == null || excludeIds.Count == 0)
+			{
+				return await database!.QueryAsync<Ingredient>("SELECT id, name FROM ingredients ORDER BY name");
+			}
+			else
+			{
+				return await database!.QueryAsync<Ingredient>($"SELECT id, name FROM ingredients WHERE id NOT IN ({string.Join(',', excludeIds)}) ORDER BY name");
+			}
 		}
 		public async Task AddIngredientAsync(Ingredient ingredient)
 		{

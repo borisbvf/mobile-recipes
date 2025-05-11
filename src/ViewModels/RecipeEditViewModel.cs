@@ -33,19 +33,10 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		}
 	}
 
-	private Ingredient? selectedIngredient;
-	public Ingredient? SelectedIngredient
-	{
-		get => selectedIngredient;
-		set
-		{
-			if (selectedIngredient != value)
-			{
-				selectedIngredient = value;
-				OnPropertyChanged();
-			}
-		}
-	}
+	public ObservableCollection<ObservableIngredient> EditedIngredients { get; } = [];
+
+	private ObservableIngredient? draggedIngredient;
+
 
 	private RecipeImage? selectedImage;
 	public RecipeImage? SelectedImage
@@ -62,9 +53,8 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 	}
 
 	public ICommand SaveCommand => new Command(SaveRecipe);
-	private async void SaveRecipe(object obj)
+	private async void SaveRecipe()
 	{
-		//Recipe? recipe = obj as Recipe;
 		if (recipe != null)
 		{
 			if (string.IsNullOrEmpty(recipe.Name))
@@ -94,6 +84,13 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			}
 			try
 			{
+				recipe.Ingredients.Clear();
+				for (int index = 0; index < EditedIngredients.Count; index++)
+				{
+					Ingredient item = new Ingredient(EditedIngredients[index]);
+					item.SortOrder = index;
+					recipe.Ingredients.Add(item);
+				}
 				if (recipe.Id == 0)
 				{
 					await recipeService.AddRecipeAsync(recipe);
@@ -140,15 +137,70 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 	public ICommand AddIngredientCommand => new Command(AddIngredient);
 	public async void AddIngredient()
 	{
-		await Shell.Current.GoToAsync(Constants.IngredientListRoute);
+		Dictionary<string, object> navParam = new();
+		List<int> ids = new();
+		foreach (ObservableIngredient item in EditedIngredients)
+		{
+			ids.Add(item.Id);
+		}
+		navParam.Add(Constants.IngredientIdsParameter, ids);
+		await Shell.Current.GoToAsync(Constants.IngredientListRoute, navParam);
 	}
 
-	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, () => selectedIngredient != null);
-	public void DeleteIngredient()
+	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, (object obj) => obj != null);
+	public void DeleteIngredient(object obj)
 	{
-		if (selectedIngredient != null)
+		if (obj != null)
 		{
-			recipe?.Ingredients.Remove(selectedIngredient);
+			EditedIngredients.Remove((ObservableIngredient)obj);
+		}
+	}
+
+	private Color GetBaseBackgroundDragColor()
+	{
+		Color result = (App.Current!.RequestedTheme == AppTheme.Light)
+			? (Color)App.Current!.Resources["White"]
+			: (Color)App.Current!.Resources["Black"];
+		return result;
+	}
+
+	public ICommand DragIngredientStartingCommand => new Command(DragIngredientStarting);
+	public void DragIngredientStarting(object obj)
+	{
+		draggedIngredient = (ObservableIngredient)obj;
+	}
+
+	public ICommand DragIngredientOverCommand => new Command(DragIngredientOver);
+	public void DragIngredientOver(object obj)
+	{
+		ObservableIngredient? current = (ObservableIngredient)obj;
+		if (current != null && draggedIngredient != null && current != draggedIngredient)
+		{
+			current.BackgroundDragColor = Colors.LightSkyBlue;
+		}
+	}
+
+	public ICommand DragIngredientLeaveCommand => new Command(DragIngredientLeave);
+	public void DragIngredientLeave(object obj)
+	{
+		ObservableIngredient? current = (ObservableIngredient)obj;
+		current.BackgroundDragColor = GetBaseBackgroundDragColor();
+	}
+
+	public ICommand DropIngredientCommand => new Command(DropIngredient);
+	public void DropIngredient(object obj)
+	{
+		ObservableIngredient? current = (ObservableIngredient)obj;
+		if (current != null && draggedIngredient != null)
+		{
+			current.BackgroundDragColor = GetBaseBackgroundDragColor();
+			draggedIngredient.BackgroundDragColor = GetBaseBackgroundDragColor();
+			if (current != draggedIngredient)
+			{
+				EditedIngredients.Remove(draggedIngredient);
+				EditedIngredients.Insert(EditedIngredients.IndexOf(current), draggedIngredient);
+			}
+			draggedIngredient = null;
 		}
 	}
 
@@ -207,6 +259,15 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		if (query.ContainsKey(nameof(Recipe)))
 		{
 			Recipe = query[nameof(Recipe)] as Recipe;
+			if (Recipe != null)
+			{
+				EditedIngredients.Clear();
+				foreach (Ingredient item in Recipe.Ingredients)
+				{
+					EditedIngredients.Add(new ObservableIngredient(item));
+				}
+			}
+			query.Remove(nameof(Recipe));
 		}
 
 		if (query.ContainsKey(Constants.CheckedTagsParameter))
@@ -223,26 +284,15 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			}
 		}
 
-		if (query.ContainsKey(nameof(Ingredient)))
+		if (query.ContainsKey(Constants.SelectedIngredientsParameter))
 		{
-			Ingredient? added = query[nameof(Ingredient)] as Ingredient;
-			if (added != null && recipe != null)
+			List<Ingredient> selected = (List<Ingredient>)query[Constants.SelectedIngredientsParameter];
+			foreach (Ingredient item in selected)
 			{
-				bool alreadyAdded = false;
-				foreach (Ingredient ingredient in recipe.Ingredients)
-				{
-					if (ingredient.Id == added.Id)
-					{
-						alreadyAdded = true;
-						break;
-					}
-				}
-				if (!alreadyAdded)
-				{
-					recipe?.Ingredients.Add(added);
-				}
+				EditedIngredients.Add(new ObservableIngredient(item));
 			}
 		}
+
 		IsBusy = false;
 	}
 }

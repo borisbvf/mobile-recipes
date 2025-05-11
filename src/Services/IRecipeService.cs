@@ -11,7 +11,7 @@ public interface IRecipeService
 	public Task UpdateRecipeAsync(Recipe recipe);
 	public Task DeleteRecipeAsync(Recipe recipe);
 
-	public Task<IEnumerable<Ingredient>> GetIngredientListAsync();
+	public Task<IEnumerable<Ingredient>> GetIngredientListAsync(List<int>? excludeIds);
 	public Task AddIngredientAsync(Ingredient ingredient);
 	public Task UpdateIngredientAsync(Ingredient ingredient);
 	public Task DeleteIngredientAsync(Ingredient ingredient);

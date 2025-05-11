@@ -4,11 +4,28 @@ using System.Diagnostics;
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;
-public class IngredientListViewModel : BaseViewModel
+public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
 	public ObservableCollection<Ingredient> Ingredients { get; } = new();
+
+	private SelectionMode viewSelectionMode;
+	public SelectionMode ViewSelectionMode
+	{
+		get => viewSelectionMode;
+		set
+		{
+			if (viewSelectionMode != value)
+			{
+				viewSelectionMode = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	private List<int>? exclusionIds;
+
 
 	private bool isRefreshing;
 	public bool IsRefreshing
@@ -38,11 +55,16 @@ public class IngredientListViewModel : BaseViewModel
 		}
 	}
 
+	public IList<object>? SelectedIngredients { get; set; }
+
+
 	private IRecipeService recipeService;
 
 	public IngredientListViewModel(IRecipeService recipeService)
 	{
 		this.recipeService = recipeService;
+		exclusionIds = null;
+		viewSelectionMode = SelectionMode.None;
 	}
 
 	public ICommand GetIngredientsCommand => new Command(GetIngredientsAsync);
@@ -53,7 +75,7 @@ public class IngredientListViewModel : BaseViewModel
 		IsBusy = true;
 		try
 		{
-			IEnumerable<Ingredient> result = await recipeService.GetIngredientListAsync();
+			IEnumerable<Ingredient> result = await recipeService.GetIngredientListAsync(exclusionIds);
 			if (Ingredients.Count > 0)
 				Ingredients.Clear();
 			foreach (Ingredient ingredient in result)
@@ -124,13 +146,14 @@ public class IngredientListViewModel : BaseViewModel
 	}
 
 	public ICommand EditIngredientCommand => new Command(EditIngredient, CanEditIngredient);
-	private bool CanEditIngredient()
+	private bool CanEditIngredient(object obj)
 	{
-		return selectedIngredient != null;
+		return obj != null;
 	}
-	private async void EditIngredient()
+	private async void EditIngredient(object obj)
 	{
-		if (selectedIngredient != null)
+		Ingredient? item = (Ingredient)obj;
+		if (item != null)
 		{
 			string name = await Shell.Current.DisplayPromptAsync(
 			"",
@@ -138,7 +161,7 @@ public class IngredientListViewModel : BaseViewModel
 			$"{LocalizationManager["Ok"]}",
 			$"{LocalizationManager["Cancel"]}",
 			keyboard:Keyboard.Create(KeyboardFlags.CapitalizeSentence),
-			initialValue:$"{selectedIngredient.Name}");
+			initialValue:$"{item.Name}");
 			if (name != null)
 			{
 				foreach (Ingredient ingredient in Ingredients)
@@ -154,8 +177,8 @@ public class IngredientListViewModel : BaseViewModel
 				}
 				try
 				{
-					selectedIngredient.Name = name;
-					await recipeService.UpdateIngredientAsync(selectedIngredient);
+					item.Name = name;
+					await recipeService.UpdateIngredientAsync(item);
 					GetIngredientsAsync();
 				}
 				catch (Exception ex)
@@ -170,10 +193,11 @@ public class IngredientListViewModel : BaseViewModel
 		}
 	}
 
-	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, () => selectedIngredient != null);
-	private async void DeleteIngredient()
+	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, (object obj) => obj != null);
+	private async void DeleteIngredient(object obj)
 	{
-		if (selectedIngredient != null)
+		Ingredient? item = (Ingredient)obj;
+		if (item != null)
 		{
 			bool confirmed = await Shell.Current.DisplayAlert(
 			"",
@@ -184,7 +208,7 @@ public class IngredientListViewModel : BaseViewModel
 			{
 				try
 				{
-					await recipeService.DeleteIngredientAsync(selectedIngredient);
+					await recipeService.DeleteIngredientAsync(item);
 					GetIngredientsAsync();
 				}
 				catch (Exception ex)
@@ -203,10 +227,27 @@ public class IngredientListViewModel : BaseViewModel
 	public async void FinishSelection()
 	{
 		Dictionary<string, object> navParam = new();
-		if (selectedIngredient != null)
+		if (exclusionIds != null)
 		{
-			navParam.Add(nameof(Ingredient), selectedIngredient);
+			if (SelectedIngredients != null)
+			{
+				List<Ingredient> list = new();
+				foreach (Ingredient item in SelectedIngredients)
+				{
+					list.Add(item);
+				}
+				navParam.Add(Constants.SelectedIngredientsParameter, list);
+			}
 		}
 		await Shell.Current.GoToAsync("..", navParam);
+	}
+
+	public void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		if (query.ContainsKey(Constants.IngredientIdsParameter))
+		{
+			exclusionIds = (List<int>)query[Constants.IngredientIdsParameter];
+			ViewSelectionMode = SelectionMode.Multiple;
+		}
 	}
 }

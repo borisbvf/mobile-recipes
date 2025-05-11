@@ -5,6 +5,7 @@
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 x:DataType="viewmodels:RecipeEditViewModel"
+			 x:Name="RecipeEditPage"
              Title="{Binding Title}">
 	<ContentPage.Resources>
 		<viewmodels:MinutesToTimeSpanConverter x:Key="minutesToTimeSpan"/>
@@ -98,41 +99,46 @@
 					CornerRadius="10">
 					<VerticalStackLayout>
 						<Grid
-							RowDefinitions="30"
-							ColumnDefinitions="*,2*">
+							RowDefinitions="40">
 							<Label
+								HorizontalOptions="Start"
+								VerticalOptions="Center"
 								FontAttributes="Bold"
 								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
 								Text="{Binding LocalizationManager[IngredientsCaption], Mode=OneWay}"/>
-							<HorizontalStackLayout
+							<ImageButton
+								Aspect="AspectFit"
+								CornerRadius="10"
+								WidthRequest="36"
+								VerticalOptions="Center"
 								HorizontalOptions="End"
-								Spacing="2"
-								Grid.Column="1">
-								<ImageButton
-									Aspect="AspectFit"
-									CornerRadius="10"
-									WidthRequest="30"
-									HorizontalOptions="End"
-									Source="add_2.png"
-									Command="{Binding AddIngredientCommand}"/>
-								<ImageButton
-									Aspect="AspectFit"
-									CornerRadius="10"
-									WidthRequest="30"
-									HorizontalOptions="End"
-									Source="delete.png"
-									Command="{Binding DeleteIngredientCommand}"/>
-							</HorizontalStackLayout>
-						
+								Source="add_2.png"
+								Command="{Binding AddIngredientCommand}"/>
+
 						</Grid>
 						<CollectionView
-							SelectionMode="Single"
-							ItemsSource="{Binding Recipe.Ingredients}"
-							SelectedItem="{Binding SelectedIngredient}">
+							SelectionMode="None"
+							ItemsSource="{Binding EditedIngredients}">
 							<CollectionView.ItemTemplate>
-								<DataTemplate x:DataType="models:Ingredient">
+								<DataTemplate x:DataType="models:ObservableIngredient">
 									<Grid
-										ColumnDefinitions="*,2*">
+										BackgroundColor="{Binding BackgroundDragColor}"
+										RowDefinitions="40"
+										ColumnDefinitions="*,2*,36">
+										<Grid.GestureRecognizers>
+											<DragGestureRecognizer
+												DragStartingCommand="{Binding BindingContext.DragIngredientStartingCommand, Source={x:Reference RecipeEditPage}}"
+												DragStartingCommandParameter="{Binding}"
+												CanDrag="True"/>
+											<DropGestureRecognizer
+												DragOverCommand="{Binding BindingContext.DragIngredientOverCommand, Source={x:Reference RecipeEditPage}}"
+												DragOverCommandParameter="{Binding}"
+												DragLeaveCommand="{Binding BindingContext.DragIngredientLeaveCommand, Source={x:Reference RecipeEditPage}}"
+												DragLeaveCommandParameter="{Binding}"
+												DropCommand="{Binding BindingContext.DropIngredientCommand, Source={x:Reference RecipeEditPage}}"
+												DropCommandParameter="{Binding}"
+												AllowDrop="True"/>
+										</Grid.GestureRecognizers>
 										<Label
 											Grid.Column="0"
 											VerticalOptions="Center"
@@ -141,6 +147,16 @@
 											Grid.Column="1"
 											VerticalOptions="Center"
 											Text="{Binding Comment, Mode=TwoWay}"/>
+										<ImageButton
+											Grid.Column="2"
+											Aspect="AspectFit"
+											CornerRadius="10"
+											WidthRequest="36"
+											VerticalOptions="Center"
+											HorizontalOptions="End"
+											Source="delete.png"
+											Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference RecipeEditPage}}"
+											CommandParameter="{Binding}"/>
 									</Grid>
 								</DataTemplate>
 							</CollectionView.ItemTemplate>						

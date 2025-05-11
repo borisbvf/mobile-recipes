@@ -5,6 +5,7 @@
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:IngredientListViewModel"
+			 x:Name="IngredientListPage"
              Title="{Binding LocalizationManager[IngredientsTitle], Mode=OneWay}">
 	<ContentPage.Resources>
 		<Style TargetType="Grid">
@@ -34,38 +35,46 @@
 			IconImageSource="add_2.png"
 			Text="{Binding LocalizationManager[AddIngredient]}"
 			Command="{Binding AddIngredientCommand}"/>
-		<ToolbarItem
-			Order="Primary"
-			IconImageSource="edit.png"
-			Text="{Binding LocalizationManager[Edit]}"
-			Command="{Binding EditIngredientCommand}"/>
-		<ToolbarItem
-			Order="Primary"
-			IconImageSource="delete.png"
-			Text="{Binding LocalizationManager[Delete]}"
-			Command="{Binding DeleteIngredientCommand}"/>
 	</ContentPage.ToolbarItems>
 	<RefreshView
 		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
 		Command="{Binding GetIngredientsCommand}">
 		<CollectionView
-			SelectionMode="Single"
+			SelectionMode="{Binding ViewSelectionMode}"
 			ItemsSource="{Binding Ingredients}"
-			SelectedItem="{Binding SelectedIngredient}">
+			SelectedItem="{Binding SelectedIngredient}"
+			SelectedItems="{Binding SelectedIngredients, Mode=TwoWay}">
 			<CollectionView.ItemTemplate>
 				<DataTemplate x:DataType="models:Ingredient">
 					<Grid
-						Padding="4"
-						Margin="4">
-						<VerticalStackLayout
-							Padding="0">
-							<Label
-								Margin="5"
-								Text="{Binding Name}"
-								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-								FontAttributes="Bold"
-								FontSize="16"/>
-						</VerticalStackLayout>
+						RowDefinitions="40"
+						Padding="2"
+						Margin="2">
+						<Label
+							Margin="5"
+							HorizontalOptions="Start"
+							VerticalOptions="Center"
+							Text="{Binding Name}"
+							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+							FontAttributes="Bold"
+							FontSize="16"/>
+						<HorizontalStackLayout
+							HorizontalOptions="End">
+							<ImageButton
+								VerticalOptions="Center"
+								HorizontalOptions="End"
+								WidthRequest="36"
+								Command="{Binding BindingContext.EditIngredientCommand, Source={x:Reference IngredientListPage}}"
+								CommandParameter="{Binding}"
+								Source="edit.png"/>
+							<ImageButton
+								VerticalOptions="Center"
+								HorizontalOptions="End"
+								WidthRequest="36"
+								Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference IngredientListPage}}"
+								CommandParameter="{Binding}"
+								Source="delete.png"/>
+						</HorizontalStackLayout>
 					</Grid>
 				</DataTemplate>
 			</CollectionView.ItemTemplate>
