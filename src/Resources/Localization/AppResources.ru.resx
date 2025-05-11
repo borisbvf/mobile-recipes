@@ -246,6 +246,15 @@
   <data name="TagsCaption" xml:space="preserve">
     <value>Ярлыки:</value>
   </data>
+  <data name="TagsEmptyCaption" xml:space="preserve">
+    <value>Здесь пока ничего нет.</value>
+  </data>
+  <data name="TagsFooterHint" xml:space="preserve">
+    <value>Чтобы изменить порядок - длительное нажатие с последующим перетаскиванием</value>
+  </data>
+  <data name="TagsSelectionTitle" xml:space="preserve">
+    <value>Выберите ярлыки</value>
+  </data>
   <data name="TagsTitle" xml:space="preserve">
     <value>Ярлыки</value>
   </data>

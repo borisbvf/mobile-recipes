@@ -69,6 +69,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 	{
 		this.recipeService = recipeService;
 		CheckedIds = null;
+		Title = LocalizationManager["TagsTitle"].ToString() ?? string.Empty;
 	}
 
 	public ICommand GetTagsCommand => new Command(GetTagListAsync);
@@ -240,6 +241,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 					CheckedIds.Add(id);
 				}
 			}
+			Title = LocalizationManager["TagsSelectionTitle"].ToString() ?? string.Empty;
 		}
 
 		if (query.ContainsKey(Constants.SelectedColorParameter) && query.ContainsKey(Constants.TagIdParameter))

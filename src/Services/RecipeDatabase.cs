@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Android.Renderscripts;
+using SQLite;
 using System.ComponentModel;
 
 namespace Recipes.Services
@@ -61,21 +62,7 @@ namespace Recipes.Services
 			{
 				database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
 			}
-			/*
-			string tempCreate = "CREATE TABLE temp_tags (" +
-				"id INTEGER," +
-				"name TEXT," +
-				"color TEXT," +
-				"sort_order INTEGER);";
-			string copyCreate = "INSERT INTO temp_tag (id, name, color, sort_order) SELECT id, name, color, 0 FROM tags";
-			string copyBack = "INSERT INTO tags (id, name, color, sort_order) SELECT id, name, color, id FROM temp_tags";
-			database!.ExecuteAsync(tempCreate);
-			database!.ExecuteAsync(copyCreate);
-			database!.ExecuteAsync("DROP TABLE tags;");
-			database!.ExecuteAsync(DBRecipeTagScript);
-			database!.ExecuteAsync(copyBack);
-			database!.ExecuteAsync("DROP TABLE temp_tags;");
-			*/
+
 			return File.Exists(Constants.DBPath);
 		}
 

@@ -6,25 +6,9 @@
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:TagListViewModel"
 			 x:Name="TagListPage"
-			 Title="{Binding LocalizationManager[TagsTitle], Mode=OneWay}">
+			 Title="{Binding Title, Mode=OneWay}">
 	<ContentPage.Resources>
 		<viewmodels:TextToColorConverter x:Key="textToColor"/>
-		<Style TargetType="Grid">
-			<Setter Property="VisualStateManager.VisualStateGroups">
-				<VisualStateGroupList>
-					<VisualStateGroup x:Name="CommonStates">
-						<VisualState x:Name="Normal"/>
-						<VisualState x:Name="Selected">
-							<VisualState.Setters>
-								<Setter
-									Property="BackgroundColor"
-									Value="LightSkyBlue"/>
-							</VisualState.Setters>
-						</VisualState>
-					</VisualStateGroup>
-				</VisualStateGroupList>
-			</Setter>
-		</Style>
 	</ContentPage.Resources>
 	<Shell.BackButtonBehavior>
 		<BackButtonBehavior
@@ -41,6 +25,7 @@
 		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
 		Command="{Binding GetTagsCommand}">
 		<CollectionView
+			EmptyView="{Binding LocalizationManager[TagsEmptyCaption]}"
 			SelectionMode="None"
 			ItemsSource="{Binding Tags}">
 			<CollectionView.ItemTemplate>

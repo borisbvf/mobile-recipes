@@ -247,6 +247,15 @@
   <data name="TagsCaption" xml:space="preserve">
     <value>Tags:</value>
   </data>
+  <data name="TagsEmptyCaption" xml:space="preserve">
+    <value>There are no items yet.</value>
+  </data>
+  <data name="TagsFooterHint" xml:space="preserve">
+    <value>To change the order, long press and then drag item</value>
+  </data>
+  <data name="TagsSelectionTitle" xml:space="preserve">
+    <value>Select tags</value>
+  </data>
   <data name="TagsTitle" xml:space="preserve">
     <value>Tags</value>
   </data>

@@ -448,6 +448,33 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no items yet..
+        /// </summary>
+        internal static string TagsEmptyCaption {
+            get {
+                return ResourceManager.GetString("TagsEmptyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To change the order, long press and then drag item.
+        /// </summary>
+        internal static string TagsFooterHint {
+            get {
+                return ResourceManager.GetString("TagsFooterHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select tags.
+        /// </summary>
+        internal static string TagsSelectionTitle {
+            get {
+                return ResourceManager.GetString("TagsSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         internal static string TagsTitle {
