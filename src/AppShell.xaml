@@ -4,8 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Recipes"
-    Shell.FlyoutBehavior="Disabled"
-    Title="Recipes">
+	x:DataType="local:AppShell"
+    Shell.FlyoutBehavior="Flyout"
+    Title="{Binding LocalizationManager[Recipes]}">
 
 	<FlyoutItem
 		FlyoutItemIsVisible="False"
@@ -16,7 +17,7 @@
 	
     <ShellContent
 		Shell.NavBarIsVisible="True"
-        Title="Recipes"
+        Title="{Binding LocalizationManager[Recipes]}"
         ContentTemplate="{DataTemplate local:Views.RecipeListView}"
         Route="MainPage" />
 

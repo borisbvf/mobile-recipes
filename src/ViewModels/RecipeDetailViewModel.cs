@@ -18,6 +18,8 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		{
 			int recipeId = (int)query[Constants.RecipeIdParameter];
 			Recipe = await recipeService.GetRecipeAsync(recipeId);
+			IsTagsFrameVisible = Recipe?.Tags.Count > 0;
+			IsImagesFrameVisible = Recipe?.Images.Count > 0;
 		}
 	}
 
@@ -29,6 +31,34 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		{
 			recipe = value;
 			OnPropertyChanged();
+		}
+	}
+
+	private bool isTagsFrameVisible;
+	public bool IsTagsFrameVisible
+	{
+		get => isTagsFrameVisible;
+		set
+		{
+			if (isTagsFrameVisible != value)
+			{
+				isTagsFrameVisible = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	private bool isImagesFrameVisible;
+	public bool IsImagesFrameVisible
+	{
+		get => isImagesFrameVisible;
+		set
+		{
+			if (isImagesFrameVisible != value)
+			{
+				isImagesFrameVisible = value;
+				OnPropertyChanged();
+			}
 		}
 	}
 
@@ -68,5 +98,52 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 				}
 			}
 		}
+	}
+
+	public ICommand CopyRecipeTextCommand => new Command(CopyRecipeText);
+	private async void CopyRecipeText()
+	{
+		if (recipe == null)
+			return;
+
+		string GetIngredients()
+		{
+			List<string> list = new();
+			foreach (Ingredient item in recipe!.Ingredients)
+			{
+				list.Add(item.Name! + " " + item.Comment);
+			}
+			return list.Count > 0 ? string.Join(Environment.NewLine, list) + Environment.NewLine : string.Empty;
+		}
+
+		string GetTags()
+		{
+			List<string> list = new();
+			foreach (RecipeTag item in recipe!.Tags)
+			{
+				list.Add(item.Name!);
+			}
+			return list.Count > 0 ? Environment.NewLine + string.Join(';', list) : string.Empty;
+		}
+
+		string textRecipe = recipe.Name + Environment.NewLine +
+			recipe.Description + Environment.NewLine +
+			GetIngredients() +
+			recipe.Instructions +
+			GetTags();
+
+		await Clipboard.Default.SetTextAsync(textRecipe);
+	}
+
+	public ICommand ExportRecipeToPdfCommand => new Command(ExportRecipeToPdf);
+	private void ExportRecipeToPdf()
+	{
+
+	}
+
+	public ICommand ShareRecipeCommand => new Command(ShareRecipe);
+	private void ShareRecipe()
+	{
+
 	}
 }

@@ -163,49 +163,6 @@
 						</CollectionView>
 					</VerticalStackLayout>
 				</Frame>
-
-				<Frame
-					Padding="5"
-					CornerRadius="10">
-					<VerticalStackLayout>
-						<Grid
-							RowDefinitions="30">
-							<Label
-								FontAttributes="Bold"
-								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-								VerticalOptions="Center"
-								Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
-							<ImageButton
-								Aspect="AspectFit"
-								HorizontalOptions="End"
-								WidthRequest="30"
-								Source="edit.png"
-								Command="{Binding SelectTagsCommand}"/>
-						</Grid>
-						<CollectionView
-							ItemsSource="{Binding Recipe.Tags}">
-							<CollectionView.ItemsLayout>
-								<LinearItemsLayout
-									Orientation="Horizontal"
-									ItemSpacing="5"/>
-							</CollectionView.ItemsLayout>
-							<CollectionView.ItemTemplate>
-								<DataTemplate x:DataType="models:RecipeTag">
-									<Frame
-										Padding="5,1"
-										CornerRadius="15"
-										BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
-										<Label
-											Margin="5"
-											FontSize="14"
-											FontAttributes="Bold"
-											Text="{Binding Name}"/>
-									</Frame>
-								</DataTemplate>
-							</CollectionView.ItemTemplate>
-						</CollectionView>
-					</VerticalStackLayout>
-				</Frame>
 			
 				<Label
 					FontAttributes="Bold"
@@ -224,6 +181,50 @@
 						</Keyboard>
 					</Editor.Keyboard>
 				</Editor>
+
+				<Frame
+				Padding="5"
+				CornerRadius="10">
+					<VerticalStackLayout>
+						<Grid
+						Margin="0,0,0,4"
+						RowDefinitions="36">
+							<Label
+							FontAttributes="Bold"
+							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+							VerticalOptions="Center"
+							Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
+							<ImageButton
+							Aspect="AspectFit"
+							HorizontalOptions="End"
+							WidthRequest="36"
+							Source="edit.png"
+							Command="{Binding SelectTagsCommand}"/>
+						</Grid>
+						<CollectionView
+						ItemsSource="{Binding Recipe.Tags}">
+							<CollectionView.ItemsLayout>
+								<LinearItemsLayout
+								Orientation="Horizontal"
+								ItemSpacing="5"/>
+							</CollectionView.ItemsLayout>
+							<CollectionView.ItemTemplate>
+								<DataTemplate x:DataType="models:RecipeTag">
+									<Frame
+									Padding="5,1"
+									CornerRadius="15"
+									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+										<Label
+										Margin="5"
+										FontSize="14"
+										FontAttributes="Bold"
+										Text="{Binding Name}"/>
+									</Frame>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>
+						</CollectionView>
+					</VerticalStackLayout>
+				</Frame>
 
 				<Frame
 					Padding="5"

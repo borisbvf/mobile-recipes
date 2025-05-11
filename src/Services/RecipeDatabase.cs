@@ -62,8 +62,7 @@ namespace Recipes.Services
 			{
 				database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
 			}
-			//database!.ExecuteAsync("DROP TABLE recipe_ingredient;");
-			//database!.ExecuteAsync(DBRecipeIngredientLinkScript);
+
 			return File.Exists(Constants.DBPath);
 		}
 

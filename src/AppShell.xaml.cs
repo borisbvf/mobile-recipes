@@ -18,5 +18,7 @@ namespace Recipes
 
 			BindingContext = this;
         }
-    }
+
+		public LocalizationManager LocalizationManager => LocalizationManager.Instance;
+	}
 }

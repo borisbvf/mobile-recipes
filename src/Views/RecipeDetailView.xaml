@@ -12,11 +12,25 @@
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
+			Order="Primary"
+			Text="Export"
+			Command="{Binding ExportRecipeToPdfCommand}"/>
+		<ToolbarItem
+			Order="Primary"
+			Text="Copy"
+			Command="{Binding CopyRecipeTextCommand}"/>
+		<ToolbarItem
+			Order="Primary"
+			Text="Share"
+			Command="{Binding ShareRecipeCommand}"/>
+		<ToolbarItem
+			Order="Primary"
 			Text="{Binding LocalizationManager[Edit], Mode=OneWay}"
 			IconImageSource="edit.png"
 			Command="{Binding EditRecipeCommand}"
 			CommandParameter="{Binding Recipe}"/>
 		<ToolbarItem
+			Order="Secondary"
 			Text="{Binding LocalizationManager[Delete], Mode=OneWay}"
 			IconImageSource="delete.png"
 			Command="{Binding DeleteRecipeCommand}"
@@ -82,7 +96,7 @@
 			<Frame
 				Margin="2"
 				Padding="5">
-				<HorizontalStackLayout>
+				<VerticalStackLayout>
 					<Label
 						Margin="1,1,10,1"
 						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
@@ -101,79 +115,64 @@
 							</DataTemplate>
 						</CollectionView.ItemTemplate>
 					</CollectionView>
-				</HorizontalStackLayout>
-			</Frame>
-		
-			<Frame
-				Margin="2"
-				Padding="5">
-				<VerticalStackLayout>
-					<Label
-						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-						Text="{Binding LocalizationManager[Directions]}"/>
-					<Label
-						Padding="0"
-						Margin="0"
-						Text="{Binding Recipe.Instructions}"/>
 				</VerticalStackLayout>
 			</Frame>
-		
+
 			<Frame
 				Margin="2"
 				Padding="5">
-				<HorizontalStackLayout>
-					<Label
-						VerticalOptions="Center"
-						Margin="1,1,5,1"
-						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-						Text="{Binding LocalizationManager[TagsCaption]}"/>
-					<CollectionView
-						Grid.Row="1"
-						ItemsSource="{Binding Recipe.Tags}">
-						<CollectionView.ItemsLayout>
-							<LinearItemsLayout
-								Orientation="Horizontal"
-								ItemSpacing="5"/>
-						</CollectionView.ItemsLayout>
-						<CollectionView.ItemTemplate>
-							<DataTemplate x:DataType="models:RecipeTag">
-								<Frame
-									Padding="5"
-									CornerRadius="15"
-									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
-									<Label
-										Margin="5,1"
-										FontSize="14"
-										FontAttributes="Bold"
-										Text="{Binding Name}"/>
-								</Frame>
-							</DataTemplate>
-						</CollectionView.ItemTemplate>
-					</CollectionView>
-				</HorizontalStackLayout>
+				<Label
+					Padding="0"
+					Margin="0"
+					Text="{Binding Recipe.Instructions}"/>
 			</Frame>
-		
+
 			<Frame
+				IsVisible="{Binding IsTagsFrameVisible}"
 				Margin="2"
 				Padding="5">
-				<VerticalStackLayout>
-					<Label
-						TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-						Text="{Binding LocalizationManager[Images]}"/>
-					<CollectionView
-						ItemsSource="{Binding Recipe.Images}">
-						<CollectionView.ItemTemplate>
-							<DataTemplate x:DataType="models:RecipeImage">
-								<VerticalStackLayout>
-									<Image
-										Source="{Binding FileName}"/>
-									<Label
-										Text="{Binding Description}"/>
-								</VerticalStackLayout>
-							</DataTemplate>
-						</CollectionView.ItemTemplate>					
-					</CollectionView>
-				</VerticalStackLayout>
+				<CollectionView
+					Grid.Row="1"
+					ItemsSource="{Binding Recipe.Tags}">
+					<CollectionView.ItemsLayout>
+						<LinearItemsLayout
+							Orientation="Horizontal"
+							ItemSpacing="4"/>
+					</CollectionView.ItemsLayout>
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="models:RecipeTag">
+							<Frame
+								Padding="5"
+								CornerRadius="15"
+								BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+								<Label
+									Margin="5,1"
+									FontSize="14"
+									FontAttributes="Bold"
+									Text="{Binding Name}"/>
+							</Frame>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+			</Frame>
+
+			<Frame
+				IsVisible="{Binding IsImagesFrameVisible}"
+				Margin="2"
+				Padding="5">
+				<CollectionView
+					ItemsSource="{Binding Recipe.Images}">
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="models:RecipeImage">
+							<VerticalStackLayout>
+								<Image
+									Source="{Binding FileName}"/>
+								<Label
+									Text="{Binding Description}"/>
+							</VerticalStackLayout>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
 			</Frame>
 		
 		</VerticalStackLayout>
