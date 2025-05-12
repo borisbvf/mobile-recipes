@@ -14,25 +14,28 @@
 		<ToolbarItem
 			Order="Primary"
 			Text="Export"
+			IconImageSource="{AppThemeBinding Light=export_light.png, Dark=export_dark.png}"
 			Command="{Binding ExportRecipeToPdfCommand}"/>
 		<ToolbarItem
 			Order="Primary"
 			Text="Copy"
+			IconImageSource="{AppThemeBinding Light=copy_light.png, Dark=copy_dark.png}"
 			Command="{Binding CopyRecipeTextCommand}"/>
 		<ToolbarItem
 			Order="Primary"
 			Text="Share"
+			IconImageSource="{AppThemeBinding Light=share_light.png, Dark=share_dark.png}"
 			Command="{Binding ShareRecipeCommand}"/>
 		<ToolbarItem
 			Order="Primary"
 			Text="{Binding LocalizationManager[Edit], Mode=OneWay}"
-			IconImageSource="edit.png"
+			IconImageSource="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"
 			Command="{Binding EditRecipeCommand}"
 			CommandParameter="{Binding Recipe}"/>
 		<ToolbarItem
 			Order="Secondary"
 			Text="{Binding LocalizationManager[Delete], Mode=OneWay}"
-			IconImageSource="delete.png"
+			IconImageSource="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"
 			Command="{Binding DeleteRecipeCommand}"
 			CommandParameter="{Binding Recipe}"/>
 	</ContentPage.ToolbarItems>
@@ -149,6 +152,7 @@
 									Margin="5,1"
 									FontSize="14"
 									FontAttributes="Bold"
+									TextColor="{StaticResource Gray600}"
 									Text="{Binding Name}"/>
 							</Frame>
 						</DataTemplate>

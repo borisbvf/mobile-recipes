@@ -17,7 +17,7 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
-			IconImageSource="add_2.png"
+			IconImageSource="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
 			Text="{Binding LocalizationManager[Add]}"
 			Command="{Binding AddTagCommand}"/>
 	</ContentPage.ToolbarItems>
@@ -71,7 +71,7 @@
 								<Label
 									Margin="5"
 									Text="{Binding Name}"
-									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+									TextColor="{StaticResource Gray600}"
 									FontAttributes="Bold"
 									FontSize="14"/>
 							</Frame>
@@ -82,17 +82,17 @@
 									WidthRequest="36"
 									Command="{Binding BindingContext.EditTagCommand, Source={x:Reference TagListPage}}"
 									CommandParameter="{Binding}"
-									Source="edit.png"/>
+									Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
 								<ImageButton
 									WidthRequest="36"
 									Command="{Binding BindingContext.SelectColorCommand, Source={x:Reference TagListPage}}"
 									CommandParameter="{Binding}"
-									Source="palette.png"/>
+									Source="{AppThemeBinding Light=palette_light.png, Dark=palette_dark.png}"/>
 								<ImageButton
 									WidthRequest="36"
 									Command="{Binding BindingContext.DeleteTagCommand, Source={x:Reference TagListPage}}"
 									CommandParameter="{Binding}"
-									Source="delete.png"/>
+									Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
 							</HorizontalStackLayout>
 						</Grid>
 					</Border>

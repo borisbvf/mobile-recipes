@@ -282,6 +282,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 					recipe?.Tags.Add(tag);
 				}
 			}
+			query.Remove(Constants.CheckedTagsParameter);
 		}
 
 		if (query.ContainsKey(Constants.SelectedIngredientsParameter))
@@ -291,6 +292,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			{
 				EditedIngredients.Add(new ObservableIngredient(item));
 			}
+			query.Remove(Constants.SelectedIngredientsParameter);
 		}
 
 		IsBusy = false;

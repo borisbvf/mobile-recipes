@@ -100,16 +100,15 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	public ICommand CopyRecipeTextCommand => new Command(CopyRecipeText);
-	private async void CopyRecipeText()
+	private string GetRecipeText(Recipe? source)
 	{
-		if (recipe == null)
-			return;
+		if (source == null)
+			return string.Empty;
 
 		string GetIngredients()
 		{
 			List<string> list = new();
-			foreach (Ingredient item in recipe!.Ingredients)
+			foreach (Ingredient item in source!.Ingredients)
 			{
 				list.Add(item.Name! + " " + item.Comment);
 			}
@@ -119,20 +118,29 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		string GetTags()
 		{
 			List<string> list = new();
-			foreach (RecipeTag item in recipe!.Tags)
+			foreach (RecipeTag item in source!.Tags)
 			{
 				list.Add(item.Name!);
 			}
 			return list.Count > 0 ? Environment.NewLine + string.Join(';', list) : string.Empty;
 		}
 
-		string textRecipe = recipe.Name + Environment.NewLine +
-			recipe.Description + Environment.NewLine +
+		return source.Name + Environment.NewLine +
+			source.Description + Environment.NewLine +
 			GetIngredients() +
-			recipe.Instructions +
+			source.Instructions +
 			GetTags();
+	}
 
-		await Clipboard.Default.SetTextAsync(textRecipe);
+	public ICommand CopyRecipeTextCommand => new Command(CopyRecipeText);
+	private async void CopyRecipeText()
+	{
+		if (recipe == null)
+			return;
+
+		string recipeText = GetRecipeText(recipe);
+
+		await Clipboard.Default.SetTextAsync(recipeText);
 	}
 
 	public ICommand ExportRecipeToPdfCommand => new Command(ExportRecipeToPdf);
@@ -142,8 +150,12 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 	}
 
 	public ICommand ShareRecipeCommand => new Command(ShareRecipe);
-	private void ShareRecipe()
+	private async void ShareRecipe()
 	{
+		if (recipe == null)
+			return;
 
+		string recipeText = GetRecipeText(recipe);
+		await Share.Default.RequestAsync(new ShareTextRequest(recipeText));
 	}
 }

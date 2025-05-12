@@ -27,12 +27,12 @@ namespace Recipes
 				return;
 			if (newConfig.IsNightModeActive)
 			{
-				Window?.SetStatusBarColor(GetColorFromRes("ShellBackgroundDark"));
+				Window?.SetStatusBarColor(GetColorFromRes("MainDark"));
 				Window?.InsetsController?.SetSystemBarsAppearance(0, (int)WindowInsetsControllerAppearance.LightStatusBars);
 			}
 			else
 			{
-				Window?.SetStatusBarColor(GetColorFromRes("ShellBackgroundLight"));
+				Window?.SetStatusBarColor(GetColorFromRes("MainLight"));
 				Window?.InsetsController?.SetSystemBarsAppearance((int)WindowInsetsControllerAppearance.LightStatusBars, (int)WindowInsetsControllerAppearance.LightStatusBars);
 			}
 		}
@@ -52,9 +52,15 @@ namespace Recipes
 
 			AppTheme? currentTheme = ThemeService.Instance?.Theme;
 			if (currentTheme == AppTheme.Light || currentTheme == AppTheme.Unspecified && !Resources.Configuration.IsNightModeActive)
+			{
 				Window?.SetStatusBarColor(GetColorFromRes("MainLight"));
+				Window?.InsetsController?.SetSystemBarsAppearance((int)WindowInsetsControllerAppearance.LightStatusBars, (int)WindowInsetsControllerAppearance.LightStatusBars);
+			}
 			else if (currentTheme == AppTheme.Dark || currentTheme == AppTheme.Unspecified && Resources.Configuration.IsNightModeActive)
+			{
 				Window?.SetStatusBarColor(GetColorFromRes("MainDark"));
+				Window?.InsetsController?.SetSystemBarsAppearance(0, (int)WindowInsetsControllerAppearance.LightStatusBars);
+			}
 		}
 
 		private Android.Graphics.Color GetColorFromRes(string name)

@@ -118,16 +118,14 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 			keyboard:Keyboard.Create(KeyboardFlags.CapitalizeSentence));
 		if (name != null)
 		{
-			foreach (Ingredient ingredient in Ingredients)
+			bool isNameUnique = await recipeService.CheckIngredientNameUnique(name, 0);
+			if (!isNameUnique)
 			{
-				if (string.Equals(ingredient.Name, name, StringComparison.OrdinalIgnoreCase))
-				{
-					await Shell.Current.DisplayAlert(
-						$"{LocalizationManager["Error"]}",
-						$"{LocalizationManager["ErrorIngredientExists"]}",
-						$"{LocalizationManager["Ok"]}");
-					return;
-				}
+				await Shell.Current.DisplayAlert(
+					$"{LocalizationManager["Error"]}",
+					$"{LocalizationManager["ErrorIngredientExists"]}",
+					$"{LocalizationManager["Ok"]}");
+				return;
 			}
 			try
 			{
@@ -156,24 +154,22 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 		if (item != null)
 		{
 			string name = await Shell.Current.DisplayPromptAsync(
-			"",
-			$"{LocalizationManager["MsgAddingIngredient"]}",
-			$"{LocalizationManager["Ok"]}",
-			$"{LocalizationManager["Cancel"]}",
-			keyboard:Keyboard.Create(KeyboardFlags.CapitalizeSentence),
-			initialValue:$"{item.Name}");
+				"",
+				$"{LocalizationManager["MsgAddingIngredient"]}",
+				$"{LocalizationManager["Ok"]}",
+				$"{LocalizationManager["Cancel"]}",
+				keyboard:Keyboard.Create(KeyboardFlags.CapitalizeSentence),
+				initialValue:$"{item.Name}");
 			if (name != null)
 			{
-				foreach (Ingredient ingredient in Ingredients)
+				bool isNameUnique = await recipeService.CheckIngredientNameUnique(name, item.Id);
+				if (!isNameUnique)
 				{
-					if (ingredient != selectedIngredient && string.Equals(ingredient.Name, name, StringComparison.OrdinalIgnoreCase))
-					{
-						await Shell.Current.DisplayAlert(
-							$"{LocalizationManager["Error"]}",
-							$"{LocalizationManager["ErrorIngredientExists"]}",
-							$"{LocalizationManager["Ok"]}");
-						return;
-					}
+					await Shell.Current.DisplayAlert(
+						$"{LocalizationManager["Error"]}",
+						$"{LocalizationManager["ErrorIngredientExists"]}",
+						$"{LocalizationManager["Ok"]}");
+					return;
 				}
 				try
 				{
@@ -200,10 +196,10 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 		if (item != null)
 		{
 			bool confirmed = await Shell.Current.DisplayAlert(
-			"",
-			$"{LocalizationManager["MsgDeletingIngredient"]}",
-			$"{LocalizationManager["Ok"]}",
-			$"{LocalizationManager["Cancel"]}");
+				"",
+				$"{LocalizationManager["MsgDeletingIngredient"]}",
+				$"{LocalizationManager["Ok"]}",
+				$"{LocalizationManager["Cancel"]}");
 			if (confirmed)
 			{
 				try

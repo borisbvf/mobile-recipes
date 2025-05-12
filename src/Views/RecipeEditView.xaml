@@ -112,7 +112,7 @@
 								WidthRequest="36"
 								VerticalOptions="Center"
 								HorizontalOptions="End"
-								Source="add_2.png"
+								Source="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
 								Command="{Binding AddIngredientCommand}"/>
 
 						</Grid>
@@ -123,7 +123,7 @@
 								<DataTemplate x:DataType="models:ObservableIngredient">
 									<Grid
 										BackgroundColor="{Binding BackgroundDragColor}"
-										RowDefinitions="40"
+										RowDefinitions="36"
 										ColumnDefinitions="*,2*,36">
 										<Grid.GestureRecognizers>
 											<DragGestureRecognizer
@@ -154,7 +154,7 @@
 											WidthRequest="36"
 											VerticalOptions="Center"
 											HorizontalOptions="End"
-											Source="delete.png"
+											Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"
 											Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference RecipeEditPage}}"
 											CommandParameter="{Binding}"/>
 									</Grid>
@@ -183,42 +183,43 @@
 				</Editor>
 
 				<Frame
-				Padding="5"
-				CornerRadius="10">
+					Padding="5"
+					CornerRadius="10">
 					<VerticalStackLayout>
 						<Grid
-						Margin="0,0,0,4"
-						RowDefinitions="36">
+							Margin="0,0,0,4"
+							RowDefinitions="36">
 							<Label
-							FontAttributes="Bold"
-							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-							VerticalOptions="Center"
-							Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
+								FontAttributes="Bold"
+								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+								VerticalOptions="Center"
+								Text="{Binding LocalizationManager[TagsCaption], Mode=OneWay}"/>
 							<ImageButton
-							Aspect="AspectFit"
-							HorizontalOptions="End"
-							WidthRequest="36"
-							Source="edit.png"
-							Command="{Binding SelectTagsCommand}"/>
+								Aspect="AspectFit"
+								HorizontalOptions="End"
+								WidthRequest="36"
+								Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"
+								Command="{Binding SelectTagsCommand}"/>
 						</Grid>
 						<CollectionView
-						ItemsSource="{Binding Recipe.Tags}">
+							ItemsSource="{Binding Recipe.Tags}">
 							<CollectionView.ItemsLayout>
 								<LinearItemsLayout
-								Orientation="Horizontal"
-								ItemSpacing="5"/>
+									Orientation="Horizontal"
+									ItemSpacing="5"/>
 							</CollectionView.ItemsLayout>
 							<CollectionView.ItemTemplate>
 								<DataTemplate x:DataType="models:RecipeTag">
 									<Frame
-									Padding="5,1"
-									CornerRadius="15"
-									BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+										Padding="5,1"
+										CornerRadius="15"
+										BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
 										<Label
-										Margin="5"
-										FontSize="14"
-										FontAttributes="Bold"
-										Text="{Binding Name}"/>
+											Margin="5"
+											FontSize="14"
+											FontAttributes="Bold"
+											TextColor="{StaticResource Gray600}"
+											Text="{Binding Name}"/>
 									</Frame>
 								</DataTemplate>
 							</CollectionView.ItemTemplate>
@@ -231,7 +232,7 @@
 					CornerRadius="10">
 					<VerticalStackLayout>
 						<Grid
-							RowDefinitions="30"
+							RowDefinitions="36"
 							ColumnDefinitions="*,2*">
 							<Label
 								FontAttributes="Bold"
@@ -244,24 +245,24 @@
 								<ImageButton
 									Aspect="AspectFit"
 									CornerRadius="10"
-									WidthRequest="30"
+									WidthRequest="36"
 									HorizontalOptions="End"
 									Command="{Binding SelectImageCommand}"
-									Source="picture.png"/>
+									Source="{AppThemeBinding Light=picture_light.png, Dark=picture_dark.png}"/>
 								<ImageButton
 									Aspect="AspectFit"
 									CornerRadius="10"
-									WidthRequest="30"
+									WidthRequest="36"
 									HorizontalOptions="End"
 									Command="{Binding TakePhotoCommand}"
-									Source="camera.png"/>
+									Source="{AppThemeBinding Light=camera_light.png, Dark=camera_dark.png}"/>
 								<ImageButton
 									Aspect="AspectFit"
 									CornerRadius="10"
-									WidthRequest="30"
+									WidthRequest="36"
 									HorizontalOptions="End"
 									Command="{Binding DeleteImageCommand}"
-									Source="delete.png"/>
+									Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
 							</HorizontalStackLayout>
 
 						</Grid>

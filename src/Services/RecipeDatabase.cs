@@ -111,7 +111,9 @@ namespace Recipes.Services
 
 		public async Task<bool> CheckRecipeNameUnique(string name, int id)
 		{
-			int count = await database!.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM recipes WHERE name = ? AND id <> {id}", name);
+			int count = id != 0
+				? await database!.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM recipes WHERE name = ? AND id <> {id}", name)
+				: await database!.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM recipes WHERE name = ?", name);
 			return count == 0;
 		}
 
@@ -192,6 +194,13 @@ namespace Recipes.Services
 			{
 				return await database!.QueryAsync<Ingredient>($"SELECT id, name FROM ingredients WHERE id NOT IN ({string.Join(',', excludeIds)}) ORDER BY name");
 			}
+		}
+		public async Task<bool> CheckIngredientNameUnique(string name, int id)
+		{
+			int count = id != 0
+				? await database!.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM ingredients WHERE name = ? AND id <> {id}", name)
+				: await database!.ExecuteScalarAsync<int>($"SELECT COUNT(*) FROM ingredients WHERE name = ?", name);
+			return count == 0;
 		}
 		public async Task AddIngredientAsync(Ingredient ingredient)
 		{

@@ -32,7 +32,7 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
-			IconImageSource="add_2.png"
+			IconImageSource="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
 			Text="{Binding LocalizationManager[AddIngredient]}"
 			Command="{Binding AddIngredientCommand}"/>
 	</ContentPage.ToolbarItems>
@@ -66,14 +66,14 @@
 								WidthRequest="36"
 								Command="{Binding BindingContext.EditIngredientCommand, Source={x:Reference IngredientListPage}}"
 								CommandParameter="{Binding}"
-								Source="edit.png"/>
+								Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
 							<ImageButton
 								VerticalOptions="Center"
 								HorizontalOptions="End"
 								WidthRequest="36"
 								Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference IngredientListPage}}"
 								CommandParameter="{Binding}"
-								Source="delete.png"/>
+								Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
 						</HorizontalStackLayout>
 					</Grid>
 				</DataTemplate>
