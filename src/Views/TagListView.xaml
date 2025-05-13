@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.TagListView"
+			 xmlns:models="clr-namespace:Recipes.Models"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodels:TagListViewModel"
+			 x:Name="TagsView">
+	<ContentView.Resources>
+		<viewmodels:TextToColorConverter x:Key="textToColor"/>
+	</ContentView.Resources>
+	<RefreshView
+		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+		Command="{Binding GetTagsCommand}">
+		<CollectionView
+			EmptyView="{Binding LocalizationManager[TagsEmptyCaption]}"
+			SelectionMode="None"
+			ItemsSource="{Binding Tags}">
+			<CollectionView.ItemTemplate>
+				<DataTemplate x:DataType="models:ObservableTag">
+					<Border
+						BackgroundColor="{Binding BackgroundDragColor}"
+						StrokeShape="RoundRectangle 5"
+						Margin="2"
+						Padding="2">
+						<Border.GestureRecognizers>
+							<TapGestureRecognizer
+								Command="{Binding BindingContext.TapTagCommand, Source={x:Reference TagsView}}"
+								CommandParameter="{Binding}"/>
+							<DragGestureRecognizer
+								DragStartingCommand="{Binding BindingContext.DragTagStartingCommand, Source={x:Reference TagsView}}"
+								DragStartingCommandParameter="{Binding}"
+								CanDrag="True"/>
+							<DropGestureRecognizer
+								DragOverCommand="{Binding BindingContext.DragTagOverCommand, Source={x:Reference TagsView}}"
+								DragOverCommandParameter="{Binding}"
+								DragLeaveCommand="{Binding BindingContext.DragTagLeaveCommand, Source={x:Reference TagsView}}"
+								DragLeaveCommandParameter="{Binding}"
+								DropCommand="{Binding BindingContext.DropTagCommand, Source={x:Reference TagsView}}"
+								DropCommandParameter="{Binding}"
+								AllowDrop="True"/>
+						</Border.GestureRecognizers>
+						<Grid
+							BackgroundColor="{Binding BackgroundSelectColor}"
+							RowDefinitions="40"
+							Padding="2"
+							Margin="1">
+							<Frame
+								HorizontalOptions="Start"
+								Padding="5"
+								CornerRadius="15"
+								BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
+								<Frame.GestureRecognizers>
+									<DragGestureRecognizer
+										DragStartingCommand="{Binding BindingContext.DragTagStartingCommand, Source={x:Reference TagsView}}"
+										DragStartingCommandParameter="{Binding}"
+										CanDrag="True"/>
+								</Frame.GestureRecognizers>
+								<Label
+									Margin="5"
+									Text="{Binding Name}"
+									TextColor="{StaticResource Gray600}"
+									FontAttributes="Bold"
+									FontSize="14"/>
+							</Frame>
+
+							<HorizontalStackLayout
+								HorizontalOptions="End">
+								<ImageButton
+									WidthRequest="36"
+									Command="{Binding BindingContext.EditTagCommand, Source={x:Reference TagsView}}"
+									CommandParameter="{Binding}"
+									Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
+								<ImageButton
+									WidthRequest="36"
+									Command="{Binding BindingContext.SelectColorCommand, Source={x:Reference TagsView}}"
+									CommandParameter="{Binding}"
+									Source="{AppThemeBinding Light=palette_light.png, Dark=palette_dark.png}"/>
+								<ImageButton
+									WidthRequest="36"
+									Command="{Binding BindingContext.DeleteTagCommand, Source={x:Reference TagsView}}"
+									CommandParameter="{Binding}"
+									Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
+							</HorizontalStackLayout>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</RefreshView>
+</ContentView>

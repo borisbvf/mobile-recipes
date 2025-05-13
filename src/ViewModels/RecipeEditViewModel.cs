@@ -131,7 +131,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		{
 			{ Constants.CheckedTagsParameter , tagIds }
 		};
-		await Shell.Current.GoToAsync(Constants.TagListRoute, navParam);
+		await Shell.Current.GoToAsync(Constants.TagSelectionRoute, navParam);
 	}
 
 	public ICommand AddIngredientCommand => new Command(AddIngredient);

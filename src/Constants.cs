@@ -18,7 +18,8 @@ public static class Constants
 	public const string EditPageRoute = "EditPage";
 	public const string IngredientListRoute = "IngredientListPage";
 	public const string IngredientSelectionRoute = "IngredientSelectionPage";
-	public const string TagListRoute = "TagListView";
+	public const string TagListRoute = "TagListPage";
+	public const string TagSelectionRoute = "TagSelectionPage";
 	public const string ColorSelectionRoute = "ColorSelectionView";
 	public const string ImageStoreRoute = "ImageStoreView";
 

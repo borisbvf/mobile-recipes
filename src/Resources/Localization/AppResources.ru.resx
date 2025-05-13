@@ -195,6 +195,9 @@
   <data name="IngredientsCaption" xml:space="preserve">
     <value>Ингридиенты:</value>
   </data>
+  <data name="IngredientsSelectionTitle" xml:space="preserve">
+    <value>Выберите ингридиенты</value>
+  </data>
   <data name="IngredientsTitle" xml:space="preserve">
     <value>Ингридиенты</value>
   </data>

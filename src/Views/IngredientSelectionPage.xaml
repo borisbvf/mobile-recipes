@@ -6,7 +6,7 @@
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:views="clr-namespace:Recipes.Views"
 			 x:DataType="viewmodels:IngredientListViewModel"
-			 Title="{Binding LocalizationManager[IngredientsTitle], Mode=OneWay}">
+			 Title="{Binding LocalizationManager[IngredientsSelectionTitle], Mode=OneWay}">
 	<Shell.BackButtonBehavior>
 		<BackButtonBehavior
 			Command="{Binding FinishSelectionCommand}"/>

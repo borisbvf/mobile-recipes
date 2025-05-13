@@ -295,6 +295,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select ingredients.
+        /// </summary>
+        internal static string IngredientsSelectionTitle {
+            get {
+                return ResourceManager.GetString("IngredientsSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingredients.
         /// </summary>
         internal static string IngredientsTitle {

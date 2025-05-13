@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Recipes.Views.TagListPage"
+             x:Class="Recipes.Views.TagSelectionPage"
              xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:local="clr-namespace:Recipes.Views"
 			 x:DataType="viewmodels:TagListViewModel"
-			 Title="{Binding Title, Mode=OneWay}">
+			 Title="{Binding LocalizationManager[TagsSelectionTitle]}">
+	<Shell.BackButtonBehavior>
+		<BackButtonBehavior
+		Command="{Binding SaveCheckedCommand}"/>
+	</Shell.BackButtonBehavior>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Order="Primary"
-			IconImageSource="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
-			Text="{Binding LocalizationManager[Add]}"
-			Command="{Binding AddTagCommand}"/>
+		Order="Primary"
+		IconImageSource="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
+		Text="{Binding LocalizationManager[Add]}"
+		Command="{Binding AddTagCommand}"/>
 	</ContentPage.ToolbarItems>
 	<local:TagListView/>
 </ContentPage>

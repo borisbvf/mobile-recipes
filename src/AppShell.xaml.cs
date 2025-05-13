@@ -14,6 +14,7 @@ namespace Recipes
             Routing.RegisterRoute(Constants.IngredientListRoute, typeof(IngredientListPage));
 			Routing.RegisterRoute(Constants.IngredientSelectionRoute, typeof(IngredientSelectionPage));
 			Routing.RegisterRoute(Constants.TagListRoute, typeof(TagListPage));
+            Routing.RegisterRoute(Constants.TagSelectionRoute, typeof(TagSelectionPage));
             Routing.RegisterRoute(Constants.ColorSelectionRoute, typeof(ColorSelectionView));
             Routing.RegisterRoute(Constants.ImageStoreRoute, typeof(ImageStoreView));
 
