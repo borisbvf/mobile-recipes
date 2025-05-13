@@ -6,24 +6,6 @@
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:IngredientListViewModel"
 			 x:Name="IngredientsView">
-	<ContentView.Resources>
-		<Style TargetType="Grid">
-			<Setter Property="VisualStateManager.VisualStateGroups">
-				<VisualStateGroupList>
-					<VisualStateGroup x:Name="CommonStates">
-						<VisualState x:Name="Normal"/>
-						<VisualState x:Name="Selected">
-							<VisualState.Setters>
-								<Setter
-									Property="BackgroundColor"
-									Value="LightSkyBlue"/>
-							</VisualState.Setters>
-						</VisualState>
-					</VisualStateGroup>
-				</VisualStateGroupList>
-			</Setter>
-		</Style>
-	</ContentView.Resources>
 	<RefreshView
 		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
 		Command="{Binding GetIngredientsCommand}">
@@ -34,36 +16,61 @@
 			SelectedItems="{Binding SelectedIngredients, Mode=TwoWay}">
 			<CollectionView.ItemTemplate>
 				<DataTemplate x:DataType="models:Ingredient">
-					<Grid
-						RowDefinitions="40"
-						Padding="2"
-						Margin="2">
-						<Label
-							Margin="5"
-							HorizontalOptions="Start"
-							VerticalOptions="Center"
-							Text="{Binding Name}"
-							TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-							FontAttributes="Bold"
-							FontSize="16"/>
-						<HorizontalStackLayout
-							HorizontalOptions="End">
-							<ImageButton
+					<Border
+						StrokeShape="RoundRectangle 5"
+						Margin="2"
+						Padding="2">
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroupList>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal">
+										<VisualState.Setters>
+											<Setter
+												Property="BackgroundColor"
+												Value="Transparent" />
+										</VisualState.Setters>
+									</VisualState>
+									<VisualState x:Name="Selected">
+										<VisualState.Setters>
+											<Setter
+												Property="BackgroundColor"
+												Value="LightSkyBlue" />
+										</VisualState.Setters>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateGroupList>
+						</VisualStateManager.VisualStateGroups>
+						<Grid
+							RowDefinitions="40"
+							Padding="2"
+							Margin="2">
+							<Label
+								Margin="5"
+								HorizontalOptions="Start"
 								VerticalOptions="Center"
-								HorizontalOptions="End"
-								WidthRequest="36"
-								Command="{Binding BindingContext.EditIngredientCommand, Source={x:Reference IngredientsView}}"
-								CommandParameter="{Binding}"
-								Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
-							<ImageButton
-								VerticalOptions="Center"
-								HorizontalOptions="End"
-								WidthRequest="36"
-								Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference IngredientsView}}"
-								CommandParameter="{Binding}"
-								Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
-						</HorizontalStackLayout>
-					</Grid>
+								Text="{Binding Name}"
+								TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+								FontAttributes="Bold"
+								FontSize="16"/>
+							<HorizontalStackLayout
+								HorizontalOptions="End">
+								<ImageButton
+									VerticalOptions="Center"
+									HorizontalOptions="End"
+									WidthRequest="36"
+									Command="{Binding BindingContext.EditIngredientCommand, Source={x:Reference IngredientsView}}"
+									CommandParameter="{Binding}"
+									Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
+								<ImageButton
+									VerticalOptions="Center"
+									HorizontalOptions="End"
+									WidthRequest="36"
+									Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference IngredientsView}}"
+									CommandParameter="{Binding}"
+									Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
+							</HorizontalStackLayout>
+						</Grid>
+					</Border>
 				</DataTemplate>
 			</CollectionView.ItemTemplate>
 		</CollectionView>

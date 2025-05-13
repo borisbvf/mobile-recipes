@@ -241,7 +241,6 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 					CheckedIds.Add(id);
 				}
 			}
-			Title = LocalizationManager["TagsSelectionTitle"].ToString() ?? string.Empty;
 		}
 
 		if (query.ContainsKey(Constants.SelectedColorParameter) && query.ContainsKey(Constants.TagIdParameter))
@@ -322,7 +321,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 			: (Color)App.Current!.Resources["Black"];
 		if (isChecked)
 		{
-			result = Colors.Aqua;
+			result = Colors.LightSkyBlue;
 		}
 		return result;
 	}
