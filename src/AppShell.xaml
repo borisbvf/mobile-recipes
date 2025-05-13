@@ -7,22 +7,83 @@
 	x:DataType="local:AppShell"
     Shell.FlyoutBehavior="Flyout"
     Title="Shell recipes">
-<FlyoutItem
+
+	<Shell.ItemTemplate>
+		<DataTemplate>
+			<Border
+				StrokeShape="RoundRectangle 30"
+				Padding="2"
+				Margin="2">
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroupList>
+						<VisualStateGroup x:Name="CommonStates">
+							<VisualState x:Name="Normal">
+								<VisualState.Setters>
+									<Setter Property="BackgroundColor"
+										Value="Transparent" />
+								</VisualState.Setters>
+							</VisualState>
+							<VisualState x:Name="Selected">
+								<VisualState.Setters>
+									<Setter Property="BackgroundColor"
+										Value="Silver" />
+								</VisualState.Setters>
+							</VisualState>
+						</VisualStateGroup>
+					</VisualStateGroupList>
+				</VisualStateManager.VisualStateGroups>
+				<Grid
+					RowDefinitions="40"
+					ColumnDefinitions="40,*">
+					
+					<Image
+						Source="{Binding FlyoutIcon}"
+						Margin="5"
+						HeightRequest="36"/>
+					<Label
+						Grid.Column="1"
+						FontAttributes="Bold"
+						Text="{Binding Title}"
+						VerticalTextAlignment="Center"/>
+				</Grid>
+			</Border>
+		</DataTemplate>
+	</Shell.ItemTemplate>
+
+	<FlyoutItem
 		FlyoutItemIsVisible="False"
-		Title="Loading"
 		Route="LoadingPage">
 		<ShellContent ContentTemplate="{DataTemplate local:Views.LoadingPage}"/>
 	</FlyoutItem>
 
-		<ShellContent
-			Title="{Binding LocalizationManager[Recipes]}"
-			ContentTemplate="{DataTemplate local:Views.RecipeListView}"
-			Route="MainPage" />
+	<ShellContent
+		FlyoutIcon="{AppThemeBinding Light=camera_light, Dark=camera_dark}"
+		Title="{Binding LocalizationManager[Recipes]}"
+		ContentTemplate="{DataTemplate local:Views.RecipeListView}"
+		Route="MainPage" />
 
-			<ShellContent 
-	Route="IngredientListView"
-				Title="{Binding LocalizationManager[IngredientsTitle]}"
-	ContentTemplate="{DataTemplate local:Views.IngredientListPage}"/>
+	<ShellContent
+		FlyoutIcon="{AppThemeBinding Light=picture_light, Dark=picture_dark}"
+		Route="IngredientListPage"
+		Title="{Binding LocalizationManager[IngredientsTitle]}"
+		ContentTemplate="{DataTemplate local:Views.IngredientListPage}"/>
 
+	<ShellContent
+		FlyoutIcon="{AppThemeBinding Light=export_light, Dark=export_dark}"
+		Route="TagListView"
+		Title="{Binding LocalizationManager[TagsTitle]}"
+		ContentTemplate="{DataTemplate local:Views.TagListView}"/>
+
+	<ShellContent
+		FlyoutIcon="{AppThemeBinding Light=edit_light, Dark=edit_dark}"
+		Route="SettingsPage"
+		Title="{Binding LocalizationManager[Settings]}"
+		ContentTemplate="{DataTemplate local:Views.SettingsPage}"/>
+
+	<ShellContent
+		FlyoutIcon="{AppThemeBinding Light=add_light, Dark=add_dark}"
+		Route="ImageStoreView"
+		Title="ImageStoreView"
+		ContentTemplate="{DataTemplate local:Views.ImageStoreView}"/>
 
 </Shell>

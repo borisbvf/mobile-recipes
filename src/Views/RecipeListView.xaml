@@ -8,21 +8,9 @@
              Title="{Binding LocalizationManager[Recipes], Mode=OneWay}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
-			Order="Secondary"
-			Text="{Binding LocalizationManager[IngredientsTitle], Mode=OneWay}"
-			Command="{Binding ShowIngredientListCommand}"/>
-		<ToolbarItem
-			Order="Secondary"
-			Text="{Binding LocalizationManager[TagsTitle], Mode=OneWay}"
-			Command="{Binding ShowTagListCommand}"/>
-		<ToolbarItem
-			Order="Secondary"
-			Text="{Binding LocalizationManager[Settings], Mode=OneWay}"
-			Command="{Binding SettingsCommand}"/>
-		<ToolbarItem
-			Order="Secondary"
-			Text="Image Store"
-			Command="{Binding ImageStoreCommand}"/>
+			Order="Primary"
+			IconImageSource="{AppThemeBinding Light=find_light, Dark=find_dark}"
+			Text="Find"/>
 	</ContentPage.ToolbarItems>
 	<Grid
 		Padding="2"

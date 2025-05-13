@@ -83,28 +83,4 @@ public class RecipeListViewModel : BaseViewModel
 		var navParameter = new Dictionary<string, object> { { nameof(Recipe), new Recipe() } };
 		Shell.Current.GoToAsync(Constants.EditPageRoute, navParameter);
 	}
-
-	public ICommand ShowIngredientListCommand => new Command(ShowIngredientList);
-	private async void ShowIngredientList()
-	{
-		await Shell.Current.GoToAsync(Constants.IngredientListRoute);
-	}
-
-	public ICommand ShowTagListCommand => new Command(ShowTagList);
-	private async void ShowTagList()
-	{
-		await Shell.Current.GoToAsync(Constants.TagListRoute);
-	}
-
-	public ICommand SettingsCommand => new Command(ShowSettings);
-	private async void ShowSettings()
-	{
-		await Shell.Current.GoToAsync($"{Constants.SettingsPageRoute}");
-	}
-
-	public ICommand ImageStoreCommand => new Command(ShowImageStore);
-	public async void ShowImageStore()
-	{
-		await Shell.Current.GoToAsync($"{Constants.ImageStoreRoute}");
-	}
 }
