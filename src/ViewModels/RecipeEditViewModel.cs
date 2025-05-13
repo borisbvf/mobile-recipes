@@ -144,7 +144,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 			ids.Add(item.Id);
 		}
 		navParam.Add(Constants.IngredientIdsParameter, ids);
-		await Shell.Current.GoToAsync(Constants.IngredientListRoute, navParam);
+		await Shell.Current.GoToAsync(Constants.IngredientSelectionRoute, navParam);
 	}
 
 	public ICommand DeleteIngredientCommand => new Command(DeleteIngredient, (object obj) => obj != null);

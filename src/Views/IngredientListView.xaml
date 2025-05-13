@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Recipes.Views.IngredientListView"
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:IngredientListViewModel"
-			 x:Name="IngredientListPage"
-             Title="{Binding LocalizationManager[IngredientsTitle], Mode=OneWay}">
-	<ContentPage.Resources>
+			 x:Name="IngredientsView">
+	<ContentView.Resources>
 		<Style TargetType="Grid">
 			<Setter Property="VisualStateManager.VisualStateGroups">
 				<VisualStateGroupList>
@@ -24,25 +23,14 @@
 				</VisualStateGroupList>
 			</Setter>
 		</Style>
-	</ContentPage.Resources>
-	<Shell.BackButtonBehavior>
-		<BackButtonBehavior
-			Command="{Binding FinishSelectionCommand}"/>
-	</Shell.BackButtonBehavior>
-	<ContentPage.ToolbarItems>
-		<ToolbarItem
-			Order="Primary"
-			IconImageSource="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
-			Text="{Binding LocalizationManager[AddIngredient]}"
-			Command="{Binding AddIngredientCommand}"/>
-	</ContentPage.ToolbarItems>
+	</ContentView.Resources>
 	<RefreshView
 		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
 		Command="{Binding GetIngredientsCommand}">
 		<CollectionView
+			x:Name="ColView"
 			SelectionMode="{Binding ViewSelectionMode}"
 			ItemsSource="{Binding Ingredients}"
-			SelectedItem="{Binding SelectedIngredient}"
 			SelectedItems="{Binding SelectedIngredients, Mode=TwoWay}">
 			<CollectionView.ItemTemplate>
 				<DataTemplate x:DataType="models:Ingredient">
@@ -64,14 +52,14 @@
 								VerticalOptions="Center"
 								HorizontalOptions="End"
 								WidthRequest="36"
-								Command="{Binding BindingContext.EditIngredientCommand, Source={x:Reference IngredientListPage}}"
+								Command="{Binding BindingContext.EditIngredientCommand, Source={x:Reference IngredientsView}}"
 								CommandParameter="{Binding}"
 								Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
 							<ImageButton
 								VerticalOptions="Center"
 								HorizontalOptions="End"
 								WidthRequest="36"
-								Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference IngredientListPage}}"
+								Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference IngredientsView}}"
 								CommandParameter="{Binding}"
 								Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
 						</HorizontalStackLayout>
@@ -80,4 +68,4 @@
 			</CollectionView.ItemTemplate>
 		</CollectionView>
 	</RefreshView>
-</ContentPage>
+</ContentView>

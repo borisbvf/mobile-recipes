@@ -102,6 +102,12 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\IngredientListView.xaml.cs">
+	    <DependentUpon>IngredientListView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\IngredientListPage.xaml.cs">
+	    <DependentUpon>IngredientListPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\RecipeDetailView.xaml.cs">
 	    <DependentUpon>RecipeDetailView.xaml</DependentUpon>
 	  </Compile>
@@ -131,6 +137,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\IngredientListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\IngredientListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\IngredientSelectionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoadingPage.xaml">

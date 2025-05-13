@@ -1,16 +1,12 @@
+using System.Collections;
+using System.Windows.Input;
+
 namespace Recipes.Views;
 
-public partial class IngredientListView : ContentPage
+public partial class IngredientListView : ContentView
 {
-	public IngredientListView(IngredientListViewModel ingredientViewModel)
+	public IngredientListView()
 	{
 		InitializeComponent();
-		BindingContext = ingredientViewModel;
-	}
-
-	protected override void OnAppearing()
-	{
-		base.OnAppearing();
-		(BindingContext as IngredientListViewModel)?.GetIngredientsCommand.Execute(this);
 	}
 }

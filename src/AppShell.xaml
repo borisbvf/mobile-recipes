@@ -6,19 +6,23 @@
     xmlns:local="clr-namespace:Recipes"
 	x:DataType="local:AppShell"
     Shell.FlyoutBehavior="Flyout"
-    Title="{Binding LocalizationManager[Recipes]}">
-
-	<FlyoutItem
+    Title="Shell recipes">
+<FlyoutItem
 		FlyoutItemIsVisible="False"
 		Title="Loading"
 		Route="LoadingPage">
 		<ShellContent ContentTemplate="{DataTemplate local:Views.LoadingPage}"/>
 	</FlyoutItem>
-	
-    <ShellContent
-		Shell.NavBarIsVisible="True"
-        Title="{Binding LocalizationManager[Recipes]}"
-        ContentTemplate="{DataTemplate local:Views.RecipeListView}"
-        Route="MainPage" />
+
+		<ShellContent
+			Title="{Binding LocalizationManager[Recipes]}"
+			ContentTemplate="{DataTemplate local:Views.RecipeListView}"
+			Route="MainPage" />
+
+			<ShellContent 
+	Route="IngredientListView"
+				Title="{Binding LocalizationManager[IngredientsTitle]}"
+	ContentTemplate="{DataTemplate local:Views.IngredientListPage}"/>
+
 
 </Shell>

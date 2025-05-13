@@ -16,9 +16,8 @@ public static class Constants
 	public const string LoadingPageRoute = "LoadingPage";
 	public const string DetailPageRoute = "DetailPage";
 	public const string EditPageRoute = "EditPage";
-	public const string IngredientListRoute = "IngredientListView";
-	public const string IngredientDetailRoute = "IngredientDetailView";
-	public const string IngredientEditRoute = "IngredientEditView";
+	public const string IngredientListRoute = "IngredientListPage";
+	public const string IngredientSelectionRoute = "IngredientSelectionPage";
 	public const string TagListRoute = "TagListView";
 	public const string ColorSelectionRoute = "ColorSelectionView";
 	public const string ImageStoreRoute = "ImageStoreView";

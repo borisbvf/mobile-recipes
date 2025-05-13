@@ -41,20 +41,6 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	private Ingredient? selectedIngredient;
-	public Ingredient? SelectedIngredient
-	{
-		get => selectedIngredient;
-		set
-		{
-			if (selectedIngredient != value)
-			{
-				selectedIngredient = value;
-				OnPropertyChanged();
-			}
-		}
-	}
-
 	public IList<object>? SelectedIngredients { get; set; }
 
 
