@@ -9,11 +9,11 @@ namespace Recipes
             InitializeComponent();
 
             Routing.RegisterRoute(Constants.SettingsPageRoute, typeof(SettingsPage));
-			Routing.RegisterRoute(Constants.DetailPageRoute, typeof(RecipeDetailView));
-			Routing.RegisterRoute(Constants.EditPageRoute, typeof(RecipeEditView));
+			Routing.RegisterRoute(Constants.DetailPageRoute, typeof(RecipeDetailPage));
+			Routing.RegisterRoute(Constants.EditPageRoute, typeof(RecipeEditPage));
             Routing.RegisterRoute(Constants.IngredientListRoute, typeof(IngredientListPage));
 			Routing.RegisterRoute(Constants.IngredientSelectionRoute, typeof(IngredientSelectionPage));
-			Routing.RegisterRoute(Constants.TagListRoute, typeof(TagListView));
+			Routing.RegisterRoute(Constants.TagListRoute, typeof(TagListPage));
             Routing.RegisterRoute(Constants.ColorSelectionRoute, typeof(ColorSelectionView));
             Routing.RegisterRoute(Constants.ImageStoreRoute, typeof(ImageStoreView));
 

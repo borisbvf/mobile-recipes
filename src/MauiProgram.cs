@@ -22,11 +22,11 @@ namespace Recipes
 #endif
 			builder.Services.AddSingleton<IRecipeService, RecipeDatabase>();
 			builder.Services.AddTransient<RecipeListViewModel>();
-			builder.Services.AddTransient<RecipeListView>();
+			builder.Services.AddTransient<RecipeListPage>();
 			builder.Services.AddTransient<RecipeDetailViewModel>();
-			builder.Services.AddTransient<RecipeDetailView>();
+			builder.Services.AddTransient<RecipeDetailPage>();
 			builder.Services.AddTransient<RecipeEditViewModel>();
-			builder.Services.AddTransient<RecipeEditView>();
+			builder.Services.AddTransient<RecipeEditPage>();
 			builder.Services.AddTransient<SettingsViewModel>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<LoadingViewModel>();
@@ -35,7 +35,7 @@ namespace Recipes
             builder.Services.AddTransient<IngredientListPage>();
             builder.Services.AddTransient<IngredientSelectionPage>();
             builder.Services.AddTransient<TagListViewModel>();
-            builder.Services.AddTransient<TagListView>();
+            builder.Services.AddTransient<TagListPage>();
             builder.Services.AddTransient<ColorSelectionViewModel>();
             builder.Services.AddTransient<ColorSelectionView>();
             builder.Services.AddTransient<ImageStoreView>();

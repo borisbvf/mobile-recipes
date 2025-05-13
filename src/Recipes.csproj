@@ -108,17 +108,17 @@
 	  <Compile Update="Views\IngredientListPage.xaml.cs">
 	    <DependentUpon>IngredientListPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\RecipeDetailView.xaml.cs">
-	    <DependentUpon>RecipeDetailView.xaml</DependentUpon>
+	  <Compile Update="Views\RecipeDetailPage.xaml.cs">
+	    <DependentUpon>RecipeDetailPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\RecipeEditView.xaml.cs">
-	    <DependentUpon>RecipeEditView.xaml</DependentUpon>
+	  <Compile Update="Views\RecipeEditPage.xaml.cs">
+	    <DependentUpon>RecipeEditPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\RecipeListView.xaml.cs">
-	    <DependentUpon>RecipeListView.xaml</DependentUpon>
+	  <Compile Update="Views\RecipeListPage.xaml.cs">
+	    <DependentUpon>RecipeListPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\TagListView.xaml.cs">
-	    <DependentUpon>TagListView.xaml</DependentUpon>
+	  <Compile Update="Views\TagListPage.xaml.cs">
+	    <DependentUpon>TagListPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -148,7 +148,7 @@
 	  <MauiXaml Update="Views\LoadingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TagListView.xaml">
+	  <MauiXaml Update="Views\TagListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SettingsPage.xaml">

@@ -59,7 +59,7 @@
 	<ShellContent
 		FlyoutIcon="{AppThemeBinding Light=camera_light, Dark=camera_dark}"
 		Title="{Binding LocalizationManager[Recipes]}"
-		ContentTemplate="{DataTemplate local:Views.RecipeListView}"
+		ContentTemplate="{DataTemplate local:Views.RecipeListPage}"
 		Route="MainPage" />
 
 	<ShellContent
@@ -72,7 +72,7 @@
 		FlyoutIcon="{AppThemeBinding Light=export_light, Dark=export_dark}"
 		Route="TagListView"
 		Title="{Binding LocalizationManager[TagsTitle]}"
-		ContentTemplate="{DataTemplate local:Views.TagListView}"/>
+		ContentTemplate="{DataTemplate local:Views.TagListPage}"/>
 
 	<ShellContent
 		FlyoutIcon="{AppThemeBinding Light=edit_light, Dark=edit_dark}"

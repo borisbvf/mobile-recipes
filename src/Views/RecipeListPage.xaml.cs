@@ -1,8 +1,8 @@
 namespace Recipes.Views;
 
-public partial class RecipeListView : ContentPage
+public partial class RecipeListPage : ContentPage
 {
-	public RecipeListView(RecipeListViewModel viewModel)
+	public RecipeListPage(RecipeListViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

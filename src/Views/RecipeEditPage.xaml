@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Recipes.Views.RecipeEditView"
+             x:Class="Recipes.Views.RecipeEditPage"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 x:DataType="viewmodels:RecipeEditViewModel"
-			 x:Name="RecipeEditPage"
+			 x:Name="RecipeChangePage"
              Title="{Binding Title}">
 	<ContentPage.Resources>
 		<viewmodels:MinutesToTimeSpanConverter x:Key="minutesToTimeSpan"/>
@@ -127,15 +127,15 @@
 										ColumnDefinitions="*,2*,36">
 										<Grid.GestureRecognizers>
 											<DragGestureRecognizer
-												DragStartingCommand="{Binding BindingContext.DragIngredientStartingCommand, Source={x:Reference RecipeEditPage}}"
+												DragStartingCommand="{Binding BindingContext.DragIngredientStartingCommand, Source={x:Reference RecipeChangePage}}"
 												DragStartingCommandParameter="{Binding}"
 												CanDrag="True"/>
 											<DropGestureRecognizer
-												DragOverCommand="{Binding BindingContext.DragIngredientOverCommand, Source={x:Reference RecipeEditPage}}"
+												DragOverCommand="{Binding BindingContext.DragIngredientOverCommand, Source={x:Reference RecipeChangePage}}"
 												DragOverCommandParameter="{Binding}"
-												DragLeaveCommand="{Binding BindingContext.DragIngredientLeaveCommand, Source={x:Reference RecipeEditPage}}"
+												DragLeaveCommand="{Binding BindingContext.DragIngredientLeaveCommand, Source={x:Reference RecipeChangePage}}"
 												DragLeaveCommandParameter="{Binding}"
-												DropCommand="{Binding BindingContext.DropIngredientCommand, Source={x:Reference RecipeEditPage}}"
+												DropCommand="{Binding BindingContext.DropIngredientCommand, Source={x:Reference RecipeChangePage}}"
 												DropCommandParameter="{Binding}"
 												AllowDrop="True"/>
 										</Grid.GestureRecognizers>
@@ -155,7 +155,7 @@
 											VerticalOptions="Center"
 											HorizontalOptions="End"
 											Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"
-											Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference RecipeEditPage}}"
+											Command="{Binding BindingContext.DeleteIngredientCommand, Source={x:Reference RecipeChangePage}}"
 											CommandParameter="{Binding}"/>
 									</Grid>
 								</DataTemplate>

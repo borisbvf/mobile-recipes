@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Recipes.Views.TagListView"
+             x:Class="Recipes.Views.TagListPage"
              xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:TagListViewModel"
-			 x:Name="TagListPage"
+			 x:Name="TagsPage"
 			 Title="{Binding Title, Mode=OneWay}">
 	<ContentPage.Resources>
 		<viewmodels:TextToColorConverter x:Key="textToColor"/>
@@ -37,18 +37,18 @@
 						Padding="2">
 						<Border.GestureRecognizers>
 							<TapGestureRecognizer
-								Command="{Binding BindingContext.TapTagCommand, Source={x:Reference TagListPage}}"
+								Command="{Binding BindingContext.TapTagCommand, Source={x:Reference TagsPage}}"
 								CommandParameter="{Binding}"/>
 							<DragGestureRecognizer
-								DragStartingCommand="{Binding BindingContext.DragTagStartingCommand, Source={x:Reference TagListPage}}"
+								DragStartingCommand="{Binding BindingContext.DragTagStartingCommand, Source={x:Reference TagsPage}}"
 								DragStartingCommandParameter="{Binding}"
 								CanDrag="True"/>
 							<DropGestureRecognizer
-								DragOverCommand="{Binding BindingContext.DragTagOverCommand, Source={x:Reference TagListPage}}"
+								DragOverCommand="{Binding BindingContext.DragTagOverCommand, Source={x:Reference TagsPage}}"
 								DragOverCommandParameter="{Binding}"
-								DragLeaveCommand="{Binding BindingContext.DragTagLeaveCommand, Source={x:Reference TagListPage}}"
+								DragLeaveCommand="{Binding BindingContext.DragTagLeaveCommand, Source={x:Reference TagsPage}}"
 								DragLeaveCommandParameter="{Binding}"
-								DropCommand="{Binding BindingContext.DropTagCommand, Source={x:Reference TagListPage}}"
+								DropCommand="{Binding BindingContext.DropTagCommand, Source={x:Reference TagsPage}}"
 								DropCommandParameter="{Binding}"
 								AllowDrop="True"/>
 						</Border.GestureRecognizers>
@@ -64,7 +64,7 @@
 								BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
 								<Frame.GestureRecognizers>
 									<DragGestureRecognizer
-										DragStartingCommand="{Binding BindingContext.DragTagStartingCommand, Source={x:Reference TagListPage}}"
+										DragStartingCommand="{Binding BindingContext.DragTagStartingCommand, Source={x:Reference TagsPage}}"
 										DragStartingCommandParameter="{Binding}"
 										CanDrag="True"/>
 								</Frame.GestureRecognizers>
@@ -80,17 +80,17 @@
 								HorizontalOptions="End">
 								<ImageButton
 									WidthRequest="36"
-									Command="{Binding BindingContext.EditTagCommand, Source={x:Reference TagListPage}}"
+									Command="{Binding BindingContext.EditTagCommand, Source={x:Reference TagsPage}}"
 									CommandParameter="{Binding}"
 									Source="{AppThemeBinding Light=edit_light.png, Dark=edit_dark.png}"/>
 								<ImageButton
 									WidthRequest="36"
-									Command="{Binding BindingContext.SelectColorCommand, Source={x:Reference TagListPage}}"
+									Command="{Binding BindingContext.SelectColorCommand, Source={x:Reference TagsPage}}"
 									CommandParameter="{Binding}"
 									Source="{AppThemeBinding Light=palette_light.png, Dark=palette_dark.png}"/>
 								<ImageButton
 									WidthRequest="36"
-									Command="{Binding BindingContext.DeleteTagCommand, Source={x:Reference TagListPage}}"
+									Command="{Binding BindingContext.DeleteTagCommand, Source={x:Reference TagsPage}}"
 									CommandParameter="{Binding}"
 									Source="{AppThemeBinding Light=delete_light.png, Dark=delete_dark.png}"/>
 							</HorizontalStackLayout>

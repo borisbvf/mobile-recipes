@@ -1,8 +1,8 @@
 namespace Recipes.Views;
 
-public partial class TagListView : ContentPage
+public partial class TagListPage : ContentPage
 {
-	public TagListView(TagListViewModel tagListViewModel)
+	public TagListPage(TagListViewModel tagListViewModel)
 	{
 		InitializeComponent();
 		BindingContext = tagListViewModel;
