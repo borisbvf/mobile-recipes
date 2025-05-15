@@ -34,7 +34,9 @@ public static class Constants
 		SQLite.SQLiteOpenFlags.SharedCache;
 	public static string DBPath = Path.Combine(FileSystem.AppDataDirectory, DBFileName);
 	public const string ImageDirectoryName = "DatabaseImages";
+	public const string PdfDirectoryName = "TempPdf";
 	public static string ImageDirectory = Path.Combine(FileSystem.AppDataDirectory, ImageDirectoryName);
+	public static string PdfDirectory = Path.Combine(FileSystem.AppDataDirectory, PdfDirectoryName);
 
 	public const string CheckedTagsParameter = "CheckedTags";
 	public const string SelectedColorParameter = "SelectedColor";

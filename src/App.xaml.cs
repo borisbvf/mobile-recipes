@@ -1,4 +1,5 @@
-﻿using Recipes.Services;
+﻿using PdfSharp.Fonts;
+using Recipes.Services;
 using System.ComponentModel;
 
 namespace Recipes
@@ -8,7 +9,7 @@ namespace Recipes
         public App()
         {
             InitializeComponent();
-
+            GlobalFontSettings.FontResolver = new FileFontResolver();
             MainPage = new AppShell();
 
             ThemeService.Instance.LoadFromPreferences();

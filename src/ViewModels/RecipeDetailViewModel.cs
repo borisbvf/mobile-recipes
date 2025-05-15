@@ -143,12 +143,6 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		await Clipboard.Default.SetTextAsync(recipeText);
 	}
 
-	public ICommand ExportRecipeToPdfCommand => new Command(ExportRecipeToPdf);
-	private void ExportRecipeToPdf()
-	{
-
-	}
-
 	public ICommand ShareRecipeCommand => new Command(ShareRecipe);
 	private async void ShareRecipe()
 	{
@@ -157,5 +151,22 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 
 		string recipeText = GetRecipeText(recipe);
 		await Share.Default.RequestAsync(new ShareTextRequest(recipeText));
+	}
+
+	public ICommand ExportRecipeToPdfCommand => new Command(ExportRecipeToPdf);
+	private async void ExportRecipeToPdf()
+	{
+		if (recipe == null)
+			return;
+
+		if (!Directory.Exists(Constants.PdfDirectory))
+			Directory.CreateDirectory(Constants.PdfDirectory);
+		string fileName = Path.Combine(Constants.PdfDirectory, $"{Guid.NewGuid()}.pdf");
+
+		RecipeExport.ExportToPdf(recipe, fileName);
+
+		await Launcher.Default.OpenAsync(new OpenFileRequest("Test", new ReadOnlyFile(fileName)));
+
+		File.Delete(fileName);
 	}
 }

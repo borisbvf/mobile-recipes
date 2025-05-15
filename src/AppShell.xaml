@@ -57,31 +57,31 @@
 	</FlyoutItem>
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=camera_light, Dark=camera_dark}"
+		FlyoutIcon="{AppThemeBinding Light=house_light, Dark=house_dark}"
 		Title="{Binding LocalizationManager[Recipes]}"
 		ContentTemplate="{DataTemplate local:Views.RecipeListPage}"
 		Route="MainPage" />
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=picture_light, Dark=picture_dark}"
+		FlyoutIcon="{AppThemeBinding Light=ingredients_light, Dark=ingredients_dark}"
 		Route="IngredientListPage"
 		Title="{Binding LocalizationManager[IngredientsTitle]}"
 		ContentTemplate="{DataTemplate local:Views.IngredientListPage}"/>
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=export_light, Dark=export_dark}"
+		FlyoutIcon="{AppThemeBinding Light=tag_light, Dark=tag_dark}"
 		Route="TagListView"
 		Title="{Binding LocalizationManager[TagsTitle]}"
 		ContentTemplate="{DataTemplate local:Views.TagListPage}"/>
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=edit_light, Dark=edit_dark}"
+		FlyoutIcon="{AppThemeBinding Light=gears_light, Dark=gears_dark}"
 		Route="SettingsPage"
 		Title="{Binding LocalizationManager[Settings]}"
 		ContentTemplate="{DataTemplate local:Views.SettingsPage}"/>
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=add_light, Dark=add_dark}"
+		FlyoutIcon="{AppThemeBinding Light=ingredients2_light, Dark=ingredients2_dark}"
 		Route="ImageStoreView"
 		Title="ImageStoreView"
 		ContentTemplate="{DataTemplate local:Views.ImageStoreView}"/>
