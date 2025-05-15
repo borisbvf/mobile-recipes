@@ -52,6 +52,8 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		}
 	}
 
+	private List<string> deletedImages = new();
+
 	public ICommand SaveCommand => new Command(SaveRecipe);
 	private async void SaveRecipe()
 	{
@@ -98,6 +100,10 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 				else
 				{
 					await recipeService.UpdateRecipeAsync(recipe);
+				}
+				foreach (string filename in deletedImages)
+				{
+					File.Delete(filename);
 				}
 				await Shell.Current.GoToAsync("..");
 			}
@@ -249,6 +255,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 	{
 		if (selectedImage != null && recipe != null)
 		{
+			deletedImages.Add(selectedImage.FileName!);
 			recipe.Images.Remove(selectedImage);
 		}
 	}
