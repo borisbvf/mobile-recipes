@@ -6,6 +6,10 @@
 			 xmlns:viewmodel="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodel:RecipeListViewModel"
              Title="{Binding LocalizationManager[Recipes], Mode=OneWay}">
+	<ContentPage.Resources>
+		<viewmodel:MinutesToTimeStringConverter x:Key="minToString"/>
+		<viewmodel:TextToColorConverter x:Key="textToColor"/>
+	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
@@ -20,33 +24,94 @@
 			Command="{Binding GetRecipesCommand}"
 			Grid.Row="1">
 			<CollectionView
+				x:Name="RecipeList"
 				ItemsSource="{Binding Recipes}">
 				<CollectionView.ItemTemplate>
 					<DataTemplate x:DataType="model:Recipe">
-						<Frame
-							Padding="4"
-							Margin="4">
-							<VerticalStackLayout
-								Padding="0">
-								<VerticalStackLayout.GestureRecognizers>
+						<Border
+							x:Name="RecipeBorder"
+							StrokeShape="RoundRectangle 10"
+							Padding="2"
+							Margin="2">
+							<Grid
+								RowDefinitions="*,*,40"
+								ColumnDefinitions="*,50">
+								<Grid.GestureRecognizers>
 									<TapGestureRecognizer
 										Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecipeListViewModel}},Path=GoToDetailsCommand}"
 										CommandParameter="{Binding .}"/>
-								</VerticalStackLayout.GestureRecognizers>
+								</Grid.GestureRecognizers>
+								<VerticalStackLayout
+									Grid.Column="0"
+									Grid.Row="0"
+									Grid.RowSpan="2"
+									Padding="0">
+									<Label
+										Margin="5"
+										Text="{Binding Name}"
+										TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
+										FontAttributes="Bold"
+										FontSize="16"/>
+									<Label
+										Margin="5"
+										Text="{Binding Description}"
+										FontSize="13"
+										VerticalOptions="End"/>
+								</VerticalStackLayout>
 								<Label
-									Margin="5"
-									Text="{Binding Name}"
-									TextColor="{AppThemeBinding Light={StaticResource MainDark}, Dark={StaticResource MainLight}}"
-									FontAttributes="Bold"
-									FontSize="16"/>
+									Grid.Row="0"
+									Grid.Column="1"
+									HorizontalOptions="Center"
+									VerticalOptions="Center"
+									Text="{Binding PreparationTime, Converter={StaticResource minToString}}"/>
 								<Label
-									Margin="5"
-									Text="{Binding Description}"
-									FontSize="13"
-									VerticalOptions="End"
-									/>
-							</VerticalStackLayout>
-						</Frame>
+									Grid.Row="1"
+									Grid.Column="1"
+									HorizontalOptions="Center"
+									VerticalOptions="Center"
+									Text="{Binding CookingTime, Converter={StaticResource minToString}}"/>
+								<CollectionView
+									x:Name="RecipeTagList"
+									Grid.Row="2"
+									Grid.Column="0"
+									Grid.ColumnSpan="2"
+									Margin="4"
+									ItemsSource="{Binding Tags}">
+									<CollectionView.GestureRecognizers>
+										<TapGestureRecognizer
+											Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecipeListViewModel}},Path=GoToDetailsCommand}"
+											CommandParameter="{Binding .}"/>
+									</CollectionView.GestureRecognizers>
+									<CollectionView.ItemsLayout>
+										<LinearItemsLayout
+											Orientation="Horizontal"
+											ItemSpacing="4"/>
+									</CollectionView.ItemsLayout>
+									<CollectionView.ItemTemplate>
+										<DataTemplate x:DataType="model:RecipeTag">
+											<Border
+												Padding="5"
+												BackgroundColor="{Binding Color, Converter={StaticResource textToColor}}"
+												StrokeShape="RoundRectangle 15">
+												<Border.GestureRecognizers>
+													<TapGestureRecognizer
+														Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RecipeListViewModel}},Path=GoToDetailsCommand}"
+														CommandParameter="{Binding BindingContext, Source={x:Reference RecipeTagList}}"/>
+												</Border.GestureRecognizers>
+												<Label
+													Padding="5,1"
+													HorizontalOptions="Center"
+													VerticalOptions="Center"
+													FontSize="14"
+													FontAttributes="Bold"
+													TextColor="{StaticResource Gray600}"
+													Text="{Binding Name}"/>
+											</Border>
+										</DataTemplate>
+									</CollectionView.ItemTemplate>
+								</CollectionView>
+							</Grid>
+						</Border>
 					</DataTemplate>
 				</CollectionView.ItemTemplate>
 			</CollectionView>

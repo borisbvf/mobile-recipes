@@ -76,8 +76,18 @@ namespace Recipes.Services
 
 		public async Task<IEnumerable<Recipe>> GetRecipeListAsync()
 		{
-			return await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
+			IEnumerable<Recipe> result = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
 				"prep_time as preparationtime, cook_time as cookingtime FROM recipes");
+			foreach (Recipe recipe in result)
+			{
+				List<RecipeTag> tags = await database!.QueryAsync<RecipeTag>("SELECT t.id, t.name, t.color FROM tags t " +
+					$"INNER JOIN recipe_tag rt ON rt.tag_id = t.id WHERE rt.recipe_id = {recipe.Id}");
+				foreach (RecipeTag tag in tags)
+				{
+					recipe.Tags.Add(tag);
+				}
+			}
+			return result;
 		}
 
 		public async Task<Recipe?> GetRecipeAsync(int recipeId)

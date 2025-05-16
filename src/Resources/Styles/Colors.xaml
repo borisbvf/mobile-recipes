@@ -18,8 +18,10 @@
 	<Color x:Key="Tertiary">#0097B2</Color>
 
 	<Color x:Key="MainDark">#0097B2</Color>
-	<Color x:Key="MainLightOld">#A0F0F0</Color>
-	<Color x:Key="MainLight">#CAF7FF</Color>
+	<Color x:Key="MainDarkOld">Black</Color>
+	<Color x:Key="MainLight">#A0F0F0</Color>
+	<Color x:Key="MainLightOld">#CAF7FF</Color>
+	<Color x:Key="MainLightNew">White</Color>
 
 	<Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
