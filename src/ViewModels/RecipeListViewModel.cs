@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;
 
-public class RecipeListViewModel : BaseViewModel
+public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
@@ -23,8 +24,26 @@ public class RecipeListViewModel : BaseViewModel
 			}
 		}
 	}
-	
+
 	private IRecipeService recipeService;
+
+	protected string? TextFilter { get; set; }
+	protected List<int> IngredientIds { get; } = [];
+	protected List<int> TagIds { get; } = [];
+
+	private string? ingredientsFilter;
+	public string? IngredientsFilter
+	{
+		get => ingredientsFilter;
+		set
+		{
+			if (value != ingredientsFilter)
+			{
+				ingredientsFilter = value;
+				OnPropertyChanged();
+			}
+		}
+	}
 
 	public RecipeListViewModel(IRecipeService recipeService)
 	{
@@ -82,5 +101,106 @@ public class RecipeListViewModel : BaseViewModel
 	{
 		var navParameter = new Dictionary<string, object> { { nameof(Recipe), new Recipe() } };
 		Shell.Current.GoToAsync(Constants.EditPageRoute, navParameter);
+	}
+
+	public ICommand GoToSearchCommand => new Command(GoToSearch);
+	private async void GoToSearch()
+	{
+		await Shell.Current.GoToAsync(Constants.RecipeSearchPage);
+	}
+
+	private async Task GetFilteredData()
+	{
+		IsBusy = true;
+		try
+		{
+			if (string.IsNullOrWhiteSpace(TextFilter) && TagIds.Count == 0 && IngredientIds.Count == 0)
+			{
+				if (Recipes.Count > 0)
+					Recipes.Clear();
+				return;
+			}
+			IEnumerable<Recipe> result = await recipeService.GetRecipeListAsync(TextFilter, TagIds, IngredientIds);
+			if (Recipes.Count > 0)
+				Recipes.Clear();
+			foreach (Recipe recipe in result)
+				Recipes.Add(recipe);
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine($"Unable to get recipes: {ex.Message}");
+			await Shell.Current.DisplayAlert(
+				LocalizationManager["Error"].ToString(),
+				ex.Message,
+				LocalizationManager["Ok"].ToString());
+		}
+		finally
+		{
+			IsBusy = false;
+		}
+	}
+
+	public ICommand SearchTextChangedCommand => new Command(SearchTextChanged, (object obj) => obj != null);
+	private async void SearchTextChanged(object obj)
+	{
+		TextChangedEventArgs args = (TextChangedEventArgs)obj;
+		if (args != null)
+		{
+			TextFilter = args.NewTextValue;
+			await GetFilteredData();
+		}
+	}
+
+	public ICommand SelectIngredientsCommand => new Command(SelectIngredients);
+	private async void SelectIngredients()
+	{
+		Dictionary<string, object> navParam = new();
+		List<int> ids = new();
+		navParam.Add(Constants.IngredientIdsParameter, ids);
+		await Shell.Current.GoToAsync(Constants.IngredientSelectionRoute, navParam);
+	}
+
+	public ICommand SelectTagsCommand => new Command(SelectTags);
+	private async void SelectTags()
+	{
+		List<int> tagIds = new();
+		Dictionary<string, object> navParam = new Dictionary<string, object>
+		{
+			{ Constants.CheckedTagsParameter , tagIds }
+		};
+		await Shell.Current.GoToAsync(Constants.TagSelectionRoute, navParam);
+	}
+
+	public async void ApplyQueryAttributes(IDictionary<string, object> query)
+	{
+		if (query.ContainsKey(Constants.CheckedTagsParameter))
+		{
+			List<int>? paramTagIds = query[Constants.CheckedTagsParameter] as List<int>;
+			if (paramTagIds != null && paramTagIds.Count > 0)
+			{
+				TagIds.Clear();
+				TagIds.AddRange(paramTagIds);
+				await GetFilteredData();
+			}
+			query.Remove(Constants.CheckedTagsParameter);
+		}
+
+		if (query.ContainsKey(Constants.SelectedIngredientsParameter))
+		{
+			List<Ingredient> selected = (List<Ingredient>)query[Constants.SelectedIngredientsParameter];
+			IngredientIds.Clear();
+			List<string> names = new();
+			foreach (Ingredient item in selected)
+			{
+				IngredientIds.Add(item.Id);
+				names.Add(item.Name!);
+			}
+			if (selected.Count > 0)
+			{
+				await GetFilteredData();
+				IngredientsFilter = string.Join(", ", names);
+			}
+			query.Remove(Constants.SelectedIngredientsParameter);
+		}
 	}
 }

@@ -23,6 +23,7 @@ namespace Recipes
 			builder.Services.AddSingleton<IRecipeService, RecipeDatabase>();
 			builder.Services.AddTransient<RecipeListViewModel>();
 			builder.Services.AddTransient<RecipeListPage>();
+            builder.Services.AddTransient<RecipeSearchPage>();
 			builder.Services.AddTransient<RecipeDetailViewModel>();
 			builder.Services.AddTransient<RecipeDetailPage>();
 			builder.Services.AddTransient<RecipeEditViewModel>();

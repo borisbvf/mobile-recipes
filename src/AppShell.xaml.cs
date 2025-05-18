@@ -9,6 +9,7 @@ namespace Recipes
             InitializeComponent();
 
             Routing.RegisterRoute(Constants.SettingsPageRoute, typeof(SettingsPage));
+            Routing.RegisterRoute(Constants.RecipeSearchPage, typeof(RecipeSearchPage));
 			Routing.RegisterRoute(Constants.DetailPageRoute, typeof(RecipeDetailPage));
 			Routing.RegisterRoute(Constants.EditPageRoute, typeof(RecipeEditPage));
             Routing.RegisterRoute(Constants.IngredientListRoute, typeof(IngredientListPage));

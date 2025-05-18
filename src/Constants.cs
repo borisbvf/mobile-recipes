@@ -12,6 +12,7 @@ public static class Constants
 
 
 	public const string MainPageRoute = "MainPage";
+	public const string RecipeSearchPage = "RecipeSearchPage";
 	public const string SettingsPageRoute = "SettingsPage";
 	public const string LoadingPageRoute = "LoadingPage";
 	public const string DetailPageRoute = "DetailPage";

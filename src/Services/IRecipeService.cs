@@ -5,6 +5,7 @@ public interface IRecipeService
 	public Task CreateTables();
 
 	public Task<IEnumerable<Recipe>> GetRecipeListAsync();
+	public Task<IEnumerable<Recipe>> GetRecipeListAsync(string? searchText, IEnumerable<int>? tagIds, IEnumerable<int>? ingredientIds);
 	public Task<Recipe?> GetRecipeAsync(int recipeId);
 	public Task<bool> CheckRecipeNameUnique(string name, int id);
 	public Task AddRecipeAsync(Recipe recipe);

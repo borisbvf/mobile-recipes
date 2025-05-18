@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.RecipeSearchPage"
+			 xmlns:model="clr-namespace:Recipes.Models"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 xmlns:views="clr-namespace:Recipes.Views"
+			 x:DataType="viewmodels:RecipeListViewModel"
+			 x:Name="RecipeSearchList"
+             Title="">
+	<Shell.TitleView>
+		<Grid
+			Margin="2"
+			Padding="2,2,6,2">
+			<Entry
+				x:Name="SearchEntry"
+				Loaded="SearchEntry_Loaded"
+				VerticalOptions="Center"
+				HorizontalOptions="Fill"
+				BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+				ClearButtonVisibility="WhileEditing"
+				ReturnType="Search"
+				Placeholder="Search...">
+				<Entry.Behaviors>
+					<viewmodels:EntryEventToCommandBehavior
+						BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+						TextChangedCommand="{Binding SearchTextChangedCommand}"/>
+				</Entry.Behaviors>
+			</Entry>
+		</Grid>
+	</Shell.TitleView>
+	<Grid
+		RowDefinitions="40,*"
+		ColumnDefinitions="*,*"
+		Padding="2"
+		Margin="2">
+		<Entry
+			Grid.Row="0"
+			Grid.Column="0"
+			Margin="0,0,2,0"
+			HorizontalOptions="Fill"
+			VerticalOptions="Center"
+			IsReadOnly="False"
+			ClearButtonVisibility="WhileEditing"
+			Placeholder="Ingredients filter"
+			Text="{Binding IngredientsFilter}">
+			<Entry.GestureRecognizers>
+				<TapGestureRecognizer
+					Command="{Binding SelectIngredientsCommand}"/>
+			</Entry.GestureRecognizers>
+		</Entry>
+		<Button
+			Grid.Row="0"
+			Grid.Column="1"
+			Margin="2,0,0,0"
+			HorizontalOptions="Fill"
+			VerticalOptions="Center"
+			Command="{Binding SelectTagsCommand}"
+			Text="Tags filter"/>
+		<views:RecipeListView
+			Grid.Row="1"
+			Grid.ColumnSpan="2"/>
+	</Grid>
+</ContentPage>

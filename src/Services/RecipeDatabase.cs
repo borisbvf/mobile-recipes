@@ -90,6 +90,20 @@ namespace Recipes.Services
 			return result;
 		}
 
+		public async Task<IEnumerable<Recipe>> GetRecipeListAsync(string? searchText, IEnumerable<int>? tagIds, IEnumerable<int>? ingredientIds)
+		{
+			IEnumerable<Recipe> result = await database!.QueryAsync<Recipe>("SELECT r.id, r.name, r.description, " +
+				"r.prep_time as preparationtime, r.cook_time as cookingtime FROM recipes r " +
+				(tagIds?.Any() ?? false ? "LEFT JOIN recipe_tag rt ON rt.recipe_id = r.id " : string.Empty) +
+				(ingredientIds?.Any() ?? false ? "LEFT JOIN recipe_ingredient ri ON ri.recipe_id = r.id " : string.Empty) +
+				$"WHERE r.name LIKE '%{searchText}%' " +
+				(tagIds?.Any() ?? false ? $"AND rt.tag_id IN ({string.Join(',', tagIds)}) " : string.Empty) +
+				(ingredientIds?.Any() ?? false ? $"AND ri.ingredient_id IN ({string.Join(',', ingredientIds)}) " : string.Empty) +
+				"GROUP BY r.id, r.name, r.description, r.prep_time, r.cook_time"
+				);
+			return result;
+		}
+
 		public async Task<Recipe?> GetRecipeAsync(int recipeId)
 		{
 			var data = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
