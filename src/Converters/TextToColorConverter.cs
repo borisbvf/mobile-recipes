@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Recipes.ViewModels;
+namespace Recipes.Converters;
 public class TextToColorConverter : IValueConverter
 {
 	public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

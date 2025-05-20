@@ -59,9 +59,43 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
+	public FilterCondition FilterConditionAll { get; } = FilterCondition.All;
+	public FilterCondition FilterConditionAny { get; } = FilterCondition.Any;
+	public FilterCondition FilterConditionNone { get; } = FilterCondition.None;
+
+	private FilterCondition? tagConditionValue;
+	public FilterCondition? TagConditionValue
+	{
+		get => tagConditionValue;
+		set
+		{
+			if (value != tagConditionValue)
+			{
+				tagConditionValue = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	private FilterCondition? ingredientConditionValue;
+	public FilterCondition? IngredientConditionValue
+	{
+		get => ingredientConditionValue;
+		set
+		{
+			if (value != ingredientConditionValue)
+			{
+				ingredientConditionValue = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
 	public RecipeListViewModel(IRecipeService recipeService)
 	{
 		this.recipeService = recipeService;
+		tagConditionValue = FilterCondition.Any;
+		ingredientConditionValue = FilterCondition.Any;
 	}
 
 	public ICommand GetRecipesCommand => new Command(GetRecipesAsync);
@@ -253,5 +287,11 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 			await GetFilteredData();
 			query.Remove(Constants.SelectedIngredientsParameter);
 		}
+	}
+
+	public ICommand OnRadioChangedCommand => new Command(OnRadioChanged);
+	private async void OnRadioChanged(object obj)
+	{
+		await GetFilteredData();
 	}
 }

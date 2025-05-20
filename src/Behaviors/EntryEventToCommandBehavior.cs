@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Recipes.ViewModels;
+namespace Recipes.Behaviors;
 
 public class EntryEventToCommandBehavior : Behavior<Entry>
 {

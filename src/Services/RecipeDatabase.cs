@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using System.ComponentModel;
+using static SQLite.SQLite3;
 
 namespace Recipes.Services
 {
@@ -74,11 +75,9 @@ namespace Recipes.Services
 			}
 		}
 
-		public async Task<IEnumerable<Recipe>> GetRecipeListAsync()
+		private async Task ReloadRecipeTags(List<Recipe> recipes)
 		{
-			IEnumerable<Recipe> result = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
-				"prep_time as preparationtime, cook_time as cookingtime FROM recipes ORDER BY name");
-			foreach (Recipe recipe in result)
+			foreach (Recipe recipe in recipes)
 			{
 				List<RecipeTag> tags = await database!.QueryAsync<RecipeTag>("SELECT t.id, t.name, t.color FROM tags t " +
 					$"INNER JOIN recipe_tag rt ON rt.tag_id = t.id WHERE rt.recipe_id = {recipe.Id}");
@@ -87,21 +86,29 @@ namespace Recipes.Services
 					recipe.Tags.Add(tag);
 				}
 			}
+		}
+
+		public async Task<List<Recipe>> GetRecipeListAsync()
+		{
+			List<Recipe> result = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
+				"prep_time as preparationtime, cook_time as cookingtime FROM recipes ORDER BY name");
+			await ReloadRecipeTags(result);
 			return result;
 		}
 
-		public async Task<IEnumerable<Recipe>> GetRecipeListAsync(string? searchText, IEnumerable<int>? tagIds, IEnumerable<int>? ingredientIds)
+		public async Task<List<Recipe>> GetRecipeListAsync(string? searchText, IEnumerable<int>? tagIds, IEnumerable<int>? ingredientIds)
 		{
-			IEnumerable<Recipe> result = await database!.QueryAsync<Recipe>("SELECT r.id, r.name, r.description, " +
+			string sql = "SELECT r.id, r.name, r.description, " +
 				"r.prep_time as preparationtime, r.cook_time as cookingtime FROM recipes r " +
 				(tagIds?.Any() ?? false ? "LEFT JOIN recipe_tag rt ON rt.recipe_id = r.id " : string.Empty) +
 				(ingredientIds?.Any() ?? false ? "LEFT JOIN recipe_ingredient ri ON ri.recipe_id = r.id " : string.Empty) +
-				$"WHERE r.name LIKE '%{searchText}%' " +
+				$"WHERE (r.name LIKE '%{searchText}%' OR r.description LIKE '%{searchText}%' OR r.instructions LIKE '%{searchText}%') " +
 				(tagIds?.Any() ?? false ? $"AND rt.tag_id IN ({string.Join(',', tagIds)}) " : string.Empty) +
 				(ingredientIds?.Any() ?? false ? $"AND ri.ingredient_id IN ({string.Join(',', ingredientIds)}) " : string.Empty) +
 				"GROUP BY r.id, r.name, r.description, r.prep_time, r.cook_time " +
-				"ORDER BY r.name"
-				);
+				$"ORDER BY CASE WHEN r.name LIKE '%{searchText}%' THEN 0 ELSE 1 END, r.name";
+			List<Recipe> result = await database!.QueryAsync<Recipe>(sql);
+			await ReloadRecipeTags(result);
 			return result;
 		}
 
@@ -209,7 +216,7 @@ namespace Recipes.Services
 				$"DELETE FROM recipes WHERE id = {recipe.Id}");
 		}
 
-		public async Task<IEnumerable<Ingredient>> GetIngredientListAsync(List<int>? excludeIds)
+		public async Task<List<Ingredient>> GetIngredientListAsync(List<int>? excludeIds = null)
 		{
 			if (excludeIds == null || excludeIds.Count == 0)
 			{
@@ -245,13 +252,12 @@ namespace Recipes.Services
 				$"DELETE FROM ingredients WHERE id = {ingredient.Id}");
 		}
 
-		public async Task<IEnumerable<RecipeTag>> GetTagListAsync()
+		public async Task<List<RecipeTag>> GetTagListAsync(List<int>? ids = null)
 		{
-			return await database!.QueryAsync<RecipeTag>("SELECT id, name, color, sort_order as sortorder FROM tags ORDER BY sort_order");
-		}
-		public async Task<IEnumerable<RecipeTag>> GetTagListAsync(List<int> ids)
-		{
-			return await database!.QueryAsync<RecipeTag>($"SELECT id, name, color FROM tags WHERE id IN ({string.Join(',', ids)})");
+			if (ids == null || ids.Count == 0)
+				return await database!.QueryAsync<RecipeTag>("SELECT id, name, color, sort_order as sortorder FROM tags ORDER BY sort_order");
+			else
+				return await database!.QueryAsync<RecipeTag>($"SELECT id, name, color FROM tags WHERE id IN ({string.Join(',', ids)}) ORDER BY sort_order");
 		}
 		public async Task AddTagAsync(RecipeTag recipeTag)
 		{

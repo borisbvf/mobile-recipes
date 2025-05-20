@@ -4,12 +4,13 @@
              x:Class="Recipes.Views.RecipeEditPage"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:models="clr-namespace:Recipes.Models"
+			 xmlns:converters="clr-namespace:Recipes.Converters"
 			 x:DataType="viewmodels:RecipeEditViewModel"
 			 x:Name="RecipeChangePage"
              Title="{Binding Title}">
 	<ContentPage.Resources>
-		<viewmodels:MinutesToTimeSpanConverter x:Key="minutesToTimeSpan"/>
-		<viewmodels:TextToColorConverter x:Key="textToColor"/>
+		<converters:MinutesToTimeSpanConverter x:Key="minutesToTimeSpan"/>
+		<converters:TextToColorConverter x:Key="textToColor"/>
 		<Style TargetType="Grid">
 			<Setter Property="VisualStateManager.VisualStateGroups">
 				<VisualStateGroupList>

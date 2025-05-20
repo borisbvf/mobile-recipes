@@ -1,4 +1,7 @@
-﻿global using Recipes.Models;
+﻿global using Recipes.Behaviors;
+//global using Recipes.Controls;
+global using Recipes.Converters;
+global using Recipes.Models;
 global using Recipes.Services;
 global using Recipes.Utils;
 global using Recipes.ViewModels;

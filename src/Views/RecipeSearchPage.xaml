@@ -5,6 +5,7 @@
 			 xmlns:model="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:views="clr-namespace:Recipes.Views"
+			 xmlns:behaviors="clr-namespace:Recipes.Behaviors"
 			 x:DataType="viewmodels:RecipeListViewModel"
 			 x:Name="RecipeSearchList"
              Title="">
@@ -22,7 +23,7 @@
 				ReturnType="Search"
 				Placeholder="Search...">
 				<Entry.Behaviors>
-					<viewmodels:EntryEventToCommandBehavior
+					<behaviors:EntryEventToCommandBehavior
 						BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
 						TextChangedCommand="{Binding SearchTextChangedCommand}"/>
 				</Entry.Behaviors>
@@ -56,13 +57,36 @@
 				</CollectionView.ItemTemplate>
 			</CollectionView>
 			<HorizontalStackLayout
+				RadioButtonGroup.GroupName="IngredientFilterCondition"
+				RadioButtonGroup.SelectedValue="{Binding IngredientConditionValue}"
 				IsVisible="{Binding IsIngredientFilterNotEmpty}">
 				<RadioButton
-					Content="All"/>
+					Value="{Binding FilterConditionAll}"
+					Content="All">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
 				<RadioButton
-					Content="Any"/>
+					Value="{Binding FilterConditionAny}"
+					Content="Any">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
 				<RadioButton
-					Content="None"/>
+					Value="{Binding FilterConditionNone}"
+					Content="None">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
 			</HorizontalStackLayout>
 		</VerticalStackLayout>
 		<VerticalStackLayout
@@ -87,13 +111,36 @@
 				</CollectionView.ItemTemplate>
 			</CollectionView>
 			<HorizontalStackLayout
+				RadioButtonGroup.GroupName="TagFilterCondition"
+				RadioButtonGroup.SelectedValue="{Binding TagConditionValue,Mode=TwoWay}"
 				IsVisible="{Binding IsTagFilterNotEmpty}">
 				<RadioButton
-					Content="All"/>
+					Value="{Binding FilterConditionAll}"
+					Content="All">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
 				<RadioButton
-					Content="Any"/>
+					Value="{Binding FilterConditionAny}"
+					Content="Any">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
 				<RadioButton
-					Content="None"/>
+					Value="{Binding FilterConditionNone}"
+					Content="None">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
 			</HorizontalStackLayout>
 		</VerticalStackLayout>
 		<views:RecipeListView

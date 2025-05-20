@@ -4,10 +4,11 @@
              x:Class="Recipes.Views.TagListView"
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 xmlns:converters="clr-namespace:Recipes.Converters"
 			 x:DataType="viewmodels:TagListViewModel"
 			 x:Name="TagsView">
 	<ContentView.Resources>
-		<viewmodels:TextToColorConverter x:Key="textToColor"/>
+		<converters:TextToColorConverter x:Key="textToColor"/>
 	</ContentView.Resources>
 	<RefreshView
 		IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"

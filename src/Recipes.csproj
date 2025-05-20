@@ -171,6 +171,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Controls\" />
 	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 

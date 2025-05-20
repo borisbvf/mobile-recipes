@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 xmlns:converters="clr-namespace:Recipes.Converters"
              x:Class="Recipes.Views.RecipeListView"
 			 x:DataType="viewmodels:RecipeListViewModel">
 	<ContentView.Resources>
-		<viewmodels:MinutesToTimeStringConverter x:Key="minToString"/>
-		<viewmodels:TextToColorConverter x:Key="textToColor"/>
+		<converters:MinutesToTimeStringConverter x:Key="minToString"/>
+		<converters:TextToColorConverter x:Key="textToColor"/>
 	</ContentView.Resources>
 	<CollectionView
 		x:Name="RecipeList"

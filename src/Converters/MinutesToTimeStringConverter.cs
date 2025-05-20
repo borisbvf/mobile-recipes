@@ -1,13 +1,14 @@
 ﻿using System.Globalization;
 
-namespace Recipes.ViewModels;
-public class MinutesToTimeSpanConverter : IValueConverter
+namespace Recipes.Converters;
+
+public class MinutesToTimeStringConverter : IValueConverter
 {
 	public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
 	{
 		if (value != null)
 		{
-			return TimeSpan.FromMinutes(System.Convert.ToDouble(value));
+			return TimeSpan.FromMinutes(System.Convert.ToDouble(value)).ToString(@"hh\:mm");
 		}
 		else
 		{
@@ -19,7 +20,7 @@ public class MinutesToTimeSpanConverter : IValueConverter
 	{
 		if (value != null)
 		{
-			return ((TimeSpan)value).Hours * 60 + ((TimeSpan)value).Minutes;
+			return 0;
 		}
 		else
 		{

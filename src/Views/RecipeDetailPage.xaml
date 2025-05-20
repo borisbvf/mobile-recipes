@@ -4,11 +4,12 @@
              x:Class="Recipes.Views.RecipeDetailPage"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 xmlns:models="clr-namespace:Recipes.Models"
+			 xmlns:converters="clr-namespace:Recipes.Converters"
 			 x:DataType="viewmodels:RecipeDetailViewModel"
              Title="">
 	<ContentPage.Resources>
-		<viewmodels:MinutesToTimeStringConverter x:Key="minutesToTimeString"/>
-		<viewmodels:TextToColorConverter x:Key="textToColor"/>
+		<converters:MinutesToTimeStringConverter x:Key="minutesToTimeString"/>
+		<converters:TextToColorConverter x:Key="textToColor"/>
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
