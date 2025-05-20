@@ -1,6 +1,6 @@
 ﻿using PdfSharp.Fonts;
 
-namespace Recipes.Services;
+namespace Recipes.Utils;
 
 public class FileFontResolver : IFontResolver
 {

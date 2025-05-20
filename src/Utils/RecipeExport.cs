@@ -6,7 +6,7 @@ using PdfSharp.Pdf;
 using System.Net;
 using System.Numerics;
 
-namespace Recipes.Services;
+namespace Recipes.Utils;
 public class RecipeExport
 {
 	public static LocalizationManager LocalizationManager => LocalizationManager.Instance;

@@ -112,7 +112,7 @@
 								WidthRequest="36"
 								VerticalOptions="Center"
 								HorizontalOptions="End"
-								Source="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
+								Source="{AppThemeBinding Light=plus_light.png, Dark=plus_dark.png}"
 								Command="{Binding AddIngredientCommand}"/>
 
 						</Grid>

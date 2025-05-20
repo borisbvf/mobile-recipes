@@ -4,12 +4,16 @@ using System.Runtime.CompilerServices;
 namespace Recipes.Models;
 public class ObservableIngredient : Ingredient, INotifyPropertyChanged
 {
-	private Color? backgroundDragColor;
+	public ObservableIngredient()
+	{
+
+	}
 
 	public ObservableIngredient(Ingredient source) : base(source)
 	{
 	}
 
+	private Color? backgroundDragColor;
 	public Color? BackgroundDragColor
 	{
 		get => backgroundDragColor;
@@ -23,12 +27,27 @@ public class ObservableIngredient : Ingredient, INotifyPropertyChanged
 		}
 	}
 
+	private Color? backgroundSelectColor;
+	public Color? BackgroundSelectColor
+	{
+		get => backgroundSelectColor;
+		set
+		{
+			if (backgroundSelectColor != value)
+			{
+				backgroundSelectColor = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
 	public override void CopyFrom(Ingredient source)
 	{
 		base.CopyFrom(source);
 		if (source is ObservableIngredient)
 		{
 			BackgroundDragColor = ((ObservableIngredient)source).BackgroundDragColor;
+			BackgroundSelectColor = ((ObservableIngredient)source).BackgroundSelectColor;
 		}
 	}
 

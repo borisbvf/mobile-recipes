@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -27,19 +28,32 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 
 	private IRecipeService recipeService;
 
-	protected string? TextFilter { get; set; }
-	protected List<int> IngredientIds { get; } = [];
-	protected List<int> TagIds { get; } = [];
+	protected string? FilterText { get; set; }
+	public ObservableCollection<Ingredient> FilterIngredients { get; } = [];
+	public ObservableCollection<RecipeTag> FilterTags { get; } = [];
 
-	private string? ingredientsFilter;
-	public string? IngredientsFilter
+	private bool isTagFilterNotEmpty;
+	public bool IsTagFilterNotEmpty
 	{
-		get => ingredientsFilter;
+		get => isTagFilterNotEmpty;
 		set
 		{
-			if (value != ingredientsFilter)
+			if (value != isTagFilterNotEmpty)
 			{
-				ingredientsFilter = value;
+				isTagFilterNotEmpty = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+	private bool isIngredientFilterNotEmpty;
+	public bool IsIngredientFilterNotEmpty
+	{
+		get => isIngredientFilterNotEmpty;
+		set
+		{
+			if (value != isIngredientFilterNotEmpty)
+			{
+				isIngredientFilterNotEmpty = value;
 				OnPropertyChanged();
 			}
 		}
@@ -109,18 +123,35 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		await Shell.Current.GoToAsync(Constants.RecipeSearchPage);
 	}
 
+	private List<int> GetIds(IEnumerable<object> entities)
+	{
+		List<int> result = new();
+		foreach (object item in entities)
+		{
+			if (item is RecipeTag)
+			{
+				result.Add(((RecipeTag)item).Id);
+			}
+			else if (item is Ingredient)
+			{
+				result.Add(((Ingredient)item).Id);
+			}
+		}
+		return result;
+	}
+
 	private async Task GetFilteredData()
 	{
 		IsBusy = true;
 		try
 		{
-			if (string.IsNullOrWhiteSpace(TextFilter) && TagIds.Count == 0 && IngredientIds.Count == 0)
+			if (string.IsNullOrWhiteSpace(FilterText) && FilterTags.Count == 0 && FilterIngredients.Count == 0)
 			{
 				if (Recipes.Count > 0)
 					Recipes.Clear();
 				return;
 			}
-			IEnumerable<Recipe> result = await recipeService.GetRecipeListAsync(TextFilter, TagIds, IngredientIds);
+			IEnumerable<Recipe> result = await recipeService.GetRecipeListAsync(FilterText, GetIds(FilterTags), GetIds(FilterIngredients));
 			if (Recipes.Count > 0)
 				Recipes.Clear();
 			foreach (Recipe recipe in result)
@@ -146,7 +177,7 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		TextChangedEventArgs args = (TextChangedEventArgs)obj;
 		if (args != null)
 		{
-			TextFilter = args.NewTextValue;
+			FilterText = args.NewTextValue;
 			await GetFilteredData();
 		}
 	}
@@ -155,18 +186,47 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 	private async void SelectIngredients()
 	{
 		Dictionary<string, object> navParam = new();
-		List<int> ids = new();
-		navParam.Add(Constants.IngredientIdsParameter, ids);
+		List<int> ids = GetIds(FilterIngredients);
+		navParam.Add(Constants.CheckedIngredientsParameter, ids);
 		await Shell.Current.GoToAsync(Constants.IngredientSelectionRoute, navParam);
+	}
+
+	private async Task LoadTagsByIds(List<int>? ids)
+	{
+		IsBusy = true;
+		FilterTags.Clear();
+		try
+		{
+			if (ids != null && ids.Count > 0)
+			{
+				IEnumerable<RecipeTag> data = await recipeService.GetTagListAsync(ids);
+				foreach (RecipeTag tag in data)
+				{
+					FilterTags.Add(tag);
+				}
+			}
+			IsTagFilterNotEmpty = FilterTags.Count > 0;
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine($"Error while getting tags by ids: {ex.Message}");
+			await Shell.Current.DisplayAlert(
+				LocalizationManager["Error"].ToString(),
+				ex.Message,
+				LocalizationManager["Ok"].ToString());
+		}
+		finally
+		{
+			IsBusy = false;
+		}
 	}
 
 	public ICommand SelectTagsCommand => new Command(SelectTags);
 	private async void SelectTags()
 	{
-		List<int> tagIds = new();
 		Dictionary<string, object> navParam = new Dictionary<string, object>
 		{
-			{ Constants.CheckedTagsParameter , tagIds }
+			{ Constants.CheckedTagsParameter , GetIds(FilterTags) }
 		};
 		await Shell.Current.GoToAsync(Constants.TagSelectionRoute, navParam);
 	}
@@ -176,30 +236,21 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		if (query.ContainsKey(Constants.CheckedTagsParameter))
 		{
 			List<int>? paramTagIds = query[Constants.CheckedTagsParameter] as List<int>;
-			if (paramTagIds != null && paramTagIds.Count > 0)
-			{
-				TagIds.Clear();
-				TagIds.AddRange(paramTagIds);
-				await GetFilteredData();
-			}
+			await LoadTagsByIds(paramTagIds);
+			await GetFilteredData();
 			query.Remove(Constants.CheckedTagsParameter);
 		}
 
 		if (query.ContainsKey(Constants.SelectedIngredientsParameter))
 		{
 			List<Ingredient> selected = (List<Ingredient>)query[Constants.SelectedIngredientsParameter];
-			IngredientIds.Clear();
-			List<string> names = new();
+			FilterIngredients.Clear();
 			foreach (Ingredient item in selected)
 			{
-				IngredientIds.Add(item.Id);
-				names.Add(item.Name!);
+				FilterIngredients.Add(new ObservableIngredient(item));
 			}
-			if (selected.Count > 0)
-			{
-				await GetFilteredData();
-				IngredientsFilter = string.Join(", ", names);
-			}
+			IsIngredientFilterNotEmpty = FilterIngredients.Count > 0;
+			await GetFilteredData();
 			query.Remove(Constants.SelectedIngredientsParameter);
 		}
 	}

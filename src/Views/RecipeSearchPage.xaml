@@ -30,33 +30,72 @@
 		</Grid>
 	</Shell.TitleView>
 	<Grid
-		RowDefinitions="40,*"
+		RowDefinitions="Auto,*"
 		ColumnDefinitions="*,*"
 		Padding="2"
 		Margin="2">
-		<Entry
+		<VerticalStackLayout
 			Grid.Row="0"
-			Grid.Column="0"
-			Margin="0,0,2,0"
-			HorizontalOptions="Fill"
-			VerticalOptions="Center"
-			IsReadOnly="False"
-			ClearButtonVisibility="WhileEditing"
-			Placeholder="Ingredients filter"
-			Text="{Binding IngredientsFilter}">
-			<Entry.GestureRecognizers>
-				<TapGestureRecognizer
-					Command="{Binding SelectIngredientsCommand}"/>
-			</Entry.GestureRecognizers>
-		</Entry>
-		<Button
+			Grid.Column="0">
+			<Button	
+				CornerRadius="10"
+				HeightRequest="40"
+				Margin="12,0,10,0"
+				HorizontalOptions="Fill"
+				VerticalOptions="Center"
+				Command="{Binding SelectIngredientsCommand}"
+				Text="Ingredients filter"/>
+			<CollectionView
+				IsVisible="{Binding IsIngredientFilterNotEmpty}"
+				ItemsSource="{Binding FilterIngredients}">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="model:Ingredient">
+						<Label
+							Text="{Binding Name}"/>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+			<HorizontalStackLayout
+				IsVisible="{Binding IsIngredientFilterNotEmpty}">
+				<RadioButton
+					Content="All"/>
+				<RadioButton
+					Content="Any"/>
+				<RadioButton
+					Content="None"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+		<VerticalStackLayout
 			Grid.Row="0"
-			Grid.Column="1"
-			Margin="2,0,0,0"
-			HorizontalOptions="Fill"
-			VerticalOptions="Center"
-			Command="{Binding SelectTagsCommand}"
-			Text="Tags filter"/>
+			Grid.Column="1">
+			<Button	
+				CornerRadius="10"
+				HeightRequest="40"
+				Margin="12,0,10,0"
+				HorizontalOptions="Fill"
+				VerticalOptions="Center"
+				Command="{Binding SelectTagsCommand}"
+				Text="Tags filter"/>
+			<CollectionView
+				IsVisible="{Binding IsTagFilterNotEmpty}"
+				ItemsSource="{Binding FilterTags}">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="model:RecipeTag">
+						<Label
+							Text="{Binding Name}"/>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+			<HorizontalStackLayout
+				IsVisible="{Binding IsTagFilterNotEmpty}">
+				<RadioButton
+					Content="All"/>
+				<RadioButton
+					Content="Any"/>
+				<RadioButton
+					Content="None"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
 		<views:RecipeListView
 			Grid.Row="1"
 			Grid.ColumnSpan="2"/>

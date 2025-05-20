@@ -10,7 +10,7 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem
 			Order="Primary"
-			IconImageSource="{AppThemeBinding Light=add_light.png, Dark=add_dark.png}"
+			IconImageSource="{AppThemeBinding Light=plus_light.png, Dark=plus_dark.png}"
 			Text="{Binding LocalizationManager[Add]}"
 			Command="{Binding AddTagCommand}"/>
 	</ContentPage.ToolbarItems>

@@ -63,13 +63,13 @@
 		Route="MainPage" />
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=ingredients_light, Dark=ingredients_dark}"
+		FlyoutIcon="{AppThemeBinding Light=list_light, Dark=list_dark}"
 		Route="IngredientListPage"
 		Title="{Binding LocalizationManager[IngredientsTitle]}"
 		ContentTemplate="{DataTemplate local:Views.IngredientListPage}"/>
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=tag_light, Dark=tag_dark}"
+		FlyoutIcon="{AppThemeBinding Light=tags_light, Dark=tags_dark}"
 		Route="TagListView"
 		Title="{Binding LocalizationManager[TagsTitle]}"
 		ContentTemplate="{DataTemplate local:Views.TagListPage}"/>
@@ -81,6 +81,7 @@
 		ContentTemplate="{DataTemplate local:Views.SettingsPage}"/>
 
 	<ShellContent
+		FlyoutItemIsVisible="False"
 		FlyoutIcon="{AppThemeBinding Light=ingredients2_light, Dark=ingredients2_dark}"
 		Route="ImageStoreView"
 		Title="ImageStoreView"

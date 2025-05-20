@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -8,24 +9,7 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 {
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
-	public ObservableCollection<Ingredient> Ingredients { get; } = new();
-
-	private SelectionMode viewSelectionMode;
-	public SelectionMode ViewSelectionMode
-	{
-		get => viewSelectionMode;
-		set
-		{
-			if (viewSelectionMode != value)
-			{
-				viewSelectionMode = value;
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	private List<int>? exclusionIds;
-
+	public ObservableCollection<ObservableIngredient> Ingredients { get; } = new();
 
 	private bool isRefreshing;
 	public bool IsRefreshing
@@ -41,6 +25,45 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
+	private List<int>? exclusionIds;
+	public List<int>? ExclusionIds
+	{
+		get => exclusionIds;
+		set
+		{
+			if (value != exclusionIds)
+			{
+				exclusionIds = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsCheckAvailable));
+			}
+		}
+	}
+
+	public bool IsCheckAvailable
+	{
+		get => checkedIds != null || exclusionIds != null;
+	}
+
+	private List<int>? checkedIds;
+	public List<int>? CheckedIds
+	{
+		get => checkedIds;
+		set
+		{
+			if (value != checkedIds)
+			{
+				checkedIds = value;
+				foreach (Ingredient item in Ingredients)
+				{
+					item.IsChecked = (checkedIds != null) && checkedIds.IndexOf(item.Id) >= 0;
+				}
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsCheckAvailable));
+			}
+		}
+	}
+
 	public IList<object>? SelectedIngredients { get; set; }
 
 
@@ -50,7 +73,7 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 	{
 		this.recipeService = recipeService;
 		exclusionIds = null;
-		viewSelectionMode = SelectionMode.None;
+		checkedIds = null;
 	}
 
 	public ICommand GetIngredientsCommand => new Command(GetIngredientsAsync);
@@ -65,7 +88,15 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 			if (Ingredients.Count > 0)
 				Ingredients.Clear();
 			foreach (Ingredient ingredient in result)
-				Ingredients.Add(ingredient);
+			{
+				ingredient.IsChecked = checkedIds != null && checkedIds.IndexOf(ingredient.Id) >= 0;
+
+				ObservableIngredient observableIngredient = new();
+				observableIngredient.CopyFrom(ingredient);
+				observableIngredient.BackgroundSelectColor = ColorHelper.GetBackgroundSelectionColor(observableIngredient.IsChecked);
+
+				Ingredients.Add(observableIngredient);
+			}
 		}
 		catch (Exception ex)
 		{
@@ -209,27 +240,53 @@ public class IngredientListViewModel : BaseViewModel, IQueryAttributable
 	public async void FinishSelection()
 	{
 		Dictionary<string, object> navParam = new();
-		if (exclusionIds != null)
+		if (IsCheckAvailable)
 		{
-			if (SelectedIngredients != null)
+			List<Ingredient> list = new();
+			foreach (Ingredient item in Ingredients)
 			{
-				List<Ingredient> list = new();
-				foreach (Ingredient item in SelectedIngredients)
+				if (item.IsChecked)
 				{
 					list.Add(item);
 				}
-				navParam.Add(Constants.SelectedIngredientsParameter, list);
 			}
+			navParam.Add(Constants.SelectedIngredientsParameter, list);
 		}
 		await Shell.Current.GoToAsync("..", navParam);
 	}
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query)
 	{
-		if (query.ContainsKey(Constants.IngredientIdsParameter))
+		if (query.ContainsKey(Constants.ExcludedIngredientIdsParameter))
 		{
-			exclusionIds = (List<int>)query[Constants.IngredientIdsParameter];
-			ViewSelectionMode = SelectionMode.Multiple;
+			exclusionIds = (List<int>)query[Constants.ExcludedIngredientIdsParameter];
+		}
+
+		if (query.ContainsKey(Constants.CheckedIngredientsParameter))
+		{
+			CheckedIds = new();
+			List<int>? paramIds = query[Constants.CheckedIngredientsParameter] as List<int>;
+			if (paramIds != null)
+			{
+				foreach (int id in paramIds)
+				{
+					CheckedIds.Add(id);
+				}
+			}
+		}
+	}
+
+	public ICommand TapIngredientCommand => new Command(TapIngredient);
+	public void TapIngredient(object obj)
+	{
+		if (!IsCheckAvailable)
+			return;
+
+		ObservableIngredient? current = obj as ObservableIngredient;
+		if (current != null)
+		{
+			current.IsChecked = !current.IsChecked;
+			current.BackgroundSelectColor = ColorHelper.GetBackgroundSelectionColor(current.IsChecked);
 		}
 	}
 }

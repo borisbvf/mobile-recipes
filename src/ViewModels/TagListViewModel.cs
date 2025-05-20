@@ -88,8 +88,8 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 				tag.IsChecked = (checkedIds != null) && (checkedIds.IndexOf(tag.Id) >= 0);
 				ObservableTag extendedTag = new();
 				extendedTag.CopyFrom(tag);
-				extendedTag.BackgroundDragColor = GetBaseBackgroundDragColor();
-				extendedTag.BackgroundSelectColor = GetBackgroundSelectionColor(extendedTag.IsChecked);
+				extendedTag.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
+				extendedTag.BackgroundSelectColor = ColorHelper.GetBackgroundSelectionColor(extendedTag.IsChecked);
 				Tags.Add(extendedTag);
 			}
 		}
@@ -306,26 +306,6 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		await Shell.Current.GoToAsync(Constants.ColorSelectionRoute, navParam);
 	}
 
-	private Color GetBaseBackgroundDragColor()
-	{
-		Color result = (App.Current!.RequestedTheme == AppTheme.Light)
-			? (Color)App.Current!.Resources["White"]
-			: (Color)App.Current!.Resources["Black"];
-		return result;
-	}
-
-	private Color GetBackgroundSelectionColor(bool isChecked)
-	{
-		Color result = (App.Current!.RequestedTheme == AppTheme.Light)
-			? (Color)App.Current!.Resources["White"]
-			: (Color)App.Current!.Resources["Black"];
-		if (isChecked)
-		{
-			result = Colors.LightSkyBlue;
-		}
-		return result;
-	}
-
 	public ICommand DragTagStartingCommand => new Command(DragTagStarting);
 	public void DragTagStarting(object obj)
 	{
@@ -338,7 +318,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		ObservableTag? currentTag = obj as ObservableTag;
 		if (currentTag != null && draggedTag != null && currentTag != draggedTag)
 		{
-			currentTag.BackgroundDragColor = Colors.LightSkyBlue;
+			currentTag.BackgroundDragColor = ColorHelper.GetBackgroundDragColor();
 		}
 	}
 
@@ -348,7 +328,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		ObservableTag? currentTag = obj as ObservableTag;
 		if (currentTag != null)
 		{
-			currentTag.BackgroundDragColor = GetBaseBackgroundDragColor();
+			currentTag.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
 		}
 	}
 
@@ -358,8 +338,8 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		ObservableTag? currentTag = obj as ObservableTag;
 		if (currentTag != null && draggedTag != null)
 		{
-			currentTag.BackgroundDragColor = GetBaseBackgroundDragColor();
-			draggedTag.BackgroundDragColor = GetBaseBackgroundDragColor();
+			currentTag.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
+			draggedTag.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
 			if (currentTag != draggedTag)
 			{
 				int oldIndex = Tags.IndexOf(draggedTag);
@@ -388,7 +368,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		if (currentTag != null)
 		{
 			currentTag.IsChecked = !currentTag.IsChecked;
-			currentTag.BackgroundSelectColor = GetBackgroundSelectionColor(currentTag.IsChecked);
+			currentTag.BackgroundSelectColor = ColorHelper.GetBackgroundSelectionColor(currentTag.IsChecked);
 		}
 	}
 }

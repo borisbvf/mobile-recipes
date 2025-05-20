@@ -11,35 +11,19 @@
 		Command="{Binding GetIngredientsCommand}">
 		<CollectionView
 			x:Name="ColView"
-			SelectionMode="{Binding ViewSelectionMode}"
-			ItemsSource="{Binding Ingredients}"
-			SelectedItems="{Binding SelectedIngredients, Mode=TwoWay}">
+			ItemsSource="{Binding Ingredients}">
 			<CollectionView.ItemTemplate>
-				<DataTemplate x:DataType="models:Ingredient">
+				<DataTemplate x:DataType="models:ObservableIngredient">
 					<Border
+						BackgroundColor="{Binding BackgroundSelectColor}"
 						StrokeShape="RoundRectangle 5"
 						Margin="2"
 						Padding="2">
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroupList>
-								<VisualStateGroup x:Name="CommonStates">
-									<VisualState x:Name="Normal">
-										<VisualState.Setters>
-											<Setter
-												Property="BackgroundColor"
-												Value="Transparent" />
-										</VisualState.Setters>
-									</VisualState>
-									<VisualState x:Name="Selected">
-										<VisualState.Setters>
-											<Setter
-												Property="BackgroundColor"
-												Value="LightSkyBlue" />
-										</VisualState.Setters>
-									</VisualState>
-								</VisualStateGroup>
-							</VisualStateGroupList>
-						</VisualStateManager.VisualStateGroups>
+						<Border.GestureRecognizers>
+							<TapGestureRecognizer
+								Command="{Binding BindingContext.TapIngredientCommand, Source={x:Reference IngredientsView}}"
+								CommandParameter="{Binding}"/>
+						</Border.GestureRecognizers>
 						<Grid
 							RowDefinitions="40"
 							Padding="2"

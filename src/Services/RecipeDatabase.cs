@@ -77,7 +77,7 @@ namespace Recipes.Services
 		public async Task<IEnumerable<Recipe>> GetRecipeListAsync()
 		{
 			IEnumerable<Recipe> result = await database!.QueryAsync<Recipe>("SELECT id, name, description, instructions, " +
-				"prep_time as preparationtime, cook_time as cookingtime FROM recipes");
+				"prep_time as preparationtime, cook_time as cookingtime FROM recipes ORDER BY name");
 			foreach (Recipe recipe in result)
 			{
 				List<RecipeTag> tags = await database!.QueryAsync<RecipeTag>("SELECT t.id, t.name, t.color FROM tags t " +
@@ -99,7 +99,8 @@ namespace Recipes.Services
 				$"WHERE r.name LIKE '%{searchText}%' " +
 				(tagIds?.Any() ?? false ? $"AND rt.tag_id IN ({string.Join(',', tagIds)}) " : string.Empty) +
 				(ingredientIds?.Any() ?? false ? $"AND ri.ingredient_id IN ({string.Join(',', ingredientIds)}) " : string.Empty) +
-				"GROUP BY r.id, r.name, r.description, r.prep_time, r.cook_time"
+				"GROUP BY r.id, r.name, r.description, r.prep_time, r.cook_time " +
+				"ORDER BY r.name"
 				);
 			return result;
 		}

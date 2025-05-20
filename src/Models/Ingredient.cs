@@ -5,6 +5,7 @@ public class Ingredient
 {
 	[PrimaryKey]
 	public int Id { get; set; }
+	public bool IsChecked { get; set; }
 	public string? Name { get; set; }
 	public string? Comment { get; set; }
 	public int SortOrder { get; set; }
@@ -21,6 +22,7 @@ public class Ingredient
 	public virtual void CopyFrom(Ingredient source)
 	{
 		Id = source.Id;
+		IsChecked = source.IsChecked;
 		Name = source.Name;
 		Comment = source.Comment;
 		SortOrder = source.SortOrder;

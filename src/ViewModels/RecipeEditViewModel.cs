@@ -149,7 +149,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		{
 			ids.Add(item.Id);
 		}
-		navParam.Add(Constants.IngredientIdsParameter, ids);
+		navParam.Add(Constants.ExcludedIngredientIdsParameter, ids);
 		await Shell.Current.GoToAsync(Constants.IngredientSelectionRoute, navParam);
 	}
 
@@ -160,14 +160,6 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		{
 			EditedIngredients.Remove((ObservableIngredient)obj);
 		}
-	}
-
-	private Color GetBaseBackgroundDragColor()
-	{
-		Color result = (App.Current!.RequestedTheme == AppTheme.Light)
-			? (Color)App.Current!.Resources["White"]
-			: (Color)App.Current!.Resources["Black"];
-		return result;
 	}
 
 	public ICommand DragIngredientStartingCommand => new Command(DragIngredientStarting);
@@ -190,7 +182,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 	public void DragIngredientLeave(object obj)
 	{
 		ObservableIngredient? current = (ObservableIngredient)obj;
-		current.BackgroundDragColor = GetBaseBackgroundDragColor();
+		current.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
 	}
 
 	public ICommand DropIngredientCommand => new Command(DropIngredient);
@@ -199,8 +191,8 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		ObservableIngredient? current = (ObservableIngredient)obj;
 		if (current != null && draggedIngredient != null)
 		{
-			current.BackgroundDragColor = GetBaseBackgroundDragColor();
-			draggedIngredient.BackgroundDragColor = GetBaseBackgroundDragColor();
+			current.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
+			draggedIngredient.BackgroundDragColor = ColorHelper.GetBaseBackgroundDragColor();
 			if (current != draggedIngredient)
 			{
 				EditedIngredients.Remove(draggedIngredient);
