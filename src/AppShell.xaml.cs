@@ -18,6 +18,7 @@ namespace Recipes
             Routing.RegisterRoute(Constants.TagSelectionRoute, typeof(TagSelectionPage));
             Routing.RegisterRoute(Constants.ColorSelectionRoute, typeof(ColorSelectionView));
             Routing.RegisterRoute(Constants.ImageStoreRoute, typeof(ImageStoreView));
+            Routing.RegisterRoute(Constants.BackupManagementRoute, typeof(BackupManagementPage));
 
 			BindingContext = this;
         }

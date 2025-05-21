@@ -41,6 +41,8 @@ namespace Recipes
             builder.Services.AddTransient<ColorSelectionViewModel>();
             builder.Services.AddTransient<ColorSelectionView>();
             builder.Services.AddTransient<ImageStoreView>();
+            builder.Services.AddTransient<BackupManagementViewModel>();
+            builder.Services.AddTransient<BackupManagementPage>();
             return builder.Build();
         }
     }

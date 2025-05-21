@@ -2,6 +2,8 @@
 using Recipes.Models;
 using System.Collections.ObjectModel;
 using Recipes.Resources.Localization;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Recipes.ViewModels;
 public class SettingsViewModel : BaseViewModel
@@ -90,5 +92,11 @@ public class SettingsViewModel : BaseViewModel
 		{
 			Themes.RemoveAt(0);
 		}
+	}
+
+	public ICommand GoToBackupsCommand => new Command(GoToBackups);
+	private async void GoToBackups()
+	{
+		await Shell.Current.GoToAsync(Constants.BackupManagementRoute);
 	}
 }

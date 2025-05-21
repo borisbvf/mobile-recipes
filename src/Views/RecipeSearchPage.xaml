@@ -56,7 +56,7 @@
 					VerticalOptions="Center"
 					IsVisible="{Binding IsIngredientFilterNotEmpty}"
 					Command="{Binding CLearIngredientFilterCommand}"
-					Source="add_2.png"/>
+					Source="{AppThemeBinding Light=cross_light.png,Dark=cross_dark.png}"/>
 			</Grid>
 			<CollectionView
 				IsVisible="{Binding IsIngredientFilterNotEmpty}"
@@ -128,7 +128,7 @@
 					VerticalOptions="Center"
 					IsVisible="{Binding IsTagFilterNotEmpty}"
 					Command="{Binding ClearTagFilterCommand}"
-					Source="add_2.png"/>
+					Source="{AppThemeBinding Light=cross_light.png,Dark=cross_dark.png}"/>
 			</Grid>
 			<CollectionView
 				IsVisible="{Binding IsTagFilterNotEmpty}"

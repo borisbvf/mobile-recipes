@@ -24,7 +24,7 @@
 		</RefreshView>
 		<ImageButton
 			Margin="10"
-			Source="{AppThemeBinding Light=add_icon.png, Dark=add_icon_2.png}"
+			Source="{AppThemeBinding Light=main_plus_light.png, Dark=main_plus_dark.png}"
 			Aspect="AspectFill"
 			Grid.Row="2"
 			HorizontalOptions="End"

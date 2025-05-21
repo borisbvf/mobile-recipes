@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Recipes.Views.BackupManagementPage"
+			 xmlns:models="clr-namespace:Recipes.Models"
+			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
+			 x:DataType="viewmodels:BackupManagementViewModel"
+             Title="BackupManagementPage">
+	<Grid
+		RowDefinitions="50,50,*">
+		<Border>
+			<Grid
+				Padding="20,0,20,0"
+				ColumnDefinitions="*,*">
+				<Label
+					Grid.Column="0"
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Text="{Binding LocalizationManager[BackupDatabaseSize]}"/>
+				<Label
+					Grid.Column="1"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					Text="{Binding DatabaseSize}"/>
+			</Grid>
+		</Border>
+		<Border
+			Grid.Row="1">
+			<Grid
+				ColumnDefinitions="*,*"
+				Padding="20,0,20,0">
+				<Label
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Text="{Binding LocalizationManager[BackupLastTime]}"/>
+				<Label
+					Grid.Column="1"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					Text="{Binding BackupLastTime}"/>
+			</Grid>
+		</Border>
+		<VerticalStackLayout
+			Margin="40"
+			Padding="8"
+			Spacing="8"
+			VerticalOptions="End"
+			HorizontalOptions="Fill"
+			Grid.Row="2">
+			<Button
+				HeightRequest="50"
+				HorizontalOptions="Fill"
+				Grid.Column="0"
+				Text="{Binding LocalizationManager[BackupReloadInfo]}"/>
+			<Button
+				HeightRequest="50"
+				HorizontalOptions="Fill"
+				Grid.Column="1"
+				Text="{Binding LocalizationManager[BackupSave]}"/>
+			<Button
+				HeightRequest="50"
+				HorizontalOptions="Fill"
+				Grid.Column="2"
+				Text="{Binding LocalizationManager[BackupRestore]}"/>
+		</VerticalStackLayout>
+	</Grid>
+</ContentPage>

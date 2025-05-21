@@ -129,8 +129,23 @@
   <data name="AppName" xml:space="preserve">
     <value>Recipes</value>
   </data>
+  <data name="BackupDatabaseSize" xml:space="preserve">
+    <value>Database size</value>
+  </data>
+  <data name="BackupLastTime" xml:space="preserve">
+    <value>Last backup saving datetime</value>
+  </data>
   <data name="BackupManagement" xml:space="preserve">
     <value>Backup management</value>
+  </data>
+  <data name="BackupReloadInfo" xml:space="preserve">
+    <value>Reload info</value>
+  </data>
+  <data name="BackupRestore" xml:space="preserve">
+    <value>Restore backup</value>
+  </data>
+  <data name="BackupSave" xml:space="preserve">
+    <value>Save backup</value>
   </data>
   <data name="ButtonFilterIngredients" xml:space="preserve">
     <value>Ingredients</value>
@@ -221,9 +236,6 @@
   </data>
   <data name="IngredientsTitle" xml:space="preserve">
     <value>Ingredients</value>
-  </data>
-  <data name="InitialColorScheme" xml:space="preserve">
-    <value>Initial color scheme</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>

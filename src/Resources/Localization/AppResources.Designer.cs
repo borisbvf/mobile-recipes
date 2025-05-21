@@ -97,11 +97,56 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database size.
+        /// </summary>
+        internal static string BackupDatabaseSize {
+            get {
+                return ResourceManager.GetString("BackupDatabaseSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last backup saving datetime.
+        /// </summary>
+        internal static string BackupLastTime {
+            get {
+                return ResourceManager.GetString("BackupLastTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup management.
         /// </summary>
         internal static string BackupManagement {
             get {
                 return ResourceManager.GetString("BackupManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload info.
+        /// </summary>
+        internal static string BackupReloadInfo {
+            get {
+                return ResourceManager.GetString("BackupReloadInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore backup.
+        /// </summary>
+        internal static string BackupRestore {
+            get {
+                return ResourceManager.GetString("BackupRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save backup.
+        /// </summary>
+        internal static string BackupSave {
+            get {
+                return ResourceManager.GetString("BackupSave", resourceCulture);
             }
         }
         
@@ -372,15 +417,6 @@ namespace Recipes.Resources.Localization {
         internal static string IngredientsTitle {
             get {
                 return ResourceManager.GetString("IngredientsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initial color scheme.
-        /// </summary>
-        internal static string InitialColorScheme {
-            get {
-                return ResourceManager.GetString("InitialColorScheme", resourceCulture);
             }
         }
         
