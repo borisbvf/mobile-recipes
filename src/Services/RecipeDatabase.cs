@@ -96,16 +96,53 @@ namespace Recipes.Services
 			return result;
 		}
 
-		public async Task<List<Recipe>> GetRecipeListAsync(string? searchText, IEnumerable<int>? tagIds, IEnumerable<int>? ingredientIds)
+		public async Task<List<Recipe>> GetRecipeListAsync(string? searchText, List<int>? tagIds, FilterCondition? tagCondition,
+			List<int>? ingredientIds, FilterCondition? ingredientCondition)
 		{
+			bool isTagFilter = (tagIds?.Any() ?? false) && tagCondition != null;
+			bool isIngredientFilter = (ingredientIds?.Any() ?? false) && ingredientCondition != null;
+
+			string tagHavingSection = string.Empty;
+			string ingredientHavingSection = string.Empty;
+
+			if (isTagFilter)
+			{
+				if (tagCondition == FilterCondition.Any)
+				{
+					tagHavingSection = " AND COUNT(DISTINCT rt.tag_id) > 0 ";
+				}
+				else if (tagCondition == FilterCondition.All)
+				{
+					tagHavingSection = $" AND COUNT(DISTINCT rt.tag_id) = {tagIds!.Count()} ";
+				}
+				else if (tagCondition == FilterCondition.None)
+				{
+					tagHavingSection = " AND COUNT(DISTINCT rt.tag_id) = 0 ";
+				}
+			}
+			if (isIngredientFilter)
+			{
+				if (ingredientCondition == FilterCondition.Any)
+				{
+					ingredientHavingSection = " AND COUNT(DISTINCT ri.ingredient_id) > 0 ";
+				}
+				else if (ingredientCondition == FilterCondition.All)
+				{
+					ingredientHavingSection = $" AND COUNT(DISTINCT ri.ingredient_id) = {ingredientIds!.Count()} ";
+				}
+				else if (ingredientCondition == FilterCondition.None)
+				{
+					ingredientHavingSection = " AND COUNT(DISTINCT ri.ingredient_id) = 0 ";
+				}
+			}
+
 			string sql = "SELECT r.id, r.name, r.description, " +
 				"r.prep_time as preparationtime, r.cook_time as cookingtime FROM recipes r " +
-				(tagIds?.Any() ?? false ? "LEFT JOIN recipe_tag rt ON rt.recipe_id = r.id " : string.Empty) +
-				(ingredientIds?.Any() ?? false ? "LEFT JOIN recipe_ingredient ri ON ri.recipe_id = r.id " : string.Empty) +
+				(isTagFilter ? $"LEFT JOIN recipe_tag rt ON rt.recipe_id = r.id AND rt.tag_id IN ({string.Join(',', tagIds!)}) " : string.Empty) +
+				(isIngredientFilter ? $"LEFT JOIN recipe_ingredient ri ON ri.recipe_id = r.id AND ri.ingredient_id IN ({string.Join(',', ingredientIds!)}) " : string.Empty) +
 				$"WHERE (r.name LIKE '%{searchText}%' OR r.description LIKE '%{searchText}%' OR r.instructions LIKE '%{searchText}%') " +
-				(tagIds?.Any() ?? false ? $"AND rt.tag_id IN ({string.Join(',', tagIds)}) " : string.Empty) +
-				(ingredientIds?.Any() ?? false ? $"AND ri.ingredient_id IN ({string.Join(',', ingredientIds)}) " : string.Empty) +
 				"GROUP BY r.id, r.name, r.description, r.prep_time, r.cook_time " +
+				"HAVING 1 = 1 " + tagHavingSection + ingredientHavingSection +
 				$"ORDER BY CASE WHEN r.name LIKE '%{searchText}%' THEN 0 ELSE 1 END, r.name";
 			List<Recipe> result = await database!.QueryAsync<Recipe>(sql);
 			await ReloadRecipeTags(result);

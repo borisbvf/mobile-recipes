@@ -32,6 +32,7 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 	public ObservableCollection<Ingredient> FilterIngredients { get; } = [];
 	public ObservableCollection<RecipeTag> FilterTags { get; } = [];
 
+
 	private bool isTagFilterNotEmpty;
 	public bool IsTagFilterNotEmpty
 	{
@@ -63,19 +64,27 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 	public FilterCondition FilterConditionAny { get; } = FilterCondition.Any;
 	public FilterCondition FilterConditionNone { get; } = FilterCondition.None;
 
+
 	private FilterCondition? tagConditionValue;
 	public FilterCondition? TagConditionValue
 	{
 		get => tagConditionValue;
 		set
 		{
-			if (value != tagConditionValue)
+			if (value != tagConditionValue && value != null)
 			{
 				tagConditionValue = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsTagConditionAll));
+				OnPropertyChanged(nameof(IsTagConditionAny));
+				OnPropertyChanged(nameof(IsTagConditionNone));
 			}
 		}
 	}
+	public bool IsTagConditionAll => tagConditionValue != null && tagConditionValue == FilterCondition.All;
+	public bool IsTagConditionAny => tagConditionValue != null && tagConditionValue == FilterCondition.Any;
+	public bool IsTagConditionNone => tagConditionValue != null && tagConditionValue == FilterCondition.None;
+
 
 	private FilterCondition? ingredientConditionValue;
 	public FilterCondition? IngredientConditionValue
@@ -83,13 +92,19 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		get => ingredientConditionValue;
 		set
 		{
-			if (value != ingredientConditionValue)
+			if (value != ingredientConditionValue && value != null)
 			{
 				ingredientConditionValue = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsIngredientConditionAll));
+				OnPropertyChanged(nameof(IsIngredientConditionAny));
+				OnPropertyChanged(nameof(IsIngredientConditionNone));
 			}
 		}
 	}
+	public bool IsIngredientConditionAll => ingredientConditionValue != null && ingredientConditionValue == FilterCondition.All;
+	public bool IsIngredientConditionAny => ingredientConditionValue != null && ingredientConditionValue == FilterCondition.Any;
+	public bool IsIngredientConditionNone => ingredientConditionValue != null && ingredientConditionValue == FilterCondition.None;
 
 	public RecipeListViewModel(IRecipeService recipeService)
 	{
@@ -185,7 +200,11 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 					Recipes.Clear();
 				return;
 			}
-			IEnumerable<Recipe> result = await recipeService.GetRecipeListAsync(FilterText, GetIds(FilterTags), GetIds(FilterIngredients));
+			List<Recipe> result = await recipeService.GetRecipeListAsync(FilterText,
+				GetIds(FilterTags),
+				tagConditionValue,
+				GetIds(FilterIngredients),
+				ingredientConditionValue);
 			if (Recipes.Count > 0)
 				Recipes.Clear();
 			foreach (Recipe recipe in result)
@@ -292,6 +311,22 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 	public ICommand OnRadioChangedCommand => new Command(OnRadioChanged);
 	private async void OnRadioChanged(object obj)
 	{
+		await GetFilteredData();
+	}
+
+	public ICommand ClearTagFilterCommand => new Command(ClearTagFilter);
+	private async void ClearTagFilter()
+	{
+		FilterTags.Clear();
+		IsTagFilterNotEmpty = false;
+		await GetFilteredData();
+	}
+
+	public ICommand CLearIngredientFilterCommand => new Command(ClearIngredientFilter);
+	private async void ClearIngredientFilter()
+	{
+		FilterIngredients.Clear();
+		IsIngredientFilterNotEmpty = false;
 		await GetFilteredData();
 	}
 }

@@ -129,6 +129,12 @@
   <data name="AppName" xml:space="preserve">
     <value>Рецепты</value>
   </data>
+  <data name="ButtonFilterIngredients" xml:space="preserve">
+    <value>Ингридиенты</value>
+  </data>
+  <data name="ButtonFilterTags" xml:space="preserve">
+    <value>Ярлыки</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отменить</value>
   </data>
@@ -137,6 +143,9 @@
   </data>
   <data name="ChangeColor" xml:space="preserve">
     <value>Изменить цвет</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистить</value>
   </data>
   <data name="ColorSelectionTitle" xml:space="preserve">
     <value>Выберите цвет ярлыка</value>
@@ -189,6 +198,15 @@
   <data name="ErrorUpdatingRecipe" xml:space="preserve">
     <value>Не удалось изменить рецепт.</value>
   </data>
+  <data name="FilterConditionAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="FilterConditionAny" xml:space="preserve">
+    <value>Любой</value>
+  </data>
+  <data name="FilterConditionNone" xml:space="preserve">
+    <value>Никакой</value>
+  </data>
   <data name="Images" xml:space="preserve">
     <value>Изображения:</value>
   </data>
@@ -239,6 +257,9 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Поиск...</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>

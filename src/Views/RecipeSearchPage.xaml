@@ -21,7 +21,7 @@
 				BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
 				ClearButtonVisibility="WhileEditing"
 				ReturnType="Search"
-				Placeholder="Search...">
+				Placeholder="{Binding LocalizationManager[SearchPlaceholder]}">
 				<Entry.Behaviors>
 					<behaviors:EntryEventToCommandBehavior
 						BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
@@ -36,16 +36,28 @@
 		Padding="2"
 		Margin="2">
 		<VerticalStackLayout
+			Margin="12,0,10,0"
 			Grid.Row="0"
 			Grid.Column="0">
-			<Button	
-				CornerRadius="10"
-				HeightRequest="40"
-				Margin="12,0,10,0"
-				HorizontalOptions="Fill"
-				VerticalOptions="Center"
-				Command="{Binding SelectIngredientsCommand}"
-				Text="Ingredients filter"/>
+			<Grid
+				ColumnDefinitions="*,36">
+				<Button	
+					CornerRadius="10"
+					HeightRequest="40"
+					HorizontalOptions="Fill"
+					VerticalOptions="Center"
+					Command="{Binding SelectIngredientsCommand}"
+					Text="{Binding LocalizationManager[ButtonFilterIngredients]}"/>
+				<ImageButton
+					Grid.Column="1"
+					HeightRequest="36"
+					WidthRequest="36"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					IsVisible="{Binding IsIngredientFilterNotEmpty}"
+					Command="{Binding CLearIngredientFilterCommand}"
+					Source="add_2.png"/>
+			</Grid>
 			<CollectionView
 				IsVisible="{Binding IsIngredientFilterNotEmpty}"
 				ItemsSource="{Binding FilterIngredients}">
@@ -56,13 +68,15 @@
 					</DataTemplate>
 				</CollectionView.ItemTemplate>
 			</CollectionView>
-			<HorizontalStackLayout
+			<VerticalStackLayout
 				RadioButtonGroup.GroupName="IngredientFilterCondition"
 				RadioButtonGroup.SelectedValue="{Binding IngredientConditionValue}"
 				IsVisible="{Binding IsIngredientFilterNotEmpty}">
 				<RadioButton
+					HeightRequest="24"
+					IsChecked="{Binding IsIngredientConditionAll}"
 					Value="{Binding FilterConditionAll}"
-					Content="All">
+					Content="{Binding LocalizationManager[FilterConditionAll]}">
 					<RadioButton.Behaviors>
 						<behaviors:RadioEventToCommandBehavior
 							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
@@ -70,36 +84,52 @@
 					</RadioButton.Behaviors>
 				</RadioButton>
 				<RadioButton
-					Value="{Binding FilterConditionAny}"
-					Content="Any">
-					<RadioButton.Behaviors>
-						<behaviors:RadioEventToCommandBehavior
-							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
-							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
-					</RadioButton.Behaviors>
-				</RadioButton>
-				<RadioButton
+					HeightRequest="24"
+					IsChecked="{Binding IsIngredientConditionNone}"
 					Value="{Binding FilterConditionNone}"
-					Content="None">
+					Content="{Binding LocalizationManager[FilterConditionNone]}">
 					<RadioButton.Behaviors>
 						<behaviors:RadioEventToCommandBehavior
 							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
 							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
 					</RadioButton.Behaviors>
 				</RadioButton>
-			</HorizontalStackLayout>
+				<RadioButton
+					HeightRequest="24"
+					IsChecked="{Binding IsIngredientConditionAny}"
+					Value="{Binding FilterConditionAny}"
+					Content="{Binding LocalizationManager[FilterConditionAny]}">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
+			</VerticalStackLayout>
 		</VerticalStackLayout>
 		<VerticalStackLayout
+			Margin="10,0,12,0"
 			Grid.Row="0"
 			Grid.Column="1">
-			<Button	
-				CornerRadius="10"
-				HeightRequest="40"
-				Margin="12,0,10,0"
-				HorizontalOptions="Fill"
-				VerticalOptions="Center"
-				Command="{Binding SelectTagsCommand}"
-				Text="Tags filter"/>
+			<Grid
+				ColumnDefinitions="*,36">
+				<Button	
+					CornerRadius="10"
+					HeightRequest="40"
+					HorizontalOptions="Fill"
+					VerticalOptions="Center"
+					Command="{Binding SelectTagsCommand}"
+					Text="{Binding LocalizationManager[ButtonFilterTags]}"/>
+				<ImageButton
+					Grid.Column="1"
+					WidthRequest="36"
+					HeightRequest="36"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					IsVisible="{Binding IsTagFilterNotEmpty}"
+					Command="{Binding ClearTagFilterCommand}"
+					Source="add_2.png"/>
+			</Grid>
 			<CollectionView
 				IsVisible="{Binding IsTagFilterNotEmpty}"
 				ItemsSource="{Binding FilterTags}">
@@ -110,13 +140,15 @@
 					</DataTemplate>
 				</CollectionView.ItemTemplate>
 			</CollectionView>
-			<HorizontalStackLayout
+			<VerticalStackLayout
 				RadioButtonGroup.GroupName="TagFilterCondition"
-				RadioButtonGroup.SelectedValue="{Binding TagConditionValue,Mode=TwoWay}"
+				RadioButtonGroup.SelectedValue="{Binding TagConditionValue}"
 				IsVisible="{Binding IsTagFilterNotEmpty}">
 				<RadioButton
+					HeightRequest="24"
+					IsChecked="{Binding IsTagConditionAll,Mode=OneWay}"
 					Value="{Binding FilterConditionAll}"
-					Content="All">
+					Content="{Binding LocalizationManager[FilterConditionAll]}">
 					<RadioButton.Behaviors>
 						<behaviors:RadioEventToCommandBehavior
 							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
@@ -124,24 +156,28 @@
 					</RadioButton.Behaviors>
 				</RadioButton>
 				<RadioButton
-					Value="{Binding FilterConditionAny}"
-					Content="Any">
-					<RadioButton.Behaviors>
-						<behaviors:RadioEventToCommandBehavior
-							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
-							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
-					</RadioButton.Behaviors>
-				</RadioButton>
-				<RadioButton
+					HeightRequest="24"
+					IsChecked="{Binding IsTagConditionNone,Mode=OneWay}"
 					Value="{Binding FilterConditionNone}"
-					Content="None">
+					Content="{Binding LocalizationManager[FilterConditionNone]}">
 					<RadioButton.Behaviors>
 						<behaviors:RadioEventToCommandBehavior
 							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
 							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
 					</RadioButton.Behaviors>
 				</RadioButton>
-			</HorizontalStackLayout>
+				<RadioButton
+					HeightRequest="24"
+					IsChecked="{Binding IsTagConditionAny,Mode=OneWay}"
+					Value="{Binding FilterConditionAny}"
+					Content="{Binding LocalizationManager[FilterConditionAny]}">
+					<RadioButton.Behaviors>
+						<behaviors:RadioEventToCommandBehavior
+							BindingContext="{Binding Path=BindingContext, Source={x:Reference RecipeSearchList}}"
+							ValueChangedCommand="{Binding OnRadioChangedCommand}"/>
+					</RadioButton.Behaviors>
+				</RadioButton>
+			</VerticalStackLayout>
 		</VerticalStackLayout>
 		<views:RecipeListView
 			Grid.Row="1"
