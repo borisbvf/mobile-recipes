@@ -74,10 +74,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.5" Color="#019FA1" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.5" Color="#0097B2" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#019FA1" BaseSize="400,400" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#0097B2" BaseSize="400,400" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -170,9 +170,5 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Controls\" />
-	  <Folder Include="Resources\Images\" />
-	</ItemGroup>
 
 </Project>

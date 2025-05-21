@@ -129,6 +129,9 @@
   <data name="AppName" xml:space="preserve">
     <value>Рецепты</value>
   </data>
+  <data name="BackupManagement" xml:space="preserve">
+    <value>Управление резервной копией</value>
+  </data>
   <data name="ButtonFilterIngredients" xml:space="preserve">
     <value>Ингридиенты</value>
   </data>
@@ -219,8 +222,11 @@
   <data name="IngredientsTitle" xml:space="preserve">
     <value>Ингридиенты</value>
   </data>
+  <data name="InitialColorScheme" xml:space="preserve">
+    <value>Первоначальная цветовая схема</value>
+  </data>
   <data name="Language" xml:space="preserve">
-    <value>Язык:</value>
+    <value>Язык</value>
   </data>
   <data name="LightTheme" xml:space="preserve">
     <value>Светлая</value>
@@ -283,7 +289,7 @@
     <value>Ярлыки</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Тема:</value>
+    <value>Тема</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Внимание</value>

@@ -97,6 +97,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup management.
+        /// </summary>
+        internal static string BackupManagement {
+            get {
+                return ResourceManager.GetString("BackupManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingredients.
         /// </summary>
         internal static string ButtonFilterIngredients {
@@ -367,7 +376,16 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language:.
+        ///   Looks up a localized string similar to Initial color scheme.
+        /// </summary>
+        internal static string InitialColorScheme {
+            get {
+                return ResourceManager.GetString("InitialColorScheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
         /// </summary>
         internal static string Language {
             get {
@@ -556,7 +574,7 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Theme:.
+        ///   Looks up a localized string similar to Theme.
         /// </summary>
         internal static string Theme {
             get {

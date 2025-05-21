@@ -53,5 +53,39 @@
 					SelectedItem="{Binding SelectedLanguage}"/>
 			</Grid>
 		</Frame>
-    </VerticalStackLayout>
+		<Frame
+			HeightRequest="80"
+			Margin="2"
+			Padding="2">
+			<Grid
+				ColumnDefinitions="4*,*"
+				Margin="5"
+				Padding="5">
+				<Label
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					FontSize="Medium"
+					Text="{Binding LocalizationManager[InitialColorScheme]}"/>
+				<Switch
+					Grid.Column="1"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					IsToggled="True"/>
+			</Grid>
+		</Frame>
+		<Frame
+			HeightRequest="70"
+			Margin="2"
+			Padding="2">
+			<Grid
+				Margin="5"
+				Padding="5">
+				<Label
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					FontSize="Medium"
+					Text="{Binding LocalizationManager[BackupManagement]}"/>
+			</Grid>
+		</Frame>
+	</VerticalStackLayout>
 </ContentPage>

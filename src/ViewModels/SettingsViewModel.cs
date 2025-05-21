@@ -9,8 +9,8 @@ public class SettingsViewModel : BaseViewModel
 	public LocalizationManager LocalizationManager => LocalizationManager.Instance;
 
 	public ObservableCollection<SettingTheme> Themes { get; set; }
-	public SettingTheme selectedTheme;
-	public SettingTheme SelectedTheme
+	public SettingTheme? selectedTheme;
+	public SettingTheme? SelectedTheme
 	{
 		get => selectedTheme;
 		set
@@ -21,7 +21,7 @@ public class SettingsViewModel : BaseViewModel
 				OnPropertyChanged();
 
 				// Update theme only if it differs from current - it could be the case when language changes.
-				if (selectedTheme.AppTheme != ThemeService.Instance.Theme)
+				if (selectedTheme != null && selectedTheme.AppTheme != ThemeService.Instance.Theme)
 				{
 					// Preferences will be saved in ThemeService
 					ThemeService.Instance!.Theme = selectedTheme.AppTheme;
