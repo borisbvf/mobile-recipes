@@ -5,29 +5,65 @@
 			 xmlns:models="clr-namespace:Recipes.Models"
 			 xmlns:viewmodels="clr-namespace:Recipes.ViewModels"
 			 x:DataType="viewmodels:BackupManagementViewModel"
-             Title="BackupManagementPage">
+             Title="{Binding LocalizationManager[BackupManagement]}">
 	<Grid
-		RowDefinitions="50,50,*">
-		<Border>
+		RowDefinitions="160,100,*">
+		<Border
+			StrokeThickness="0">
 			<Grid
 				Padding="20,0,20,0"
+				RowDefinitions="*,*,*,*"
 				ColumnDefinitions="*,*">
 				<Label
 					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Grid.Row="0"
+					VerticalOptions="Center"
+					HorizontalOptions="Center"
+					Text="{Binding LocalizationManager[BackupDatabaseInfo]}"/>
+				<Label
+					Grid.Column="0"
+					Grid.Row="1"
 					VerticalOptions="Center"
 					HorizontalOptions="Start"
 					Text="{Binding LocalizationManager[BackupDatabaseSize]}"/>
 				<Label
 					Grid.Column="1"
+					Grid.Row="1"
 					VerticalOptions="Center"
 					HorizontalOptions="End"
 					Text="{Binding DatabaseSize}"/>
+				<Label
+					Grid.Column="0"
+					Grid.Row="2"
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Text="{Binding LocalizationManager[BackupImagesSize]}"/>
+				<Label
+					Grid.Column="1"
+					Grid.Row="2"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					Text="{Binding ImagesSize}"/>
+				<Label
+					Grid.Column="0"
+					Grid.Row="3"
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Text="{Binding LocalizationManager[BackupRecipesCount]}"/>
+				<Label
+					Grid.Column="1"
+					Grid.Row="3"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					Text="{Binding RecipesCount}"/>
 			</Grid>
 		</Border>
 		<Border
+			StrokeThickness="0"
 			Grid.Row="1">
 			<Grid
-				ColumnDefinitions="*,*"
+				ColumnDefinitions="2*,*"
 				Padding="20,0,20,0">
 				<Label
 					VerticalOptions="Center"
@@ -51,17 +87,20 @@
 				HeightRequest="50"
 				HorizontalOptions="Fill"
 				Grid.Column="0"
-				Text="{Binding LocalizationManager[BackupReloadInfo]}"/>
+				Text="{Binding LocalizationManager[BackupReloadInfo]}"
+				Command="{Binding ReloadInfoCommand}"/>
 			<Button
 				HeightRequest="50"
 				HorizontalOptions="Fill"
 				Grid.Column="1"
-				Text="{Binding LocalizationManager[BackupSave]}"/>
+				Text="{Binding LocalizationManager[BackupSave]}"
+				Command="{Binding SaveBackupCommand}"/>
 			<Button
 				HeightRequest="50"
 				HorizontalOptions="Fill"
 				Grid.Column="2"
-				Text="{Binding LocalizationManager[BackupRestore]}"/>
+				Text="{Binding LocalizationManager[BackupRestore]}"
+				Command="{Binding RestoreBackupCommand}"/>
 		</VerticalStackLayout>
 	</Grid>
 </ContentPage>

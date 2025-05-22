@@ -9,6 +9,7 @@ public interface IRecipeService
 		List<int>? ingredientIds, FilterCondition? ingredientCondition);
 	public Task<Recipe?> GetRecipeAsync(int recipeId);
 	public Task<bool> CheckRecipeNameUnique(string name, int id);
+	public Task<int> GetRecipeCount();
 	public Task AddRecipeAsync(Recipe recipe);
 	public Task UpdateRecipeAsync(Recipe recipe);
 	public Task DeleteRecipeAsync(Recipe recipe);

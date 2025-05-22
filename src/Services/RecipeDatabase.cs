@@ -186,6 +186,12 @@ namespace Recipes.Services
 			return count == 0;
 		}
 
+		public async Task<int> GetRecipeCount()
+		{
+			int count = await database!.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM recipes");
+			return count;
+		}
+
 		public async Task AddRecipeAsync(Recipe recipe)
 		{
 			int rows = await database!.ExecuteAsync(

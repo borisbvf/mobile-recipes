@@ -97,11 +97,29 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database info.
+        /// </summary>
+        internal static string BackupDatabaseInfo {
+            get {
+                return ResourceManager.GetString("BackupDatabaseInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database size.
         /// </summary>
         internal static string BackupDatabaseSize {
             get {
                 return ResourceManager.GetString("BackupDatabaseSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images size.
+        /// </summary>
+        internal static string BackupImagesSize {
+            get {
+                return ResourceManager.GetString("BackupImagesSize", resourceCulture);
             }
         }
         
@@ -120,6 +138,15 @@ namespace Recipes.Resources.Localization {
         internal static string BackupManagement {
             get {
                 return ResourceManager.GetString("BackupManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipes count.
+        /// </summary>
+        internal static string BackupRecipesCount {
+            get {
+                return ResourceManager.GetString("BackupRecipesCount", resourceCulture);
             }
         }
         
@@ -228,6 +255,15 @@ namespace Recipes.Resources.Localization {
         internal static string DarkTheme {
             get {
                 return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never.
+        /// </summary>
+        internal static string DateTimeNever {
+            get {
+                return ResourceManager.GetString("DateTimeNever", resourceCulture);
             }
         }
         
@@ -417,6 +453,15 @@ namespace Recipes.Resources.Localization {
         internal static string IngredientsTitle {
             get {
                 return ResourceManager.GetString("IngredientsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KB.
+        /// </summary>
+        internal static string KiloByte {
+            get {
+                return ResourceManager.GetString("KiloByte", resourceCulture);
             }
         }
         
