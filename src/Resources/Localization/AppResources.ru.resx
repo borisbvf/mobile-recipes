@@ -138,11 +138,20 @@
   <data name="BackupImagesSize" xml:space="preserve">
     <value>Размер изображений</value>
   </data>
+  <data name="BackupLastFilename" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="BackupLastFolder" xml:space="preserve">
+    <value>Папка</value>
+  </data>
   <data name="BackupLastTime" xml:space="preserve">
-    <value>Время сохранения последней резервной копии</value>
+    <value>Дата и время</value>
   </data>
   <data name="BackupManagement" xml:space="preserve">
     <value>Управление резервной копией</value>
+  </data>
+  <data name="BackupPreviousInfo" xml:space="preserve">
+    <value>Предыдущая резервная копия</value>
   </data>
   <data name="BackupRecipesCount" xml:space="preserve">
     <value>Количество рецептов</value>
@@ -152,6 +161,9 @@
   </data>
   <data name="BackupRestore" xml:space="preserve">
     <value>Восстановить из резервной копии</value>
+  </data>
+  <data name="BackupRestoreWarning" xml:space="preserve">
+    <value>Все существующие данные будут удалены и заменены на данные из резервной копии.</value>
   </data>
   <data name="BackupSave" xml:space="preserve">
     <value>Сохранить резервную копию</value>
@@ -176,6 +188,9 @@
   </data>
   <data name="ColorSelectionTitle" xml:space="preserve">
     <value>Выберите цвет ярлыка</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Продолжить</value>
   </data>
   <data name="CookTime" xml:space="preserve">
     <value>Время на приготовление:</value>

@@ -75,6 +75,17 @@ namespace Recipes.Services
 			}
 		}
 
+		public bool ReconnectDB()
+		{
+			if (database != null)
+			{
+				database.CloseAsync();
+				database = null;
+			}
+			database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
+			return File.Exists(Constants.DBPath) && database != null;
+		}
+
 		private async Task ReloadRecipeTags(List<Recipe> recipes)
 		{
 			foreach (Recipe recipe in recipes)

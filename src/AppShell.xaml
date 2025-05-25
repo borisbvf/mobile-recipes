@@ -69,7 +69,7 @@
 		ContentTemplate="{DataTemplate local:Views.IngredientListPage}"/>
 
 	<ShellContent
-		FlyoutIcon="{AppThemeBinding Light=tags_light, Dark=tags_dark}"
+		FlyoutIcon="{AppThemeBinding Light=tag_light, Dark=tag_dark}"
 		Route="TagListView"
 		Title="{Binding LocalizationManager[TagsTitle]}"
 		ContentTemplate="{DataTemplate local:Views.TagListPage}"/>
@@ -86,5 +86,9 @@
 		Route="ImageStoreView"
 		Title="ImageStoreView"
 		ContentTemplate="{DataTemplate local:Views.ImageStoreView}"/>
+
+	<MenuFlyoutItem
+		Text="Export all recipes"
+		IconImageSource="{AppThemeBinding Light=book_light, Dark=book_dark}"/>
 
 </Shell>

@@ -124,7 +124,25 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last backup saving datetime.
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string BackupLastFilename {
+            get {
+                return ResourceManager.GetString("BackupLastFilename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        internal static string BackupLastFolder {
+            get {
+                return ResourceManager.GetString("BackupLastFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date and time.
         /// </summary>
         internal static string BackupLastTime {
             get {
@@ -138,6 +156,15 @@ namespace Recipes.Resources.Localization {
         internal static string BackupManagement {
             get {
                 return ResourceManager.GetString("BackupManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous backup.
+        /// </summary>
+        internal static string BackupPreviousInfo {
+            get {
+                return ResourceManager.GetString("BackupPreviousInfo", resourceCulture);
             }
         }
         
@@ -165,6 +192,15 @@ namespace Recipes.Resources.Localization {
         internal static string BackupRestore {
             get {
                 return ResourceManager.GetString("BackupRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All existing data will be erased and replaced to the data from the backup..
+        /// </summary>
+        internal static string BackupRestoreWarning {
+            get {
+                return ResourceManager.GetString("BackupRestoreWarning", resourceCulture);
             }
         }
         
@@ -237,6 +273,15 @@ namespace Recipes.Resources.Localization {
         internal static string ColorSelectionTitle {
             get {
                 return ResourceManager.GetString("ColorSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        internal static string Continue {
+            get {
+                return ResourceManager.GetString("Continue", resourceCulture);
             }
         }
         

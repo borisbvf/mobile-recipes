@@ -7,7 +7,9 @@
 			 x:DataType="viewmodels:BackupManagementViewModel"
              Title="{Binding LocalizationManager[BackupManagement]}">
 	<Grid
-		RowDefinitions="160,100,*">
+		RowDefinitions="*,*,*">
+		<ActivityIndicator
+			IsRunning="{Binding IsBusy}"/>
 		<Border
 			StrokeThickness="0">
 			<Grid
@@ -18,6 +20,7 @@
 					Grid.Column="0"
 					Grid.ColumnSpan="2"
 					Grid.Row="0"
+					FontSize="Medium"
 					VerticalOptions="Center"
 					HorizontalOptions="Center"
 					Text="{Binding LocalizationManager[BackupDatabaseInfo]}"/>
@@ -63,21 +66,56 @@
 			StrokeThickness="0"
 			Grid.Row="1">
 			<Grid
-				ColumnDefinitions="2*,*"
+				ColumnDefinitions="*,2*"
+				RowDefinitions="*,*,*,*"
 				Padding="20,0,20,0">
 				<Label
+					Grid.Row="0"
+					Grid.ColumnSpan="2"
+					FontSize="Medium"
+					VerticalOptions="Center"
+					HorizontalOptions="Center"
+					Text="{Binding LocalizationManager[BackupPreviousInfo]}"/>
+				<Label
+					Grid.Row="1"
+					Grid.Column="0"
 					VerticalOptions="Center"
 					HorizontalOptions="Start"
 					Text="{Binding LocalizationManager[BackupLastTime]}"/>
 				<Label
+					Grid.Row="1"
 					Grid.Column="1"
 					VerticalOptions="Center"
 					HorizontalOptions="End"
 					Text="{Binding BackupLastTime}"/>
+				<Label
+					Grid.Row="2"
+					Grid.Column="0"
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Text="{Binding LocalizationManager[BackupLastFolder]}"/>
+				<Label
+					Grid.Row="2"
+					Grid.Column="1"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					Text="{Binding BackupFolderName}"/>
+				<Label
+					Grid.Row="3"
+					Grid.Column="0"
+					VerticalOptions="Center"
+					HorizontalOptions="Start"
+					Text="{Binding LocalizationManager[BackupLastFilename]}"/>
+				<Label
+					Grid.Row="3"
+					Grid.Column="1"
+					VerticalOptions="Center"
+					HorizontalOptions="End"
+					Text="{Binding BackupFileName}"/>
 			</Grid>
 		</Border>
 		<VerticalStackLayout
-			Margin="40"
+			Margin="20"
 			Padding="8"
 			Spacing="8"
 			VerticalOptions="End"

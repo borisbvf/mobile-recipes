@@ -7,4 +7,10 @@ public partial class BackupManagementPage : ContentPage
 		InitializeComponent();
 		BindingContext = backupManagementViewModel;
 	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		(BindingContext as BackupManagementViewModel)?.ReloadInfoCommand.Execute(this);
+	}
 }

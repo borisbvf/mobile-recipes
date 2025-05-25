@@ -4,6 +4,8 @@ public static class Constants
 	public const string AppThemeKey = "AppTheme";
 	public const string LanguageKey = "Language";
 	public const string LastBackupDatetimeKey = "LastBackupDatetime";
+	public const string LastBackupFolderKey = "LastBackupFolder";
+	public const string LastBackupFilenameKey = "LastBackupFilename";
 
 
 	public const string RussianLang = "Русский";

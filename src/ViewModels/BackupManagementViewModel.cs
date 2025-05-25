@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using Microsoft.Maui.Storage;
+using Recipes.FolderPickUtil;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -57,21 +58,46 @@ public class BackupManagementViewModel : BaseViewModel
 		}
 	}
 
-	private string? backupLastTime;
 	public string? BackupLastTime
 	{
-		get => backupLastTime;
+		get => Preferences.Default.Get(Constants.LastBackupDatetimeKey, "No information");
 		set
 		{
-			if (value != backupLastTime)
+			if (value != null && value != Preferences.Default.Get(Constants.LastBackupDatetimeKey, string.Empty))
 			{
-				backupLastTime = value;
+				Preferences.Default.Set(Constants.LastBackupDatetimeKey, value);
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ICommand ReloadInfoCommand => new Command(ReloadInfo);
+	public string? BackupFolderName
+	{
+		get => Preferences.Default.Get(Constants.LastBackupFolderKey, "No information");
+		set
+		{
+			if (value != null && value != Preferences.Default.Get(Constants.LastBackupFolderKey, string.Empty))
+			{
+				Preferences.Default.Set(Constants.LastBackupFolderKey, value);
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public string? BackupFileName
+	{
+		get => Preferences.Default.Get(Constants.LastBackupFilenameKey, "No information");
+		set
+		{
+			if (value != null && value != Preferences.Default.Get(Constants.LastBackupFilenameKey, string.Empty))
+			{
+				Preferences.Default.Set(Constants.LastBackupFilenameKey, value);
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ICommand ReloadInfoCommand => new Command(ReloadInfo, () => !IsBusy);
 	private async void ReloadInfo()
 	{
 		string SizeToStr(long byteSize)
@@ -83,36 +109,120 @@ public class BackupManagementViewModel : BaseViewModel
 			return $"{sizeKB.ToString(nfi)} {LocalizationManager["KiloByte"]}";
 		}
 
-		if (!Directory.Exists(Constants.ImageDirectory))
-			Directory.CreateDirectory(Constants.ImageDirectory);
-		DirectoryInfo dirInfo = new DirectoryInfo(Constants.ImageDirectory);
-		FileInfo[] files = dirInfo.GetFiles();
-		long size = 0;
-		foreach (FileInfo file in files)
+		IsBusy = true;
+		try
 		{
-			size += file.Length;
+			if (!Directory.Exists(Constants.ImageDirectory))
+				Directory.CreateDirectory(Constants.ImageDirectory);
+			DirectoryInfo dirInfo = new DirectoryInfo(Constants.ImageDirectory);
+			FileInfo[] files = dirInfo.GetFiles();
+			long size = 0;
+			foreach (FileInfo file in files)
+			{
+				size += file.Length;
+			}
+			ImagesSize = SizeToStr(size);
+
+			FileInfo dbFile = new FileInfo(Constants.DBPath);
+			DatabaseSize = SizeToStr(dbFile.Length);
+
+			int count = await _recipeService.GetRecipeCount();
+			RecipesCount = $"{count}";
 		}
-		ImagesSize = SizeToStr(size);
-
-		FileInfo dbFile = new FileInfo(Constants.DBPath);
-		DatabaseSize = SizeToStr(dbFile.Length);
-
-		int count = await _recipeService.GetRecipeCount();
-		RecipesCount = $"{count}";
-
-		DateTime datetime = Preferences.Default.Get(Constants.LastBackupDatetimeKey, DateTime.MinValue);
-		BackupLastTime = datetime == DateTime.MinValue ? $"{LocalizationManager["DateTimeNever"]}" : $"{datetime}";
+		finally
+		{
+			IsBusy = false;
+		}
 	}
 
-	public ICommand SaveBackupCommand => new Command(SaveBackup);
-	private void SaveBackup()
+	internal async Task<WorkResult<string>> ProcessBackupSaving(string path)
 	{
-
+		IsBusy = true;
+		try
+		{
+			WorkResult<string> backupResult = BackupService.BackupDatabase(path);
+			if (backupResult.IsSuccess)
+			{
+				BackupLastTime = DateTime.Now.ToString("yyyy.MM.dd hh:mm");
+				BackupFolderName = path;
+				BackupFileName = Path.GetFileName(backupResult.Data);
+			}
+			else
+			{
+				await Shell.Current.DisplayAlert(
+					$"{LocalizationManager["Error"]}",
+					$"{backupResult.Exception?.Message}",
+					$"{LocalizationManager["Ok"]}");
+			}
+			return backupResult;
+		}
+		finally
+		{
+			IsBusy = false;
+		}
 	}
 
-	public ICommand RestoreBackupCommand => new Command(RestoreBackup);
-	private void RestoreBackup()
+	internal async Task<WorkResult> ProcessBackupRestoring(string filePath)
 	{
+		IsBusy = true;
+		try
+		{
+			WorkResult backupResult = BackupService.RestoreDatabase(filePath);
+			if (!backupResult.IsSuccess)
+			{
+				await Shell.Current.DisplayAlert(
+					$"{LocalizationManager["Error"]}",
+					$"{backupResult.Exception?.Message}",
+					$"{LocalizationManager["Ok"]}");
+			}
+			return backupResult;
+		}
+		finally
+		{
+			IsBusy = false;
+		}
+	}
 
+	public ICommand SaveBackupCommand => new Command(SaveBackup, () => !IsBusy);
+	private async void SaveBackup()
+	{
+		FolderPickerResult folderPickResult = await FolderPicker.Default.PickAsync();
+		if (folderPickResult.IsSuccess)
+		{
+			await ProcessBackupSaving(folderPickResult.FolderPath!);
+		}
+		else
+		{
+			if (folderPickResult.Exception is not TaskCanceledException)
+			{
+				await Shell.Current.DisplayAlert(
+					$"{LocalizationManager["Error"]}",
+					$"{folderPickResult.Exception?.Message}",
+					$"{LocalizationManager["Ok"]}");
+			}
+		}
+	}
+
+	public ICommand RestoreBackupCommand => new Command(RestoreBackup, () => !IsBusy);
+	private async void RestoreBackup()
+	{
+		bool confirmation = await Shell.Current.DisplayAlert(
+			"",
+			$"{LocalizationManager["BackupRestoreWarning"]}",
+			$"{LocalizationManager["Continue"]}",
+			$"{LocalizationManager["Cancel"]}");
+		if (!confirmation)
+			return;
+
+		FileResult? fileResult = await FilePicker.Default.PickAsync();
+		if (fileResult != null)
+		{
+			WorkResult backupResult = await ProcessBackupRestoring(fileResult.FullPath);
+			if (backupResult.IsSuccess)
+			{
+				_recipeService.ReconnectDB();
+				ReloadInfo();
+			}
+		}
 	}
 }
