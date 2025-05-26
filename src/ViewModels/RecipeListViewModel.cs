@@ -60,57 +60,44 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	public FilterCondition FilterConditionAll { get; } = FilterCondition.All;
-	public FilterCondition FilterConditionAny { get; } = FilterCondition.Any;
-	public FilterCondition FilterConditionNone { get; } = FilterCondition.None;
+	public FilterCondition[] FilterConditions { get; } = [
+		FilterCondition.All,
+		FilterCondition.None,
+		FilterCondition.Any];
 
-
-	private FilterCondition? tagConditionValue;
-	public FilterCondition? TagConditionValue
+	private FilterCondition? selectedIngredientFilterCondition;
+	public FilterCondition? SelectedIngredientFilterCondition
 	{
-		get => tagConditionValue;
+		get => selectedIngredientFilterCondition;
 		set
 		{
-			if (value != tagConditionValue && value != null)
+			if (value != selectedIngredientFilterCondition)
 			{
-				tagConditionValue = value;
+				selectedIngredientFilterCondition = value;
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(IsTagConditionAll));
-				OnPropertyChanged(nameof(IsTagConditionAny));
-				OnPropertyChanged(nameof(IsTagConditionNone));
 			}
 		}
 	}
-	public bool IsTagConditionAll => tagConditionValue != null && tagConditionValue == FilterCondition.All;
-	public bool IsTagConditionAny => tagConditionValue != null && tagConditionValue == FilterCondition.Any;
-	public bool IsTagConditionNone => tagConditionValue != null && tagConditionValue == FilterCondition.None;
 
-
-	private FilterCondition? ingredientConditionValue;
-	public FilterCondition? IngredientConditionValue
+	private FilterCondition? selectedTagFilterCondition;
+	public FilterCondition? SelectedTagFilterCondition
 	{
-		get => ingredientConditionValue;
+		get => selectedTagFilterCondition;
 		set
 		{
-			if (value != ingredientConditionValue && value != null)
+			if (value != selectedTagFilterCondition)
 			{
-				ingredientConditionValue = value;
+				selectedTagFilterCondition = value;
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(IsIngredientConditionAll));
-				OnPropertyChanged(nameof(IsIngredientConditionAny));
-				OnPropertyChanged(nameof(IsIngredientConditionNone));
 			}
 		}
 	}
-	public bool IsIngredientConditionAll => ingredientConditionValue != null && ingredientConditionValue == FilterCondition.All;
-	public bool IsIngredientConditionAny => ingredientConditionValue != null && ingredientConditionValue == FilterCondition.Any;
-	public bool IsIngredientConditionNone => ingredientConditionValue != null && ingredientConditionValue == FilterCondition.None;
 
 	public RecipeListViewModel(IRecipeService recipeService)
 	{
 		this.recipeService = recipeService;
-		tagConditionValue = FilterCondition.Any;
-		ingredientConditionValue = FilterCondition.Any;
+		SelectedIngredientFilterCondition = FilterCondition.Any;
+		SelectedTagFilterCondition = FilterCondition.Any;
 	}
 
 	public ICommand GetRecipesCommand => new Command(GetRecipesAsync);
@@ -123,7 +110,7 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		{
 			if (!recipeService.CheckIfDBExists())
 			{
-				await Shell.Current.DisplayAlert("", "Database does not exists, will be created.", "Ok");
+				await Shell.Current.DisplayAlert("", $"{LocalizationManager["DBCreationMessage"]}", $"{LocalizationManager["Ok"]}");
 				await recipeService.CreateTables();
 			}
 
@@ -202,9 +189,9 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 			}
 			List<Recipe> result = await recipeService.GetRecipeListAsync(FilterText,
 				GetIds(FilterTags),
-				tagConditionValue,
+				SelectedTagFilterCondition,
 				GetIds(FilterIngredients),
-				ingredientConditionValue);
+				SelectedIngredientFilterCondition);
 			if (Recipes.Count > 0)
 				Recipes.Clear();
 			foreach (Recipe recipe in result)
@@ -308,8 +295,8 @@ public class RecipeListViewModel : BaseViewModel, IQueryAttributable
 		}
 	}
 
-	public ICommand OnRadioChangedCommand => new Command(OnRadioChanged);
-	private async void OnRadioChanged(object obj)
+	public ICommand OnPickerValueChangedCommand => new Command(OnPickerValueChanged);
+	private async void OnPickerValueChanged(object obj)
 	{
 		await GetFilteredData();
 	}

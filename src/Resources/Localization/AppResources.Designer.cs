@@ -394,6 +394,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database does not exist, will be created..
+        /// </summary>
+        internal static string DBCreationMessage {
+            get {
+                return ResourceManager.GetString("DBCreationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string Delete {

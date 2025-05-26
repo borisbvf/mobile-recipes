@@ -228,6 +228,9 @@
   <data name="DateTimeNever" xml:space="preserve">
     <value>Never</value>
   </data>
+  <data name="DBCreationMessage" xml:space="preserve">
+    <value>Database does not exist, will be created.</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>

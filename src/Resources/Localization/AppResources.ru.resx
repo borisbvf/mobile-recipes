@@ -228,6 +228,9 @@
   <data name="DateTimeNever" xml:space="preserve">
     <value>Никогда</value>
   </data>
+  <data name="DBCreationMessage" xml:space="preserve">
+    <value>База данных отсутствует, будет создана.</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
