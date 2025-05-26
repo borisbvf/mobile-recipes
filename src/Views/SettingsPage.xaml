@@ -74,6 +74,9 @@
 			HeightRequest="70"
 			Margin="2"
 			Padding="2">
+			<Frame.GestureRecognizers>
+				<TapGestureRecognizer Command="{Binding GoToCleaningUnusedCommand}"/>
+			</Frame.GestureRecognizers>
 			<Grid
 				Margin="5"
 				Padding="5">
@@ -81,7 +84,7 @@
 					VerticalOptions="Center"
 					HorizontalOptions="Start"
 					FontSize="Medium"
-					Text="Cleaning unused files"/>
+					Text="{Binding LocalizationManager[CleaningUnusedFiles]}"/>
 			</Grid>
 		</Frame>
 	</VerticalStackLayout>

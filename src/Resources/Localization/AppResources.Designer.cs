@@ -160,6 +160,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No information.
+        /// </summary>
+        internal static string BackupNoInformation {
+            get {
+                return ResourceManager.GetString("BackupNoInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous backup.
         /// </summary>
         internal static string BackupPreviousInfo {
@@ -174,15 +183,6 @@ namespace Recipes.Resources.Localization {
         internal static string BackupRecipesCount {
             get {
                 return ResourceManager.GetString("BackupRecipesCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reload info.
-        /// </summary>
-        internal static string BackupReloadInfo {
-            get {
-                return ResourceManager.GetString("BackupReloadInfo", resourceCulture);
             }
         }
         
@@ -205,11 +205,29 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup has been successfully restored..
+        /// </summary>
+        internal static string BackupRestoringSuccess {
+            get {
+                return ResourceManager.GetString("BackupRestoringSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save backup.
         /// </summary>
         internal static string BackupSave {
             get {
                 return ResourceManager.GetString("BackupSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup has been successfully saved..
+        /// </summary>
+        internal static string BackupSavingSuccess {
+            get {
+                return ResourceManager.GetString("BackupSavingSuccess", resourceCulture);
             }
         }
         
@@ -255,6 +273,69 @@ namespace Recipes.Resources.Localization {
         internal static string ChangeColor {
             get {
                 return ResourceManager.GetString("ChangeColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete files.
+        /// </summary>
+        internal static string CleaningCommand {
+            get {
+                return ResourceManager.GetString("CleaningCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count.
+        /// </summary>
+        internal static string CleaningFilesCount {
+            get {
+                return ResourceManager.GetString("CleaningFilesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        internal static string CleaningFilesSize {
+            get {
+                return ResourceManager.GetString("CleaningFilesSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image files.
+        /// </summary>
+        internal static string CleaningImagesCaption {
+            get {
+                return ResourceManager.GetString("CleaningImagesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pdf files.
+        /// </summary>
+        internal static string CleaningPdfCaption {
+            get {
+                return ResourceManager.GetString("CleaningPdfCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files have been successfully deleted..
+        /// </summary>
+        internal static string CleaningSuccessMessage {
+            get {
+                return ResourceManager.GetString("CleaningSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleaning unused files.
+        /// </summary>
+        internal static string CleaningUnusedFiles {
+            get {
+                return ResourceManager.GetString("CleaningUnusedFiles", resourceCulture);
             }
         }
         
@@ -615,6 +696,15 @@ namespace Recipes.Resources.Localization {
         internal static string Recipes {
             get {
                 return ResourceManager.GetString("Recipes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload info.
+        /// </summary>
+        internal static string ReloadInfo {
+            get {
+                return ResourceManager.GetString("ReloadInfo", resourceCulture);
             }
         }
         

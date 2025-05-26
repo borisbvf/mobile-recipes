@@ -99,4 +99,6 @@ public class SettingsViewModel : BaseViewModel
 	{
 		await Shell.Current.GoToAsync(Constants.BackupManagementRoute);
 	}
+
+	public ICommand GoToCleaningUnusedCommand => new Command(async () => await Shell.Current.GoToAsync(Constants.CleaningUnusedFilesRoute));
 }

@@ -43,6 +43,8 @@ namespace Recipes
             builder.Services.AddTransient<ImageStoreView>();
             builder.Services.AddTransient<BackupManagementViewModel>();
             builder.Services.AddTransient<BackupManagementPage>();
+            builder.Services.AddTransient<CleaningUnusedFilesViewModel>();
+            builder.Services.AddTransient<CleaningUnusedFilesPage>();
             return builder.Build();
         }
     }

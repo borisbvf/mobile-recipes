@@ -59,7 +59,7 @@ public class BackupManagementViewModel : BaseViewModel
 
 	public string? BackupLastTime
 	{
-		get => Preferences.Default.Get(Constants.LastBackupDatetimeKey, "No information");
+		get => Preferences.Default.Get(Constants.LastBackupDatetimeKey, $"{LocalizationManager["BackupNoInformation"]}");
 		set
 		{
 			if (value != null && value != Preferences.Default.Get(Constants.LastBackupDatetimeKey, string.Empty))
@@ -72,7 +72,7 @@ public class BackupManagementViewModel : BaseViewModel
 
 	public string? BackupFolderName
 	{
-		get => Preferences.Default.Get(Constants.LastBackupFolderKey, "No information");
+		get => Preferences.Default.Get(Constants.LastBackupFolderKey, $"{LocalizationManager["BackupNoInformation"]}");
 		set
 		{
 			if (value != null && value != Preferences.Default.Get(Constants.LastBackupFolderKey, string.Empty))
@@ -85,7 +85,7 @@ public class BackupManagementViewModel : BaseViewModel
 
 	public string? BackupFileName
 	{
-		get => Preferences.Default.Get(Constants.LastBackupFilenameKey, "No information");
+		get => Preferences.Default.Get(Constants.LastBackupFilenameKey, $"{LocalizationManager["BackupNoInformation"]}");
 		set
 		{
 			if (value != null && value != Preferences.Default.Get(Constants.LastBackupFilenameKey, string.Empty))
@@ -191,7 +191,7 @@ public class BackupManagementViewModel : BaseViewModel
 			WorkResult<string> backupResult = await ProcessBackupSaving(folderPickResult.FolderPath!);
 			if (backupResult.IsSuccess)
 			{
-				IToast toast = Toast.Make("Backup successfully saved.");
+				IToast toast = Toast.Make($"{LocalizationManager["BackupSavingSuccess"]}");
 				await toast.Show();
 			}
 		}
@@ -224,7 +224,7 @@ public class BackupManagementViewModel : BaseViewModel
 			WorkResult backupResult = await ProcessBackupRestoring(fileResult.FullPath);
 			if (backupResult.IsSuccess)
 			{
-				IToast toast = Toast.Make("Backup successfully restored.");
+				IToast toast = Toast.Make($"{LocalizationManager["BackupRestoringSuccess"]}");
 				await toast.Show();
 				_recipeService.ReconnectDB();
 				ReloadInfo();

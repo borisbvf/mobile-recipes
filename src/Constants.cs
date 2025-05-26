@@ -27,6 +27,7 @@ public static class Constants
 	public const string ColorSelectionRoute = "ColorSelectionView";
 	public const string ImageStoreRoute = "ImageStoreView";
 	public const string BackupManagementRoute = "BackupManagementPage";
+	public const string CleaningUnusedFilesRoute = "CleaningUnusedFilesPage";
 
 
 	public const int LoadingAnimationInterval = 3000;

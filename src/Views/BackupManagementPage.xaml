@@ -126,7 +126,7 @@
 				HeightRequest="50"
 				HorizontalOptions="Fill"
 				Grid.Column="0"
-				Text="{Binding LocalizationManager[BackupReloadInfo]}"
+				Text="{Binding LocalizationManager[ReloadInfo]}"
 				Command="{Binding ReloadInfoCommand}"/>
 			<Button
 				HeightRequest="50"

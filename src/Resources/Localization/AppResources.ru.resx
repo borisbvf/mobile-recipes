@@ -150,14 +150,14 @@
   <data name="BackupManagement" xml:space="preserve">
     <value>Управление резервной копией</value>
   </data>
+  <data name="BackupNoInformation" xml:space="preserve">
+    <value>Неизвестно</value>
+  </data>
   <data name="BackupPreviousInfo" xml:space="preserve">
     <value>Предыдущая резервная копия</value>
   </data>
   <data name="BackupRecipesCount" xml:space="preserve">
     <value>Количество рецептов</value>
-  </data>
-  <data name="BackupReloadInfo" xml:space="preserve">
-    <value>Перезагрузить данные</value>
   </data>
   <data name="BackupRestore" xml:space="preserve">
     <value>Восстановить из резервной копии</value>
@@ -165,8 +165,14 @@
   <data name="BackupRestoreWarning" xml:space="preserve">
     <value>Все существующие данные будут удалены и заменены на данные из резервной копии.</value>
   </data>
+  <data name="BackupRestoringSuccess" xml:space="preserve">
+    <value>Резервная копия успешно восстановлена.</value>
+  </data>
   <data name="BackupSave" xml:space="preserve">
     <value>Сохранить резервную копию</value>
+  </data>
+  <data name="BackupSavingSuccess" xml:space="preserve">
+    <value>Резервная копия успешно сохранена.</value>
   </data>
   <data name="ButtonFilterIngredients" xml:space="preserve">
     <value>Ингридиенты</value>
@@ -182,6 +188,27 @@
   </data>
   <data name="ChangeColor" xml:space="preserve">
     <value>Изменить цвет</value>
+  </data>
+  <data name="CleaningCommand" xml:space="preserve">
+    <value>Удалить файлы</value>
+  </data>
+  <data name="CleaningFilesCount" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="CleaningFilesSize" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="CleaningImagesCaption" xml:space="preserve">
+    <value>Файлы изображения</value>
+  </data>
+  <data name="CleaningPdfCaption" xml:space="preserve">
+    <value>Файлы Pdf</value>
+  </data>
+  <data name="CleaningSuccessMessage" xml:space="preserve">
+    <value>Файлы были успешно удалены.</value>
+  </data>
+  <data name="CleaningUnusedFiles" xml:space="preserve">
+    <value>Удаление неиспользуемых файлов</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>Очистить</value>
@@ -302,6 +329,9 @@
   </data>
   <data name="Recipes" xml:space="preserve">
     <value>Рецепты</value>
+  </data>
+  <data name="ReloadInfo" xml:space="preserve">
+    <value>Перезагрузить данные</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>

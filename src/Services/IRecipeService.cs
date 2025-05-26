@@ -25,4 +25,6 @@ public interface IRecipeService
 	public Task AddTagAsync(RecipeTag recipeTag);
 	public Task UpdateTagAsync(RecipeTag recipeTag);
 	public Task DeleteTagAsync(RecipeTag recipeTag);
+
+	public Task<List<string>> GetImageFilenamesAsync();
 }

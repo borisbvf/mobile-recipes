@@ -65,4 +65,11 @@ public partial class Toast : IToast
 		Dispose(true);
 		GC.SuppressFinalize(this);
 	}
+
+	static TimeSpan GetDuration(ToastDuration duration) => duration switch
+	{
+		ToastDuration.Short => TimeSpan.FromSeconds(2),
+		ToastDuration.Long => TimeSpan.FromSeconds(3.5),
+		_ => throw new InvalidEnumArgumentException(nameof(Duration), (int)duration, typeof(ToastDuration))
+	};
 }
