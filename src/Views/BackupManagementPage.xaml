@@ -115,13 +115,14 @@
 			</Grid>
 		</Border>
 		<VerticalStackLayout
-			Margin="20"
+			Margin="10"
 			Padding="8"
 			Spacing="8"
 			VerticalOptions="End"
 			HorizontalOptions="Fill"
 			Grid.Row="2">
 			<Button
+				IsVisible="False"
 				HeightRequest="50"
 				HorizontalOptions="Fill"
 				Grid.Column="0"

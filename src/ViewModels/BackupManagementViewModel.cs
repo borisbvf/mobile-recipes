@@ -1,7 +1,6 @@
-﻿using Microsoft.Maui.Storage;
-using Recipes.FolderPickUtil;
+﻿using Recipes.FolderPickUtil;
+using Recipes.ToastUtil;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;
@@ -189,7 +188,12 @@ public class BackupManagementViewModel : BaseViewModel
 		FolderPickerResult folderPickResult = await FolderPicker.Default.PickAsync();
 		if (folderPickResult.IsSuccess)
 		{
-			await ProcessBackupSaving(folderPickResult.FolderPath!);
+			WorkResult<string> backupResult = await ProcessBackupSaving(folderPickResult.FolderPath!);
+			if (backupResult.IsSuccess)
+			{
+				IToast toast = Toast.Make("Backup successfully saved.");
+				await toast.Show();
+			}
 		}
 		else
 		{
@@ -220,6 +224,8 @@ public class BackupManagementViewModel : BaseViewModel
 			WorkResult backupResult = await ProcessBackupRestoring(fileResult.FullPath);
 			if (backupResult.IsSuccess)
 			{
+				IToast toast = Toast.Make("Backup successfully restored.");
+				await toast.Show();
 				_recipeService.ReconnectDB();
 				ReloadInfo();
 			}
