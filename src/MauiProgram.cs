@@ -40,7 +40,6 @@ namespace Recipes
             builder.Services.AddTransient<TagSelectionPage>();
             builder.Services.AddTransient<ColorSelectionViewModel>();
             builder.Services.AddTransient<ColorSelectionView>();
-            builder.Services.AddTransient<ImageStoreView>();
             builder.Services.AddTransient<BackupManagementViewModel>();
             builder.Services.AddTransient<BackupManagementPage>();
             builder.Services.AddTransient<CleaningUnusedFilesViewModel>();
