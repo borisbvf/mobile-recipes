@@ -124,8 +124,8 @@
 								<DataTemplate x:DataType="models:ObservableIngredient">
 									<Grid
 										BackgroundColor="{Binding BackgroundDragColor}"
-										RowDefinitions="36"
-										ColumnDefinitions="*,2*,36">
+										RowDefinitions="40"
+										ColumnDefinitions="2*,3*,36">
 										<Grid.GestureRecognizers>
 											<DragGestureRecognizer
 												DragStartingCommand="{Binding BindingContext.DragIngredientStartingCommand, Source={x:Reference RecipeChangePage}}"
@@ -142,6 +142,8 @@
 										</Grid.GestureRecognizers>
 										<Label
 											Grid.Column="0"
+											LineBreakMode="TailTruncation"
+											MaxLines="2"
 											VerticalOptions="Center"
 											Text="{Binding Name}"/>
 										<Entry

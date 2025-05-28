@@ -109,13 +109,15 @@
 						ItemsSource="{Binding Recipe.Ingredients}">
 						<CollectionView.ItemTemplate>
 							<DataTemplate x:DataType="models:Ingredient">
-								<HorizontalStackLayout>
+								<Grid
+									ColumnDefinitions="2*,3*">
 									<Label
-										Margin="1,1,10,1"
+										Grid.Column="0"
 										Text="{Binding Name}"/>
 									<Label
+										Grid.Column="1"
 										Text="{Binding Comment}"/>
-								</HorizontalStackLayout>
+								</Grid>
 							</DataTemplate>
 						</CollectionView.ItemTemplate>
 					</CollectionView>

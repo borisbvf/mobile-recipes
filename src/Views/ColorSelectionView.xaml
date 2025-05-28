@@ -18,11 +18,15 @@
 		</CollectionView.ItemsLayout>
 		<CollectionView.ItemTemplate>
 			<DataTemplate x:DataType="Color">
-				<Rectangle
-					Margin="5"
-					HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ColorSelectionViewModel}}, Path=RectangleHeight}"
-					WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ColorSelectionViewModel}}, Path=RectangleWidth}"
-					BackgroundColor="{Binding .}"/>
+				<Grid>
+					<Rectangle
+						Margin="5"
+						RadiusX="10"
+						RadiusY="10"
+						HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ColorSelectionViewModel}}, Path=RectangleHeight}"
+						WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ColorSelectionViewModel}}, Path=RectangleWidth}"
+						BackgroundColor="{Binding .}"/>
+				</Grid>
 			</DataTemplate>
 		</CollectionView.ItemTemplate>
 	</CollectionView>

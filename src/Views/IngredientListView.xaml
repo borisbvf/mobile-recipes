@@ -25,11 +25,13 @@
 								CommandParameter="{Binding}"/>
 						</Border.GestureRecognizers>
 						<Grid
-							RowDefinitions="40"
+							RowDefinitions="*"
+							ColumnDefinitions="*,76"
 							Padding="2"
 							Margin="2">
 							<Label
 								Margin="5"
+								LineBreakMode="WordWrap"
 								HorizontalOptions="Start"
 								VerticalOptions="Center"
 								Text="{Binding Name}"
@@ -37,6 +39,8 @@
 								FontAttributes="Bold"
 								FontSize="16"/>
 							<HorizontalStackLayout
+								Grid.Column="1"
+								HeightRequest="40"
 								HorizontalOptions="End">
 								<ImageButton
 									VerticalOptions="Center"

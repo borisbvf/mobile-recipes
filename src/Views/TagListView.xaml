@@ -44,11 +44,12 @@
 						<Grid
 							BackgroundColor="{Binding BackgroundSelectColor}"
 							RowDefinitions="40"
+							ColumnDefinitions="*,110"
 							Padding="2"
 							Margin="1">
 							<Frame
 								HorizontalOptions="Start"
-								Padding="5"
+								Padding="4"
 								CornerRadius="15"
 								BackgroundColor="{Binding Path=Color, Converter={StaticResource textToColor}}">
 								<Frame.GestureRecognizers>
@@ -59,6 +60,8 @@
 								</Frame.GestureRecognizers>
 								<Label
 									Margin="5"
+									LineBreakMode="MiddleTruncation"
+									HorizontalOptions="Start"
 									Text="{Binding Name}"
 									TextColor="{StaticResource Gray600}"
 									FontAttributes="Bold"
@@ -66,6 +69,7 @@
 							</Frame>
 
 							<HorizontalStackLayout
+								Grid.Column="1"
 								HorizontalOptions="End">
 								<ImageButton
 									WidthRequest="36"

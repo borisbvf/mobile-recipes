@@ -302,7 +302,7 @@ public class TagListViewModel : BaseViewModel, IQueryAttributable
 		ObservableTag? currentTag = obj as ObservableTag;
 		Dictionary<string, object> navParam = new();
 		if (currentTag != null)
-			navParam.Add(Constants.TagIdParameter, currentTag.Id);
+			navParam.Add(nameof(RecipeTag), currentTag);
 		await Shell.Current.GoToAsync(Constants.ColorSelectionRoute, navParam);
 	}
 
