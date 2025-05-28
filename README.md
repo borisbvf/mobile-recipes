@@ -5,7 +5,7 @@
 # Recipes cross-platform application
 An application for storing and organizing recipes.
 
-## Implemented feateres:
+## Implemented features:
 Recipe editing and search, ingredient and label lists, image attachments, and PDF export. Data is stored locally on the device, with an option to export a database archive.
 
 ## Platforms:
