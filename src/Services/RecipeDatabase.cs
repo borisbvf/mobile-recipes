@@ -204,6 +204,10 @@ namespace Recipes.Services;
 				$"SELECT t.id, t.description, t.filename FROM recipe_image t WHERE t.recipe_id = {recipeId}");
 			foreach (RecipeImage image in images)
 			{
+				if (image.FileName != null)
+				{
+					image.FileName = Path.Combine(Constants.ImageDirectory, Path.GetFileName(image.FileName));
+				}
 				recipe.Images.Add(image);
 			}
 		}
@@ -233,7 +237,7 @@ namespace Recipes.Services;
 			recipe.Instructions,
 			recipe.PreparationTime,
 			recipe.CookingTime);
-		if (recipe.Tags?.Count > 0)
+		if (recipe.Tags.Count > 0 || recipe.Ingredients.Count > 0 || recipe.Images.Count > 0)
 		{
 			int lastRecipeId = await database!.ExecuteScalarAsync<int>("select last_insert_rowid()");
 			foreach (RecipeTag tag in recipe.Tags)

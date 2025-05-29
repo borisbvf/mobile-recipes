@@ -215,7 +215,7 @@ public class RecipeEditViewModel: BaseViewModel, IQueryAttributable
 		await sourceStream.CopyToAsync(newFileStream);
 
 		RecipeImage recipeImage = new();
-		recipeImage.FileName = newFileName;
+		recipeImage.FileName = Path.GetFileName(newFileName);
 		recipe!.Images.Add(recipeImage);
 	}
 
