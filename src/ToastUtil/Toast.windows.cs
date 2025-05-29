@@ -47,7 +47,9 @@ public partial class Toast : IToast
 			.SetDuration(GetAppNotificationDuration(Duration))
 			.BuildNotification();
 		PlatformToast.Expiration = DateTimeOffset.Now.Add(GetDuration(Duration));
+		AppNotificationManager.Default.Register();
 		AppNotificationManager.Default.Show(PlatformToast);
+		AppNotificationManager.Default.Unregister();
 	}
 
 	static AppNotificationDuration GetAppNotificationDuration(ToastDuration duration) => duration switch

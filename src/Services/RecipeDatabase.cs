@@ -11,7 +11,7 @@ namespace Recipes.Services;
 	private const string DBRecipesScript = "CREATE TABLE recipes (" +
 		"id INTEGER PRIMARY KEY," +
 		"name TEXT NOT NULL UNIQUE," +
-		"description TEXT NOT NULL," +
+		"description TEXT," +
 		"instructions TEXT NOT NULL," +
 		"prep_time INTEGER," +
 		"cook_time INTEGER" +
@@ -57,13 +57,25 @@ namespace Recipes.Services;
 		DBRecipeIngredientLinkScript, 
 		DBRecipeImageLinkScript };
 
+	protected async void ChangeDb()
+	{
+		await database!.ExecuteAsync("PRAGMA writable_schema = true; ");
+		await database!.ExecuteAsync($"UPDATE sqlite_schema SET sql = '{DBRecipesScript}' WHERE type = 'table' AND name = 'recipes'");
+		await database!.ExecuteAsync("PRAGMA writable_schema = OFF; ");
+	}
+
+	public async Task<List<SchemaData>> GetSchema()
+	{
+		List<SchemaData> result = await database!.QueryAsync<SchemaData>("SELECT type, name, tbl_name AS tblname, rootpage, sql FROM sqlite_schema");
+		return result;
+	}
+
 	public bool CheckIfDBExists()
 	{
 		if (database == null)
 		{
 			database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
 		}
-
 		return File.Exists(Constants.DBPath);
 	}
 
@@ -84,6 +96,15 @@ namespace Recipes.Services;
 		}
 		database = new SQLiteAsyncConnection(Constants.DBPath, Constants.DBOpenFlags);
 		return File.Exists(Constants.DBPath) && database != null;
+	}
+
+	public async Task DisconnectDB()
+	{
+		if (database != null)
+		{
+			await database.CloseAsync();
+			database = null;
+		}
 	}
 
 	private async Task ReloadRecipeTags(List<Recipe> recipes)

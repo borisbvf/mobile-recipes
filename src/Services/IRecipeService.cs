@@ -4,6 +4,9 @@ public interface IRecipeService
 	public bool CheckIfDBExists();
 	public Task CreateTables();
 	public bool ReconnectDB();
+	public Task DisconnectDB();
+
+	public Task<List<SchemaData>> GetSchema();
 
 	public Task<List<Recipe>> GetRecipeListAsync();
 	public Task<List<Recipe>> GetRecipeListAsync(string? searchText, List<int>? tagIds, FilterCondition? tagCondition, 

@@ -139,7 +139,7 @@ public class BackupManagementViewModel : BaseViewModel
 		IsBusy = true;
 		try
 		{
-			WorkResult<string> backupResult = BackupService.BackupDatabase(path);
+			WorkResult<string> backupResult = await BackupService.BackupDatabase(path, _recipeService);
 			if (backupResult.IsSuccess)
 			{
 				BackupLastTime = DateTime.Now.ToString("yyyy.MM.dd hh:mm");
@@ -166,7 +166,7 @@ public class BackupManagementViewModel : BaseViewModel
 		IsBusy = true;
 		try
 		{
-			WorkResult backupResult = BackupService.RestoreDatabase(filePath);
+			WorkResult backupResult = await BackupService.RestoreDatabase(filePath, _recipeService);
 			if (!backupResult.IsSuccess)
 			{
 				await Shell.Current.DisplayAlert(
