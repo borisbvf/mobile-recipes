@@ -2,6 +2,7 @@
 using CoreText;
 using Foundation;
 using UIKit;
+using Microsoft.Maui.Platform;
 
 namespace Recipes.ToastUtil;
 /// <summary>
