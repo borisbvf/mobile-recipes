@@ -24,7 +24,7 @@
 		<ApplicationTitle>Recipes</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.recipes</ApplicationId>
+		<ApplicationId>com.jeekstudio.recipes</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
