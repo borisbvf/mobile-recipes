@@ -9,7 +9,7 @@
     Title="Shell recipes">
 
 	<Shell.ItemTemplate>
-		<DataTemplate>
+		<DataTemplate x:DataType="ShellContent">
 			<Border
 				StrokeShape="RoundRectangle 30"
 				Padding="2"
