@@ -80,6 +80,8 @@ public class CleaningUnusedFilesViewModel : BaseViewModel
 		IsBusy = true;
 		try
 		{
+			if (!Directory.Exists(Constants.PdfDirectory))
+				Directory.CreateDirectory(Constants.PdfDirectory);
 			DirectoryInfo pdfDirInfo = new DirectoryInfo(Constants.PdfDirectory);
 			long pdfFileSize = 0;
 			pdfFilePathList.Clear();
@@ -91,6 +93,8 @@ public class CleaningUnusedFilesViewModel : BaseViewModel
 			PdfCount = pdfFilePathList.Count;
 			PdfSize = pdfFileSize;
 
+			if (!Directory.Exists(Constants.ImageDirectory))
+				Directory.CreateDirectory(Constants.ImageDirectory);
 			DirectoryInfo imageDirInfo = new DirectoryInfo(Constants.ImageDirectory);
 			List<string> imageDbData = await _recipeService.GetImageFilenamesAsync();
 			long imageFileSize = 0;

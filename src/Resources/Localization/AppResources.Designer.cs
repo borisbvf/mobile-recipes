@@ -349,6 +349,15 @@ namespace Recipes.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recipe was successfully copied.
+        /// </summary>
+        internal static string ClipboardCopiedMsg {
+            get {
+                return ResourceManager.GetString("ClipboardCopiedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select tag&apos;s color.
         /// </summary>
         internal static string ColorSelectionTitle {

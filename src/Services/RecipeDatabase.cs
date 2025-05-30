@@ -366,6 +366,10 @@ namespace Recipes.Services;
 		List<string> result = new();
 		foreach (RecipeImage image in images)
 		{
+			if (image.FileName != null)
+			{
+				image.FileName = Path.Combine(Constants.ImageDirectory, Path.GetFileName(image.FileName));
+			}
 			result.Add(image.FileName!);
 		}
 		return result;

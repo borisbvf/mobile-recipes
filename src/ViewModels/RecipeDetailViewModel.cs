@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using Recipes.ToastUtil;
+using System.Windows.Input;
 
 namespace Recipes.ViewModels;
 
@@ -139,8 +140,19 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 			return;
 
 		string recipeText = GetRecipeText(recipe);
-
-		await Clipboard.Default.SetTextAsync(recipeText);
+		try
+		{
+			await Clipboard.Default.SetTextAsync(recipeText);
+			IToast toast = Toast.Make($"{LocalizationManager["ClipboardCopiedMsg"]}");
+			await toast.Show();
+		}
+		catch (Exception e)
+		{
+			await Shell.Current.DisplayAlert(
+				$"{LocalizationManager["Error"]}",
+				$"{e.Message}",
+				$"{LocalizationManager["Ok"]}");
+		}
 	}
 
 	public ICommand ShareRecipeCommand => new Command(ShareRecipe);
@@ -149,8 +161,18 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		if (recipe == null)
 			return;
 
-		string recipeText = GetRecipeText(recipe);
-		await Share.Default.RequestAsync(new ShareTextRequest(recipeText));
+		try
+		{
+			string recipeText = GetRecipeText(recipe);
+			await Share.Default.RequestAsync(new ShareTextRequest(recipeText));
+		}
+		catch (Exception e)
+		{
+			await Shell.Current.DisplayAlert(
+				$"{LocalizationManager["Error"]}",
+				$"{e.Message}",
+				$"{LocalizationManager["Ok"]}");
+		}
 	}
 
 	public ICommand ExportRecipeToPdfCommand => new Command(ExportRecipeToPdf);
@@ -159,14 +181,32 @@ public class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
 		if (recipe == null)
 			return;
 
-		if (!Directory.Exists(Constants.PdfDirectory))
-			Directory.CreateDirectory(Constants.PdfDirectory);
-		string fileName = Path.Combine(Constants.PdfDirectory, $"{Guid.NewGuid()}.pdf");
+		try
+		{
+			if (!Directory.Exists(Constants.PdfDirectory))
+				Directory.CreateDirectory(Constants.PdfDirectory);
+			string guid = $"_{Guid.NewGuid()}";
+			string fileName = $"{recipe.Name}";
+			int guidIndex = 1;
+			while (File.Exists(Path.Combine(Constants.PdfDirectory, $"{fileName}.pdf")) && guidIndex < guid.Length)
+			{
+				fileName = $"{fileName}{guid[guidIndex]}";
+				guidIndex++;
+			}
+			fileName = Path.Combine(Constants.PdfDirectory, $"{fileName}.pdf");
 
-		RecipeExport.ExportToPdf(recipe, fileName);
+			RecipeExport.ExportToPdf(recipe, fileName);
 
-		await Launcher.Default.OpenAsync(new OpenFileRequest("Test", new ReadOnlyFile(fileName)));
+			await Launcher.Default.OpenAsync(new OpenFileRequest($"{recipe.Name}", new ReadOnlyFile(fileName)));
 
-		File.Delete(fileName);
+			File.Delete(fileName);
+		}
+		catch (Exception e)
+		{
+			await Shell.Current.DisplayAlert(
+				$"{LocalizationManager["Error"]}",
+				$"{e.Message}",
+				$"{LocalizationManager["Ok"]}");
+		}
 	}
 }

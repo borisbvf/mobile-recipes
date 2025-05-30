@@ -213,6 +213,9 @@
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="ClipboardCopiedMsg" xml:space="preserve">
+    <value>Recipe was successfully copied</value>
+  </data>
   <data name="ColorSelectionTitle" xml:space="preserve">
     <value>Select tag's color</value>
   </data>
