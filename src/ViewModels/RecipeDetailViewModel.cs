@@ -1,4 +1,4 @@
-﻿using Recipes.ToastUtil;
+﻿using MauiCommonTools.Alerts;
 using System.Windows.Input;
 
 namespace Recipes.ViewModels;

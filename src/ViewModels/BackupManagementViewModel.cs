@@ -1,5 +1,5 @@
-﻿using Recipes.FolderPickUtil;
-using Recipes.ToastUtil;
+﻿using MauiCommonTools.Storage;
+using MauiCommonTools.Alerts;
 using System.Globalization;
 using System.Windows.Input;
 
