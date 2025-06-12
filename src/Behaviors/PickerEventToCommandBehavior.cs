@@ -4,7 +4,7 @@ namespace Recipes.Behaviors;
 public class PickerEventToCommandBehavior : Behavior<Picker>
 {
 	public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(
-		nameof(ValueChangedCommand), typeof(ICommand), typeof(EntryEventToCommandBehavior)
+		nameof(ValueChangedCommand), typeof(ICommand), typeof(PickerEventToCommandBehavior)
 		);
 	public ICommand ValueChangedCommand
 	{

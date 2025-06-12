@@ -5,7 +5,7 @@ namespace Recipes.Behaviors;
 public class RadioEventToCommandBehavior : Behavior<RadioButton>
 {
 	public static readonly BindableProperty ValueChangedCommandProperty = BindableProperty.Create(
-		nameof(ValueChangedCommand), typeof(ICommand), typeof(EntryEventToCommandBehavior),
+		nameof(ValueChangedCommand), typeof(ICommand), typeof(RadioEventToCommandBehavior),
 		propertyChanged: PropChanged
 		);
 	public ICommand ValueChangedCommand

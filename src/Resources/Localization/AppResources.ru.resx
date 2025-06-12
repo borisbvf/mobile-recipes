@@ -319,7 +319,7 @@
     <value>Вы уверены, что хотите удалить ингридиент?</value>
   </data>
   <data name="MsgDeletingTag" xml:space="preserve">
-    <value>Вы уверены,что хотите удалить ярлык?</value>
+    <value>Вы уверены, что хотите удалить ярлык?</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Наименование:</value>
